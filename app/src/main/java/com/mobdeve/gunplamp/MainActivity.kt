@@ -1,7 +1,12 @@
 package com.mobdeve.gunplamp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import com.mobdeve.gunplamp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -9,8 +14,26 @@ class MainActivity : AppCompatActivity() {
         private val data = ArrayList<User>()
     }
 
+    private val loginResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {result: ActivityResult ->
+
+        if (result.resultCode == RESULT_OK) {
+            //TODO
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        val viewBinding : ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
+
+        viewBinding.btnLogin.setOnClickListener(View.OnClickListener {
+            val intent = Intent(applicationContext, LoginActivity::class.java)
+            loginResultLauncher.launch(intent)
+        })
+
+
     }
 }
