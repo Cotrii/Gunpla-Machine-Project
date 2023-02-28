@@ -14,6 +14,15 @@ class MainActivity : AppCompatActivity() {
         private val data = ArrayList<User>()
     }
 
+    private val registerResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {result: ActivityResult ->
+
+        if (result.resultCode == RESULT_OK) {
+            //TODO
+        }
+    }
+
     private val loginResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {result: ActivityResult ->
@@ -33,6 +42,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, LoginActivity::class.java)
             loginResultLauncher.launch(intent)
         })
+
+        viewBinding.btnRegister.setOnClickListener(View.OnClickListener {
+            val intent = Intent(applicationContext, RegisterActivity::class.java)
+            registerResultLauncher.launch(intent)
+        })
+
+
 
 
     }
