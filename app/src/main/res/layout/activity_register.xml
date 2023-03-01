@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#636363"
     tools:context=".RegisterActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -106,7 +105,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/buttonRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FEB220"
