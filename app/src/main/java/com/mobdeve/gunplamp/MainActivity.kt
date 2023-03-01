@@ -32,6 +32,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val mapResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {result: ActivityResult ->
+
+        if (result.resultCode == RESULT_OK) {
+            //TODO
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
