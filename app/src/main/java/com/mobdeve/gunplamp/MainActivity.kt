@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val mapResultLauncher = registerForActivityResult(
+    private val createPostLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {result: ActivityResult ->
 
@@ -57,6 +57,11 @@ class MainActivity : AppCompatActivity() {
         viewBinding.btnRegister.setOnClickListener(View.OnClickListener {
             val intent = Intent(applicationContext, RegisterActivity::class.java)
             registerResultLauncher.launch(intent)
+        })
+
+        viewBinding.btnCreatePost.setOnClickListener(View.OnClickListener {
+            val intent = Intent(applicationContext, CreatePostActivity::class.java)
+            createPostLauncher.launch(intent)
         })
 
 
