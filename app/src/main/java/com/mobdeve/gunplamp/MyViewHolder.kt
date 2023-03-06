@@ -21,6 +21,9 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
 
         //
         this.viewBinding.ibFavorite.setImageResource(isLikedDrawable(post.liked))
+
+        this.viewBinding.tvBotUsername.text = post.username
+        this.viewBinding.tvDesc.text = post.caption
     }
 
     fun setLikeOnClickListener(onClickListener: View.OnClickListener) {
@@ -30,10 +33,10 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
     fun isLikedDrawable(like: Boolean): Int {
 
         if (like) {
-            return R.drawable.liked_36
+            return R.drawable.favorite_24
         }
 
-        return R.drawable.unliked_36
+        return R.drawable.not_favorite_24
     }
 
     fun changeLike(post: Post) {
