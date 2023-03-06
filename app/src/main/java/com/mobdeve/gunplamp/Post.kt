@@ -10,8 +10,8 @@ class Post(
     val userImageId: Int,
 
     //Count the number of users who liked the post
-    val likeCounter: ArrayList<String>,
-    //
-    val comments: ArrayList<String>
+//    val likeCounter: ArrayList<String>,
+//    //
+//    val comments: ArrayList<String>
     ) {
 }

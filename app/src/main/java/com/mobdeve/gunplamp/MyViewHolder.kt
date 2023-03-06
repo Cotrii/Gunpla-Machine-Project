@@ -10,6 +10,8 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
     fun bindData(post: Post) {
         this.viewBinding.ivUserIcon.setImageResource(post.userImageId)
         this.viewBinding.tvUsername.text = post.username
+
+
         this.viewBinding.tvLocation.text = post.location
 
         this.viewBinding.ivImagePosted.setImageResource((post.imageId))
@@ -40,10 +42,10 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
 
 
     //Suggestion
-    fun userInLikeList(post: Post, user: User): Boolean {
-
-        return (post.likeCounter).contains(user.username)
-    }
+//    fun userInLikeList(post: Post, user: User): Boolean {
+//
+//        return (post.likeCounter).contains(user.username)
+//    }
 
 
 }

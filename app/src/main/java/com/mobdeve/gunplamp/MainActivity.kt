@@ -43,6 +43,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val homeActivityLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {result: ActivityResult ->
+
+        if (result.resultCode == RESULT_OK) {
+            //TODO
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,6 +71,11 @@ class MainActivity : AppCompatActivity() {
         viewBinding.btnCreatePost.setOnClickListener(View.OnClickListener {
             val intent = Intent(applicationContext, CreatePostActivity::class.java)
             createPostLauncher.launch(intent)
+        })
+
+        viewBinding.button.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this@MainActivity, HomeActivity::class.java)
+            homeActivityLauncher.launch(intent)
         })
 
 
