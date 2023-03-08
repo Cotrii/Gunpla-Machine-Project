@@ -21,7 +21,18 @@ class MainActivity : AppCompatActivity() {
 
         if (result.resultCode == RESULT_OK) {
             //TODO
-            Toast.makeText(this, "RESULT IS:" + result.data?.getStringExtra("firstName") + " " + result.data?.getStringExtra("password") + " " +result.data?.getStringExtra("username"), Toast.LENGTH_SHORT).show()
+            val username: String = result.data?.getStringExtra("username").toString()
+            val password: String = result.data?.getStringExtra("password").toString()
+            val firstName: String = result.data?.getStringExtra("firstName").toString()
+            val lastName: String = result.data?.getStringExtra("lastName").toString()
+            val profilePic: Int = 0
+            data.add(User(username,password,firstName,lastName,profilePic))
+            val intent = Intent(applicationContext, HomeActivity::class.java)
+            intent.putExtra("username", username)
+            intent.putExtra("firstName", firstName)
+            intent.putExtra("lastName", lastName)
+            intent.putExtra("profilePic", profilePic)
+            startActivity(intent)
         }
     }
 

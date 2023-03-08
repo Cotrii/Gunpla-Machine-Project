@@ -8,13 +8,13 @@ import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
 class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root) {
 
     fun bindData(post: Post) {
-        this.viewBinding.ivUserIcon.setImageResource(post.userImageId)
+        this.viewBinding.ivUserIcon.setImageResource(post.profilePic)
         this.viewBinding.tvUsername.text = post.username
 
 
-        this.viewBinding.tvLocation.text = post.location
+        this.viewBinding.tvLocation.text = post.store.name
 
-        this.viewBinding.ivImagePosted.setImageResource((post.imageId))
+        this.viewBinding.ivImagePosted.setImageResource((post.imagePost))
 
         //How will we track every user's activity with likes (Solution: add or check if user
         // is in list/array of strings?

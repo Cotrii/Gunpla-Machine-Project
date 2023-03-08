@@ -14,83 +14,41 @@ class DataHelper {
                 R.drawable.person3,
                 R.drawable.person4
             )
+            val users = arrayOf(User("Wonderer1", "pass1", "first1", "last1", R.drawable.person1),
+                User("JustMe2", "pass2", "first2", "last2", R.drawable.person2),
+                User("TravelingNomad3", "pass3", "first3", "last3", R.drawable.person3))
+
+            val stores = arrayOf(Store("Store1", "ABC CITY FIRST"), Store("Store2", "DEF CITY SECOND"), Store("STORE3", "GHI CITY THIRD"))
 
             val data = ArrayList<Post>()
             data.add(
                 Post(
+                    users[0],
                     R.drawable.buildings,
-                    "February 14, 2021",
                     "that's a tall boi",
-                    "New York, NY, USA",
-                    false,
-                    usernames[0],
-                    userImages[0]
+                    stores[0],
+                    "February 14, 2021",
+                    false
                 )
             )
             data.add(
                 Post(
+                    users[1],
                     R.drawable.food,
-                    "December 25, 2020",
                     "just made lunch! ready to dig in #food #burgers #coke",
-                    null,
-                    true,
-                    usernames[0],
-                    userImages[0]
+                    stores[1],
+                    "December 25, 2020",
+                    false
                 )
             )
             data.add(
                 Post(
+                    users[2],
                     R.drawable.fruits,
-                    "January 01, 2019",
-                    "breakfast for today",
-                    null,
-                    false,
-                    usernames[1],
-                    userImages[1]
-                )
-            )
-            data.add(
-                Post(
-                    R.drawable.furniture,
-                    "May 10, 2020",
-                    "just arrived at our Airbnb\nVacation time starts now!\n.\n.\n.\n.\n#insta #traveler #vacation",
-                    "Secret location",
-                    true,
-                    usernames[1],
-                    userImages[1]
-                )
-            )
-            data.add(
-                Post(
-                    R.drawable.race_car,
-                    "March 12, 2021",
-                    null,
-                    "Slovakia",
-                    false,
-                    usernames[2],
-                    userImages[2]
-                )
-            )
-            data.add(
-                Post(
-                    R.drawable.waterfall,
-                    "October 29, 2020",
-                    "after walking 274839173 many km, finally arrived. well worth the wait!!!",
-                    "Skógafoss, Iceland",
-                    false,
-                    usernames[2],
-                    userImages[2]
-                )
-            )
-            data.add(
-                Post(
-                    R.drawable.work_desk,
-                    "June 20, 2019",
-                    "#worklifebalance",
-                    null,
-                    true,
-                    usernames[3],
-                    userImages[3]
+                    "just made lunch! ready to dig in #food #burgers #coke",
+                    stores[2],
+                    "December 25, 2020",
+                    true
                 )
             )
             data.shuffle()
