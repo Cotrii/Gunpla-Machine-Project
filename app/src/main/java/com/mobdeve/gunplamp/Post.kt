@@ -1,17 +1,20 @@
 package com.mobdeve.gunplamp
 
-class Post(
-    val imageId: Int,
-    val datePosted: String,
-    val caption: String?,
-    val location: String?,
-    var liked: Boolean,
-    val username: String,
-    val userImageId: Int,
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-    //Count the number of users who liked the post
-//    val likeCounter: ArrayList<String>,
-//    //
-//    val comments: ArrayList<String>
-    ) {
+class Post(poster: User, imagePost: Int, caption: String?, store: Store, date: String, isLiked: Boolean) {
+    val username: String = poster.username
+    val profilePic: Int = poster.profilePic
+
+    val imagePost: Int = imagePost
+    val caption: String? = caption
+    val datePosted: String = date
+    val store: Store = store
+
+    var liked: Boolean = isLiked
+    var likes: ArrayList<User>? = null
+    var comments: ArrayList<Comment>? = null
+
 }

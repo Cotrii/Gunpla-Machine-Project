@@ -1,12 +1,16 @@
 package com.mobdeve.gunplamp
 
 class User(
-
-    val userid: Int,
-    val username: String,
-    val password: String,
-    val firstName: String,
-    val lastName: String,
+    username: String,
+    password: String,
+    firstName: String,
+    lastName: String,
+    profilePic: Int,
 
    ) {
+    val username: String = username
+    val password: String = password
+    val firstName: String = firstName
+    val lastName: String = lastName
+    val profilePic: Int = profilePic
 }
