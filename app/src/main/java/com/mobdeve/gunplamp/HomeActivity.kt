@@ -3,6 +3,7 @@ package com.mobdeve.gunplamp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -18,7 +19,17 @@ class HomeActivity : AppCompatActivity() {
     ) {result: ActivityResult ->
 
         if (result.resultCode == RESULT_OK) {
-            //TODO
+
+        }
+    }
+
+    private val galleryViewLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+
+        if (result.resultCode == RESULT_OK) {
+            val imageURI = result?.data
+            Toast.makeText(this, "IMAGE URI IS:" + imageURI, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -41,12 +52,15 @@ class HomeActivity : AppCompatActivity() {
         val createPostButton = viewBinding.fabCreatePost
 
         createPostButton.setOnClickListener {
-            val intent = Intent(applicationContext, CreatePostActivity::class.java)
-//            intent.putExtra("username", username)
-//            intent.putExtra("firstName", firstName)
-//            intent.putExtra("lastName", lastName)
-//            intent.putExtra("profilePic", profilePic)
-            createPostLauncher.launch(intent)
+//            val intent = Intent(applicationContext, CreatePostActivity::class.java)
+////            intent.putExtra("username", username)
+////            intent.putExtra("firstName", firstName)
+////            intent.putExtra("lastName", lastName)
+////            intent.putExtra("profilePic", profilePic)
+//            createPostLauncher.launch(intent)
+
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            galleryViewLauncher.launch(gallery)
         }
 
 
