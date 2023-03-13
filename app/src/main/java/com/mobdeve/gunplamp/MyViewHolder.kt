@@ -30,6 +30,10 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
         this.viewBinding.ibFavorite.setOnClickListener(onClickListener)
     }
 
+    fun setEditOnClickListener(onClickListener: View.OnClickListener) {
+        this.viewBinding.ibDetailsBtn.setOnClickListener(onClickListener)
+    }
+
     fun isLikedDrawable(like: Boolean): Int {
 
         if (like) {

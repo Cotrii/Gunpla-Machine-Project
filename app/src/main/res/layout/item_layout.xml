@@ -23,7 +23,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -42,6 +42,13 @@
                 android:text="TextView" />
 
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ib_detailsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            app:srcCompat="@drawable/baseline_more_vert_24" />
 
     </LinearLayout>
 
@@ -105,5 +112,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Description" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,13 +33,24 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    //Edit (?)
+    private val viewPostDetailsLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+
+        if (result.resultCode == RESULT_OK) {
+
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val viewBinding : ActivityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        viewBinding.myRecyclerView.adapter = MyAdapter(DataHelper.initializeData())
+//        viewBinding.myRecyclerView.adapter = MyAdapter(DataHelper.initializeData())
+        viewBinding.myRecyclerView.adapter = MyAdapter(DataHelper.initializeData(), viewPostDetailsLauncher)
 
         viewBinding.myRecyclerView.layoutManager = LinearLayoutManager(this)
 
