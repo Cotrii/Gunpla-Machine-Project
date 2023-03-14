@@ -30,6 +30,9 @@ class HomeActivity : AppCompatActivity() {
         if (result.resultCode == RESULT_OK) {
             val imageURI = result?.data
             Toast.makeText(this, "IMAGE URI IS:" + imageURI, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, CreatePostActivity::class.java)
+            intent.putExtra("imagePost", imageURI.toString())
+            createPostLauncher.launch(intent)
         }
     }
 
@@ -70,7 +73,7 @@ class HomeActivity : AppCompatActivity() {
 ////            intent.putExtra("profilePic", profilePic)
 //            createPostLauncher.launch(intent)
 
-            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            val gallery = Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             galleryViewLauncher.launch(gallery)
         }
 
