@@ -15,6 +15,9 @@ import com.mobdeve.gunplamp.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var myAdapter: MyAdapter
+
     private val createPostLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {result: ActivityResult ->
@@ -57,13 +60,9 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //Initialize ViewBinding for HomeActivity
         val viewBinding : ActivityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-
-//        viewBinding.myRecyclerView.adapter = MyAdapter(DataHelper.initializeData())
-        viewBinding.myRecyclerView.adapter = MyAdapter(DataHelper.initializeData(), viewPostDetailsLauncher)
-
-        viewBinding.myRecyclerView.layoutManager = LinearLayoutManager(this)
 
         val username: String = intent.getStringExtra("username").toString()
         val firstName: String =intent.getStringExtra("firstName").toString()
@@ -90,6 +89,13 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this@HomeActivity, UserProfileActivity::class.java)
             this.userProfileLauncher.launch(intent)
         }
+
+
+        //RecyclerView setup; Note how MyAdapter has viewPostResultLauncher
+        this.recyclerView = viewBinding.myRecyclerView
+        this.myAdapter = MyAdapter(DataHelper.initializeData(), viewPostDetailsLauncher)
+        viewBinding.myRecyclerView.adapter = myAdapter
+        viewBinding.myRecyclerView.layoutManager = LinearLayoutManager(this)
 
 
     }
