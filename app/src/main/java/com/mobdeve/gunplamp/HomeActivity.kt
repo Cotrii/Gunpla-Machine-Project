@@ -30,7 +30,6 @@ class HomeActivity : AppCompatActivity() {
 
         if (result.resultCode == RESULT_OK) {
             val imageURI = result?.data?.data
-            Toast.makeText(this, "IMAGE URI IS:" + imageURI, Toast.LENGTH_SHORT).show()
             val intent = Intent(this, CreatePostActivity::class.java)
             intent.putExtra("imagePost", imageURI.toString())
             createPostLauncher.launch(intent)

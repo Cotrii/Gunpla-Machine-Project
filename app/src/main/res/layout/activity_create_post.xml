@@ -42,7 +42,7 @@
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/etCaption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"

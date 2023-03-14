@@ -13,10 +13,14 @@ import com.fondesa.kpermissions.extension.checkPermissionsStatus
 import com.fondesa.kpermissions.extension.permissionsBuilder
 import com.mobdeve.gunplamp.databinding.ActivityCreatePostBinding
 import java.net.URI
+import java.util.*
 
 class CreatePostActivity : AppCompatActivity() {
 
     lateinit var imagePostURI : Uri
+    lateinit var caption : String
+    lateinit var store : Store
+    lateinit var datePosted : Date
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //
@@ -31,12 +35,23 @@ class CreatePostActivity : AppCompatActivity() {
             if(res.toString().contains("Granted")){
                 val imageString = intent.getStringExtra("imagePost");
                 imagePostURI = Uri.parse(imageString);
-                Toast.makeText(this, "status is:" + res, Toast.LENGTH_SHORT).show()
 //                viewBinding.ivImagePost.setImageBitmap(selectedImage)
                 viewBinding.ivImagePost.setImageURI(imagePostURI)
             }
             else{
                 finish()
+            }
+        }
+
+        viewBinding.btnCancel.setOnClickListener({
+            finish()
+        })
+
+        viewBinding.btnPost.setOnClickListener {
+            if (viewBinding.etCaption.text.length > 0) {
+                datePosted = Date()
+                caption = viewBinding.etCaption.text.toString()
+                store = Store("NEW STORE", "1429 street malate manila")
             }
         }
     }
