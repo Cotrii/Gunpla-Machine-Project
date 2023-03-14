@@ -1,6 +1,7 @@
 package com.mobdeve.gunplamp
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -28,7 +29,7 @@ class HomeActivity : AppCompatActivity() {
     ) { result: ActivityResult ->
 
         if (result.resultCode == RESULT_OK) {
-            val imageURI = result?.data
+            val imageURI = result?.data?.data
             Toast.makeText(this, "IMAGE URI IS:" + imageURI, Toast.LENGTH_SHORT).show()
             val intent = Intent(this, CreatePostActivity::class.java)
             intent.putExtra("imagePost", imageURI.toString())
@@ -74,6 +75,7 @@ class HomeActivity : AppCompatActivity() {
 //            createPostLauncher.launch(intent)
 
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            gallery.type = "image/*";
             galleryViewLauncher.launch(gallery)
         }
 
