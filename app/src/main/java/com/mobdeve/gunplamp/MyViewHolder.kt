@@ -1,9 +1,11 @@
 package com.mobdeve.gunplamp
 
+import android.net.Uri
 import android.view.View
 import android.view.View.OnClickListener
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
+import kotlin.reflect.typeOf
 
 class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root) {
 
@@ -14,7 +16,15 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
 
         this.viewBinding.tvLocation.text = post.store.name
 
-        this.viewBinding.ivImagePosted.setImageResource((post.imagePost))
+        if(post.imagePost != null){
+            if(post.imagePost.toIntOrNull() != null ){
+                this.viewBinding.ivImagePosted.setImageResource((post.imagePost.toInt()))
+            }
+            else{
+                val imagePostURI = Uri.parse(post.imagePost);
+                this.viewBinding.ivImagePosted.setImageURI(imagePostURI)
+            }
+        }
 
         //How will we track every user's activity with likes (Solution: add or check if user
         // is in list/array of strings?
