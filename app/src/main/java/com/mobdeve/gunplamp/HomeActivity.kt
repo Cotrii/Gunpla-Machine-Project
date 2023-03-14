@@ -18,6 +18,10 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var myAdapter: MyAdapter
 
+    companion object {
+        private val data : ArrayList<Post> = DataHelper.initializeData()
+    }
+
     private val createPostLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {result: ActivityResult ->
@@ -93,7 +97,7 @@ class HomeActivity : AppCompatActivity() {
 
         //RecyclerView setup; Note how MyAdapter has viewPostResultLauncher
         this.recyclerView = viewBinding.myRecyclerView
-        this.myAdapter = MyAdapter(DataHelper.initializeData(), viewPostDetailsLauncher)
+        this.myAdapter = MyAdapter(data, viewPostDetailsLauncher)
         viewBinding.myRecyclerView.adapter = myAdapter
         viewBinding.myRecyclerView.layoutManager = LinearLayoutManager(this)
 

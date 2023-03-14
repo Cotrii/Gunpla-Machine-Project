@@ -20,23 +20,25 @@
             android:id="@+id/iv_userIcon"
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <LinearLayout
-            android:layout_width="310dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_username"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView" />
 
             <TextView
                 android:id="@+id/tv_location"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView" />
@@ -47,6 +49,7 @@
             android:id="@+id/ib_detailsBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:backgroundTint="#FFFFFF"
             app:srcCompat="@drawable/baseline_more_vert_24" />
 
@@ -56,6 +59,7 @@
         android:id="@+id/imageLayout"
         android:layout_width="match_parent"
         android:layout_height="500dp"
+        android:background="#000000"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/descLayout"
         app:layout_constraintTop_toBottomOf="@+id/headerLayout">
@@ -71,6 +75,8 @@
         android:id="@+id/descLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:background="#FBFAFA"
         android:orientation="vertical"
         android:padding="4dp"
@@ -97,8 +103,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:paddingLeft="10dp"
-                android:text="0 Likes"
-                android:textColor="#000000" />
+                android:text="0 Likes" />
         </LinearLayout>
 
         <TextView
@@ -106,14 +111,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
-            android:textColor="#000000"
             tools:text="Username" />
 
         <TextView
             android:id="@+id/tv_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
             tools:text="Description" />
 
     </LinearLayout>
