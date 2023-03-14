@@ -46,6 +46,14 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private val userProfileLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result : ActivityResult ->
+        if (result.resultCode == RESULT_OK){
+
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -76,6 +84,11 @@ class HomeActivity : AppCompatActivity() {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             gallery.type = "image/*";
             galleryViewLauncher.launch(gallery)
+        }
+
+        viewBinding.imageButton.setOnClickListener{
+            val intent = Intent(this@HomeActivity, UserProfileActivity::class.java)
+            this.userProfileLauncher.launch(intent)
         }
 
 
