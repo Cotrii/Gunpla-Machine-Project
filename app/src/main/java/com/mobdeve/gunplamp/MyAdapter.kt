@@ -54,6 +54,7 @@ class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultL
             intent.putExtra(ViewPostDetails.CAPTION_KEY, data[position].caption)
             intent.putExtra(ViewPostDetails.IMAGE_KEY, data[position].imagePost)
             intent.putExtra(ViewPostDetails.POSITION_KEY, position)
+            intent.putExtra(ViewPostDetails.USERNAME_KEY, data[position].username)
 
             this.myActivityResultLauncher.launch(intent)
 

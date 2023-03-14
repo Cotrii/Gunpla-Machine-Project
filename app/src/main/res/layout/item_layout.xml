@@ -13,6 +13,7 @@
         android:gravity="center"
         android:padding="4dp"
         app:layout_constraintBottom_toTopOf="@+id/imageLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -34,14 +35,16 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv_location"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="#000000" />
 
         </LinearLayout>
 
@@ -68,6 +71,8 @@
             android:id="@+id/iv_imagePosted"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_launcher_background" />
     </LinearLayout>
 
@@ -75,18 +80,17 @@
         android:id="@+id/descLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:background="#FBFAFA"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="4dp"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <ImageButton
@@ -103,7 +107,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:paddingLeft="10dp"
-                android:text="0 Likes" />
+                android:text="0 Likes"
+                android:textColor="#000000" />
         </LinearLayout>
 
         <TextView
@@ -111,12 +116,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-black"
+            android:textColor="#000000"
             tools:text="Username" />
 
         <TextView
             android:id="@+id/tv_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
             tools:text="Description" />
 
     </LinearLayout>
