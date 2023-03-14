@@ -28,11 +28,10 @@ class CreatePostActivity : AppCompatActivity() {
         val permStatus = checkPermissionsStatus(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA);
 
         for (res in permStatus){
-            val status = res.toString().split(".");
-            if(status.toString().contains("Granted")){
+            if(res.toString().contains("Granted")){
                 val imageString = intent.getStringExtra("imagePost");
                 imagePostURI = Uri.parse(imageString);
-                Toast.makeText(this, "status is:" + status, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "status is:" + res, Toast.LENGTH_SHORT).show()
 //                viewBinding.ivImagePost.setImageBitmap(selectedImage)
                 viewBinding.ivImagePost.setImageURI(imagePostURI)
             }
