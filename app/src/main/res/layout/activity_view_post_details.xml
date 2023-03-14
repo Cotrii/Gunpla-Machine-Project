@@ -5,6 +5,8 @@
     android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
     tools:context=".ViewPostDetails">
 
     <RelativeLayout
@@ -38,7 +40,6 @@
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/et_editCaption"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -48,12 +49,15 @@
 
     <EditText
         android:id="@+id/et_editCaption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="412dp"
+        android:layout_height="181dp"
+        android:layout_margin="4dp"
         android:ems="10"
+        android:gravity="left"
         android:inputType="textMultiLine"
         android:maxLength="200"
         android:text="Caption"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_image" />
