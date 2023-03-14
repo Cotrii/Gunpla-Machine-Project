@@ -1,14 +1,15 @@
 package com.mobdeve.gunplamp
 
+import android.net.Uri
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class Post(poster: User, imagePost: Int, caption: String?, store: Store, date: String, isLiked: Boolean) {
+class Post(poster: User, imagePost: String?, caption: String?, store: Store, date: String, isLiked: Boolean) {
     val username: String = poster.username
     val profilePic: Int = poster.profilePic
 
-    val imagePost: Int = imagePost
+    val imagePost: String? = imagePost
     val caption: String? = caption
     val datePosted: String = date
     val store: Store = store

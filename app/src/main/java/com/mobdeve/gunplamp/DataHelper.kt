@@ -24,7 +24,7 @@ class DataHelper {
             data.add(
                 Post(
                     users[0],
-                    R.drawable.buildings,
+                    R.drawable.buildings.toString(),
                     "that's a tall boi",
                     stores[0],
                     "February 14, 2021",
@@ -34,7 +34,7 @@ class DataHelper {
             data.add(
                 Post(
                     users[1],
-                    R.drawable.food,
+                    R.drawable.food.toString(),
                     "just made lunch! ready to dig in #food #burgers #coke",
                     stores[1],
                     "December 25, 2020",
@@ -44,7 +44,7 @@ class DataHelper {
             data.add(
                 Post(
                     users[2],
-                    R.drawable.fruits,
+                    R.drawable.fruits.toString(),
                     "just made lunch! ready to dig in #food #burgers #coke",
                     stores[2],
                     "December 25, 2020",

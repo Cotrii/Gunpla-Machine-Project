@@ -5,18 +5,23 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.gunplamp.databinding.ActivityHomeBinding
+import kotlin.properties.Delegates
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var myAdapter: MyAdapter
+    private lateinit var username : String
+    private lateinit var firstName : String
+    private lateinit var lastName : String
+    private var profilePic by Delegates.notNull<Int>()
+    private lateinit var user : User
 
     companion object {
         private val data : ArrayList<Post> = DataHelper.initializeData()
@@ -27,7 +32,16 @@ class HomeActivity : AppCompatActivity() {
     ) {result: ActivityResult ->
 
         if (result.resultCode == RESULT_OK) {
+//            Toast.makeText(this, "SUCCESS:" + result.data?.getStringExtra("caption"), Toast.LENGTH_SHORT).show()
+            user = User(username,"djkslajdksad",firstName,lastName,profilePic)
+            val imagePost = result.data?.getStringExtra("imagePost")
+            val caption = result.data?.getStringExtra("caption")
+            val datePost = result.data?.getStringExtra("datePosted")
+            val storeName = result.data?.getStringExtra("storeName")
+            val storeCity = result.data?.getStringExtra("storeCity")
 
+            data.add(Post(user, imagePost, caption, Store(storeName,storeCity),datePost.toString(), false))
+            this.myAdapter.notifyDataSetChanged()
         }
     }
 
@@ -39,6 +53,7 @@ class HomeActivity : AppCompatActivity() {
             val imageURI = result?.data?.data
             val intent = Intent(this, CreatePostActivity::class.java)
             intent.putExtra("imagePost", imageURI.toString())
+            intent.putExtra("username", username)
             createPostLauncher.launch(intent)
         }
     }
@@ -68,11 +83,10 @@ class HomeActivity : AppCompatActivity() {
         val viewBinding : ActivityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val username: String = intent.getStringExtra("username").toString()
-        val firstName: String =intent.getStringExtra("firstName").toString()
-        val lastName: String = intent.getStringExtra("lastName").toString()
-        val profilePic: Int? = intent.getIntExtra("profilePic",0)
-        Toast.makeText(this, "FROM HOME:" + username, Toast.LENGTH_SHORT).show()
+        username= intent.getStringExtra("username").toString()
+        firstName =intent.getStringExtra("firstName").toString()
+        lastName = intent.getStringExtra("lastName").toString()
+        profilePic = intent.getIntExtra("profilePic",0)
 
         val createPostButton = viewBinding.fabCreatePost
 
