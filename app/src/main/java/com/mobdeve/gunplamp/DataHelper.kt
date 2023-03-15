@@ -35,7 +35,7 @@ class DataHelper {
                 Post(
                     users[1],
                     R.drawable.pharact.toString(),
-                    "just made lunch! ready to dig in #food #burgers #coke",
+                    "I found Pharact, very nice!",
                     stores[1],
                     "December 25, 2020",
                     false

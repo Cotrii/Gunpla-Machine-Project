@@ -22,4 +22,9 @@ class Post(poster: User, imagePost: String?, caption: String?, store: Store, dat
         caption = newCap
     }
 
+    fun countLikes(): Int? {
+
+        return likes?.size
+    }
+
 }
