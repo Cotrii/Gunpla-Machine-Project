@@ -51,7 +51,6 @@ class DataHelper {
                     true
                 )
             )
-            data.shuffle()
 
             return data;
         }

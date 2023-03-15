@@ -81,7 +81,7 @@
         android:id="@+id/fabCreatePost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="16dp"
         android:clickable="true"
         app:backgroundTint="#3C3C3D"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -37,6 +37,8 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
 
         this.viewBinding.tvBotUsername.text = post.username
         this.viewBinding.tvDesc.text = post.caption
+
+        this.viewBinding.tvDate.text = post.datePosted
     }
 
     fun setLikeOnClickListener(onClickListener: View.OnClickListener) {
