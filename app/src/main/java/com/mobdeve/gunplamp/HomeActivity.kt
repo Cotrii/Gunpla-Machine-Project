@@ -1,17 +1,17 @@
 package com.mobdeve.gunplamp
 
 import android.content.Intent
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.mobdeve.gunplamp.databinding.ActivityHomeBinding
 import kotlin.properties.Delegates
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -64,7 +64,11 @@ class HomeActivity : AppCompatActivity() {
     ) { result: ActivityResult ->
 
         if (result.resultCode == RESULT_OK) {
+            val position = result.data!!.getIntExtra(ViewPostDetails.POSITION_KEY, 0)
+            val newCaption = result.data!!.getStringExtra(ViewPostDetails.CAPTION_KEY).toString()
 
+            data[position].changeCaption(newCaption)
+            myAdapter.notifyItemChanged(position)
         }
     }
 
@@ -115,6 +119,11 @@ class HomeActivity : AppCompatActivity() {
         viewBinding.myRecyclerView.adapter = myAdapter
         viewBinding.myRecyclerView.layoutManager = LinearLayoutManager(this)
 
+        //Remove flickering of item
+        val animator = recyclerView.itemAnimator
+        if (animator is SimpleItemAnimator) {
+            (animator as SimpleItemAnimator).supportsChangeAnimations = false
+        }
 
     }
 }

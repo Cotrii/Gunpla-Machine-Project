@@ -53,7 +53,6 @@ class ViewPostDetails : AppCompatActivity() {
 
         viewBinding.etEditCaption.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -66,9 +65,12 @@ class ViewPostDetails : AppCompatActivity() {
 
         viewBinding.btnSave.setOnClickListener(View.OnClickListener {
 
-            val intent : Intent = Intent()
+            val changedIntent : Intent = Intent()
 
-
+            changedIntent.putExtra(ViewPostDetails.CAPTION_KEY, viewBinding.etEditCaption.text.toString())
+            changedIntent.putExtra(ViewPostDetails.POSITION_KEY, position)
+            setResult(RESULT_OK, changedIntent)
+            finish()
 
         })
 

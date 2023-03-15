@@ -10,12 +10,16 @@ class Post(poster: User, imagePost: String?, caption: String?, store: Store, dat
     val profilePic: Int = poster.profilePic
 
     val imagePost: String? = imagePost
-    val caption: String? = caption
+    var caption: String? = caption
     val datePosted: String = date
     val store: Store = store
 
     var liked: Boolean = isLiked
     var likes: ArrayList<User>? = null
     var comments: ArrayList<Comment>? = null
+
+    fun changeCaption(newCap: String) {
+        caption = newCap
+    }
 
 }
