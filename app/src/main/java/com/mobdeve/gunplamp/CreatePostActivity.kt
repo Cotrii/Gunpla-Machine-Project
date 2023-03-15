@@ -108,7 +108,7 @@ class CreatePostActivity : AppCompatActivity() {
         }
 
         viewBinding.btnPost.setOnClickListener {
-            if (viewBinding.etCaption.text.length > 0) {
+            if (viewBinding.etCaption.text.isNotEmpty() && tempName.isNotEmpty() && tempCity.isNotEmpty()) {
                 datePosted = Date()
                 caption = viewBinding.etCaption.text.toString()
                 intent.putExtra("imagePost", imageString)

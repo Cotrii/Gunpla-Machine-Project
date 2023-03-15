@@ -1,6 +1,7 @@
 package com.mobdeve.gunplamp
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -31,7 +32,16 @@ class ViewPostDetails : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         // Set Image View (not editable)
-        viewBinding.ivImage.setImageResource(intent.getIntExtra(ViewPostDetails.IMAGE_KEY, 0))
+        val imageString = intent.getStringExtra(ViewPostDetails.IMAGE_KEY)
+        if(imageString != null){
+            if(imageString.toIntOrNull() != null ){
+                this.viewBinding.ivImage.setImageResource(imageString.toInt())
+            }
+            else{
+                val imagePostURI = Uri.parse(imageString);
+                this.viewBinding.ivImage.setImageURI(imagePostURI)
+            }
+        }
 
         captionStr = intent.getStringExtra(ViewPostDetails.CAPTION_KEY).toString()
         val position = intent.getIntExtra(ViewPostDetails.POSITION_KEY, 0)

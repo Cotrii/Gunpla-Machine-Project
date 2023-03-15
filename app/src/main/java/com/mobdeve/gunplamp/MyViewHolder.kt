@@ -1,8 +1,10 @@
 package com.mobdeve.gunplamp
 
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
 import kotlin.reflect.typeOf
@@ -18,6 +20,7 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
 
         if(post.imagePost != null){
             if(post.imagePost.toIntOrNull() != null ){
+                Log.d("DJSAKLDJSALKDJSA", "bindData: " + post.imagePost)
                 this.viewBinding.ivImagePosted.setImageResource((post.imagePost.toInt()))
             }
             else{
