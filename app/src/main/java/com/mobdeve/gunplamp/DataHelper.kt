@@ -7,18 +7,15 @@ package com.mobdeve.gunplamp
 class DataHelper {
     companion object {
         fun initializeData(): ArrayList<Post> {
-            val usernames = arrayOf("Wonderer", "JustMe", "TravelingNomad", "WelcomeToMyLife")
-            val userImages = intArrayOf(
-                R.drawable.person1,
-                R.drawable.person2,
-                R.drawable.person3,
-                R.drawable.person4
-            )
-            val users = arrayOf(User("Wonderer1", "pass1", "first1", "last1", R.drawable.person1),
-                User("JustMe2", "pass2", "first2", "last2", R.drawable.person2),
-                User("TravelingNomad3", "pass3", "first3", "last3", R.drawable.person3))
+            val users = arrayOf(
+                User("nugundam237", "pass1", "Amuro", "Ray", R.drawable.emblem),
+                User("thehawk", "pass2", "Borat", "Sagdiyev", R.drawable.borat),
+                User("mechagaikotsu", "pass3", "Mecha", "Gaikotsu", R.drawable.mechagaikotsu))
 
-            val stores = arrayOf(Store("Store1", "ABC CITY FIRST"), Store("Store2", "DEF CITY SECOND"), Store("STORE3", "GHI CITY THIRD"))
+            val stores = arrayOf(
+                Store("Toys R Us Uptown Mall", "Taguig"),
+                Store("SM Masinag", "Rizal"),
+                Store("Toytown Glorietta", "Makati City"))
 
             val data = ArrayList<Post>()
             data.add(
