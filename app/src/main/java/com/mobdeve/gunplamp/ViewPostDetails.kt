@@ -19,6 +19,7 @@ class ViewPostDetails : AppCompatActivity() {
         const val IMAGE_KEY: String = "IMAGE_KEY"
         const val CAPTION_KEY: String = "CAPTION_KEY"
         const val POSITION_KEY: String = "POSITION_KEY"
+        const val STATUS_KEY: String = "STATUS_KEY"
     }
 
     private lateinit var captionStr: String
@@ -69,7 +70,22 @@ class ViewPostDetails : AppCompatActivity() {
 
             changedIntent.putExtra(ViewPostDetails.CAPTION_KEY, viewBinding.etEditCaption.text.toString())
             changedIntent.putExtra(ViewPostDetails.POSITION_KEY, position)
+
+            changedIntent.putExtra(ViewPostDetails.STATUS_KEY, "Edit")
             setResult(RESULT_OK, changedIntent)
+            finish()
+
+        })
+
+        viewBinding.btnDelete.setOnClickListener(View.OnClickListener {
+
+            val deleteIntent : Intent = Intent()
+
+            deleteIntent.putExtra(ViewPostDetails.CAPTION_KEY, viewBinding.etEditCaption.text.toString())
+            deleteIntent.putExtra(ViewPostDetails.POSITION_KEY, position)
+
+            deleteIntent.putExtra(ViewPostDetails.STATUS_KEY, "Delete")
+            setResult(RESULT_OK, deleteIntent)
             finish()
 
         })

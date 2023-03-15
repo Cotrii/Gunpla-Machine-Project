@@ -6,6 +6,7 @@ import android.provider.MediaStore
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -67,8 +68,18 @@ class HomeActivity : AppCompatActivity() {
             val position = result.data!!.getIntExtra(ViewPostDetails.POSITION_KEY, 0)
             val newCaption = result.data!!.getStringExtra(ViewPostDetails.CAPTION_KEY).toString()
 
-            data[position].changeCaption(newCaption)
-            myAdapter.notifyItemChanged(position)
+            val status = result.data!!.getStringExtra(ViewPostDetails.STATUS_KEY).toString()
+            if (status == "Edit")
+            {
+                data[position].changeCaption(newCaption)
+                myAdapter.notifyItemChanged(position)
+            }
+            else //DELETE
+            {
+                data.remove(data[position])
+
+                myAdapter.notifyDataSetChanged()
+            }
         }
     }
 
