@@ -61,7 +61,7 @@
     <LinearLayout
         android:id="@+id/imageLayout"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:background="#000000"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/descLayout"
@@ -72,7 +72,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_launcher_background" />
     </LinearLayout>
 
