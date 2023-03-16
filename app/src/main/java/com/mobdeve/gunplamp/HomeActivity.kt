@@ -87,7 +87,31 @@ class HomeActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result : ActivityResult ->
         if (result.resultCode == RESULT_OK){
+            val username = result.data!!.getStringExtra("username")
+            val firstName = result.data!!.getStringExtra("firstName")
+            val lastName = result.data!!.getStringExtra("lastName")
+            val password = result.data!!.getStringExtra("password")
+            val profilePic = result.data!!.getStringExtra("profilePic")
 
+            if (username != null) {
+                user.username = username
+            }
+
+            if(firstName != null){
+                user.firstName = firstName
+            }
+
+            if(lastName != null){
+                user.lastName = lastName
+            }
+
+            if(password != null){
+                user.password = password
+            }
+
+//            if(profilePic != null){
+//                user.profilePic
+//            }
         }
     }
 
@@ -102,6 +126,8 @@ class HomeActivity : AppCompatActivity() {
         firstName =intent.getStringExtra("firstName").toString()
         lastName = intent.getStringExtra("lastName").toString()
         profilePic = intent.getIntExtra("profilePic",0)
+
+        user = User(username,"djskal", firstName, lastName, profilePic)
 
         val createPostButton = viewBinding.fabCreatePost
 
@@ -120,6 +146,11 @@ class HomeActivity : AppCompatActivity() {
 
         viewBinding.imageButton.setOnClickListener{
             val intent = Intent(this@HomeActivity, UserProfileActivity::class.java)
+//            intent.putExtra("username", user.username)
+//            intent.putExtra("firstName", user.firstName)
+//            intent.putExtra("lastName", user.lastName)
+//            intent.putExtra("profilePic", user.profilePic)
+//            intent.putExtra("password", user.password)
             this.userProfileLauncher.launch(intent)
         }
 

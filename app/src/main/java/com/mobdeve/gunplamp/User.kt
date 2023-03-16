@@ -8,9 +8,9 @@ class User(
     profilePic: Int,
 
    ) {
-    val username: String = username
-    val password: String = password
-    val firstName: String = firstName
-    val lastName: String = lastName
-    val profilePic: Int = profilePic
+    var username: String = username
+    var password: String = password
+    var firstName: String = firstName
+    var lastName: String = lastName
+    var profilePic: Int = profilePic
 }
