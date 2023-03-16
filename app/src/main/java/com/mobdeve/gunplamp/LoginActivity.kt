@@ -12,7 +12,7 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         const val INPUT_USER_KEY = "INPUT_USER_KEY"
-        private lateinit var USERLIST_KEY: ArrayList<User> =
+//        private lateinit var USERLIST_KEY: ArrayList<User> =
     }
 
 
