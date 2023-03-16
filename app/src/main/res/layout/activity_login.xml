@@ -75,6 +75,7 @@
                 android:textColor="#000000"
                 android:textColorHint="#528CE7"
                 android:textSize="14sp" />
+
             <EditText
                 android:id="@+id/et_usernameInput2"
                 android:layout_width="match_parent"
@@ -83,10 +84,10 @@
                 android:backgroundTint="#528CE7"
                 android:ems="10"
                 android:hint="PASSWORD"
-                android:textSize="14sp"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:textColor="#000000"
-                android:textColorHint="#528CE7" />
+                android:textColorHint="#528CE7"
+                android:textSize="14sp" />
             <Button
                 android:id="@+id/btn_savelogin"
                 android:layout_width="wrap_content"

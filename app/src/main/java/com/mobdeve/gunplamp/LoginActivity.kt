@@ -12,6 +12,7 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         const val INPUT_USER_KEY = "INPUT_USER_KEY"
+        private lateinit var USERLIST_KEY: ArrayList<User> =
     }
 
 
@@ -59,7 +60,6 @@ class LoginActivity : AppCompatActivity() {
                     && user.password == viewBinding.etUsernameInput2.text.toString()) {
                         val intent : Intent = Intent(this@LoginActivity, HomeActivity:: class.java)
                         openHomeLauncher.launch(intent)
-
                 }
             }
 

@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         viewBinding.btnHome.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@MainActivity, HomeActivity::class.java)
+            intent.putExtra(, data)
             homeActivityLauncher.launch(intent)
         })
 
