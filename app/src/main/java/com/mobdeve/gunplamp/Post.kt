@@ -15,16 +15,18 @@ class Post(poster: User, imagePost: String?, caption: String?, store: Store, dat
     val store: Store = store
 
     var liked: Boolean = isLiked
-    var likes: ArrayList<User>? = null
-    var comments: ArrayList<Comment>? = null
+    var likes: ArrayList<String> = ArrayList()
+    var comments: ArrayList<Comment>? = ArrayList()
 
     fun changeCaption(newCap: String) {
         caption = newCap
     }
 
     fun countLikes(): Int? {
-
-        return likes?.size
+        if(likes != null){
+            return likes?.size
+        } else{
+            return 0
+        }
     }
-
 }

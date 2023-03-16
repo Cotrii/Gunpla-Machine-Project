@@ -2,9 +2,11 @@ package com.mobdeve.gunplamp
 
 import android.content.Intent
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
@@ -39,7 +41,12 @@ class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultL
         holder.bindData(this.data[position])
 
         holder.setLikeOnClickListener(View.OnClickListener {
-            holder.changeLike(this.data[position])
+            if(holder.changeLike(this.data[position])){
+                this.data[position].likes?.add("USER1")
+            }else{
+                this.data[position].likes?.remove("USER1")
+            }
+            Log.d("ASDJKLASJDKLAJSDKLJSAK", "onBindViewHolder: " + this.data[position].likes)
             notifyItemChanged(position)
         })
 
