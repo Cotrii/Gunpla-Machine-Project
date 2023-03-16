@@ -51,6 +51,8 @@ class LoginActivity : AppCompatActivity() {
 
             val userList : ArrayList<User> = DataGenerator.generateData()
 
+//            userList.add( User("nugundam237", "pass1", "Amuro", "Ray", R.drawable.emblem))
+
             for (user in userList) {
 
                 if (user.username == viewBinding.etUsernameInput.text.toString()

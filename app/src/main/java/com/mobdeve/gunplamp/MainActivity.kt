@@ -45,14 +45,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val createPostLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {result: ActivityResult ->
-
-        if (result.resultCode == RESULT_OK) {
-            //TODO
-        }
-    }
 
     private val homeActivityLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -80,12 +72,7 @@ class MainActivity : AppCompatActivity() {
             registerResultLauncher.launch(intent)
         })
 
-        viewBinding.btnCreatePost.setOnClickListener(View.OnClickListener {
-            val intent = Intent(applicationContext, CreatePostActivity::class.java)
-            createPostLauncher.launch(intent)
-        })
-
-        viewBinding.button.setOnClickListener(View.OnClickListener {
+        viewBinding.btnHome.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@MainActivity, HomeActivity::class.java)
             homeActivityLauncher.launch(intent)
         })
