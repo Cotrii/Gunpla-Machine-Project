@@ -49,6 +49,10 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
         this.viewBinding.ibDetailsBtn.setOnClickListener(onClickListener)
     }
 
+    fun setViewCommentsOnClickListener(onClickListener: View.OnClickListener) {
+        this.viewBinding.tvComments.setOnClickListener(onClickListener)
+    }
+
     fun isLikedDrawable(like: Boolean): Int {
 
         if (like) {

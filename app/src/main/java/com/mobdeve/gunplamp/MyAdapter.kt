@@ -53,6 +53,13 @@ class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultL
 
             this.myActivityResultLauncher.launch(intent)
         })
+
+        holder.setViewCommentsOnClickListener(View.OnClickListener {
+           val intent : Intent = Intent(holder.itemView.context, ViewCommentsActivity::class.java)
+
+//            intent.putExtra()
+            this.myActivityResultLauncher.launch(intent)
+        })
     }
 
     override fun getItemCount(): Int {
