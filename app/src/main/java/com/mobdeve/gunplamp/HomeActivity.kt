@@ -6,6 +6,7 @@ import android.provider.MediaStore
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -143,6 +144,8 @@ class HomeActivity : AppCompatActivity() {
             gallery.type = "image/*";
             galleryViewLauncher.launch(gallery)
         }
+//
+//        viewBinding.imageButton.setImageDrawable(profilePic.toDrawable())
 
         viewBinding.imageButton.setOnClickListener{
             val intent = Intent(this@HomeActivity, UserProfileActivity::class.java)

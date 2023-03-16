@@ -1,5 +1,6 @@
 package com.mobdeve.gunplamp
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,8 +9,14 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.view.drawToBitmap
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.mobdeve.gunplamp.databinding.ActivityMainBinding
 import com.mobdeve.gunplamp.databinding.ActivityUserProfileBinding
 
@@ -25,12 +32,14 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         var edit: Boolean = false
         var editUsername : Boolean = false
         var editPassword : Boolean = false
+        var editProfilePic: Boolean = false
 
         val viewBinding : ActivityUserProfileBinding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
@@ -47,6 +56,7 @@ class UserProfileActivity : AppCompatActivity() {
         viewBinding.textView8.visibility = View.GONE
         viewBinding.textView9.visibility = View.GONE
         viewBinding.textView10.visibility = View.GONE
+        viewBinding.svProfilePics.visibility = View.GONE
 
         fun showSavedButton(){
             if(originalLastName != viewBinding.lastName.text.toString() || originalFirstName != viewBinding.firstName.text.toString() || originalUserName != viewBinding.username.text.toString()){
@@ -55,6 +65,34 @@ class UserProfileActivity : AppCompatActivity() {
             else{
                 viewBinding.saveButton.visibility = View.INVISIBLE
             }
+        }
+
+        viewBinding.ivProfilePic.setOnClickListener {
+            editProfilePic = !editProfilePic
+            if (editProfilePic) {
+                viewBinding.svProfilePics.visibility = View.VISIBLE
+                viewBinding.saveButton.visibility = View.VISIBLE
+                viewBinding.ivProfPic1.setOnClickListener({
+                    viewBinding.ivProfilePic.setImageResource(R.drawable.person1)
+                })
+                viewBinding.ivProfPic2.setOnClickListener({
+                    viewBinding.ivProfilePic.setImageResource(R.drawable.person2)
+                })
+                viewBinding.ivProfPic3.setOnClickListener({
+                    viewBinding.ivProfilePic.setImageResource(R.drawable.person3)
+                })
+                viewBinding.ivProfPic4.setOnClickListener({
+                    viewBinding.ivProfilePic.setImageResource(R.drawable.person4)
+                })
+            } else {
+                viewBinding.svProfilePics.visibility = View.GONE
+            }
+        }
+
+        viewBinding.buttonLogout.setOnClickListener {
+            val logoutIntent = Intent(applicationContext, MainActivity::class.java)
+            logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(logoutIntent)
         }
 
         viewBinding.buttonChangePass.setOnClickListener {
@@ -94,6 +132,8 @@ class UserProfileActivity : AppCompatActivity() {
 
             if(viewBinding.confirmNewPassword.text.toString() == viewBinding.newPassword.text.toString() && viewBinding.newPassword.text.toString().length > 0)
             intent.putExtra("password", viewBinding.newPassword.text.toString())
+
+            intent.putExtra("profilePic", viewBinding.ivProfilePic.drawable.toString())
 
             setResult(RESULT_OK, intent)
             finish()

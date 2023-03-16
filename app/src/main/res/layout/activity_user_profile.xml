@@ -24,6 +24,57 @@
                 android:layout_height="match_parent"
                 android:paddingBottom="40dp">
 
+                <ScrollView
+                    android:id="@+id/svProfilePics"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="#DCDCDC"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        tools:overScrollMode="always">
+
+                        <ImageView
+                            android:id="@+id/ivProfPic1"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="10dp"
+                            android:padding="5dp"
+                            app:srcCompat="@drawable/person1" />
+
+                        <ImageView
+                            android:id="@+id/ivProfPic2"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="10dp"
+                            android:padding="5dp"
+                            app:srcCompat="@drawable/person2" />
+
+                        <ImageView
+                            android:id="@+id/ivProfPic3"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="10dp"
+                            android:padding="5dp"
+                            app:srcCompat="@drawable/person3" />
+
+                        <ImageView
+                            android:id="@+id/ivProfPic4"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="10dp"
+                            android:padding="5dp"
+                            app:srcCompat="@drawable/person4" />
+
+                    </LinearLayout>
+                </ScrollView>
+
                 <LinearLayout
                     android:id="@+id/linearLayout4"
                     android:layout_width="match_parent"
@@ -32,7 +83,7 @@
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+                    app:layout_constraintTop_toBottomOf="@+id/svProfilePics">
 
                     <TextView
                         android:id="@+id/textView2"
@@ -278,8 +329,9 @@
                     <ImageView
                         android:id="@+id/ivProfilePic"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_margin="10sp"
+                        android:adjustViewBounds="false"
                         app:srcCompat="@drawable/person1" />
 
                 </LinearLayout>
@@ -340,6 +392,18 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
+                <Button
+                    android:id="@+id/buttonLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#E9494A"
+                    android:text="LOGOUT"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonChangePass" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>

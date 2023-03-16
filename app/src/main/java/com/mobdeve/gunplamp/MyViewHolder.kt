@@ -20,7 +20,6 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
 
         if(post.imagePost != null){
             if(post.imagePost.toIntOrNull() != null ){
-                Log.d("DJSAKLDJSALKDJSA", "bindData: " + post.imagePost)
                 this.viewBinding.ivImagePosted.setImageResource((post.imagePost.toInt()))
             }
             else{
@@ -37,6 +36,7 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
 
         this.viewBinding.tvBotUsername.text = post.username
         this.viewBinding.tvDesc.text = post.caption
+        this.viewBinding.tvLikeCounter.text = post.countLikes().toString() + " Likes"
 
         this.viewBinding.tvDate.text = post.datePosted
     }
@@ -62,8 +62,10 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
         return R.drawable.not_favorite_24
     }
 
-    fun changeLike(post: Post) {
+    fun changeLike(post: Post) : Boolean {
         post.liked = !(post.liked)
+        this.viewBinding.tvLikeCounter.text = post.countLikes().toString() + " Likes"
+        return post.liked
     }
 
 
