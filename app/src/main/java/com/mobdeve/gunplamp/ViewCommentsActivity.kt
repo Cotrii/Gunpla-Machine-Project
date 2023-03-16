@@ -3,6 +3,7 @@ package com.mobdeve.gunplamp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import com.mobdeve.gunplamp.databinding.ActivityViewCommentsBinding
 class ViewCommentsActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var myCommentsAdapter: MyCommentsAdapter
 
     private val addCommentLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -28,7 +30,7 @@ class ViewCommentsActivity : AppCompatActivity() {
         val viewBinding : ActivityViewCommentsBinding = ActivityViewCommentsBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        this.recyclerView = findViewById(R.id.commentsRecyclerView)
+        this.recyclerView = viewBinding.commentsRecyclerView
 
         val commentsList = ArrayList<Comment>()
 
@@ -40,11 +42,24 @@ class ViewCommentsActivity : AppCompatActivity() {
             , "Any zakus perhaps?"))
 
 
-        this.recyclerView.adapter = MyCommentsAdapter(commentsList, addCommentLauncher)
+        this.myCommentsAdapter = MyCommentsAdapter(commentsList, addCommentLauncher)
+        viewBinding.commentsRecyclerView.adapter = myCommentsAdapter
 
         this.recyclerView.layoutManager = LinearLayoutManager(this)
 
 
+        //this.myAdapter = MyAdapter(data, viewPostDetailsLauncher)
+        //        viewBinding.myRecyclerView.adapter = myAdapter
+
+        viewBinding.btnSubmitCmmt.setOnClickListener(View.OnClickListener {
+
+            if (viewBinding.etEntry.text.toString() != "") {
+                commentsList.add(Comment(  User("thehawk", "pass2", "Borat", "Sagdiyev", R.drawable.borat)
+                    , viewBinding.etEntry.text.toString()))
+
+                this.myCommentsAdapter.notifyDataSetChanged()
+            }
+        })
 
     }
 }
