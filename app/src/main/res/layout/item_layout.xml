@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -23,39 +23,52 @@
             android:layout_height="35dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            tools:srcCompat="@tools:sample/avatars"/>
+            android:src="@drawable/borat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_username"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="35dp"
+            tools:layout_conversion_absoluteWidth="35dp"
+            tools:srcCompat="@tools:sample/avatars" />
 
 
-<!--        <ImageView-->
-<!--            android:id="@+id/iv_userIcon"-->
-<!--            android:layout_width="35dp"-->
-<!--            android:layout_height="35dp"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginEnd="8dp"-->
-<!--            tools:srcCompat="@tools:sample/avatars" />-->
+        <!--        <ImageView-->
+        <!--            android:id="@+id/iv_userIcon"-->
+        <!--            android:layout_width="35dp"-->
+        <!--            android:layout_height="35dp"-->
+        <!--            android:layout_marginStart="8dp"-->
+        <!--            android:layout_marginEnd="8dp"-->
+        <!--            tools:srcCompat="@tools:sample/avatars" />-->
 
-        <LinearLayout
-            android:layout_width="300dp"
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginStart="8dp"
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_location"
+            app:layout_constraintStart_toEndOf="@+id/iv_userIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="300dp" />
 
-            <TextView
-                android:id="@+id/tv_username"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView"
-                android:textColor="#000000" />
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="TextView"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_userIcon"
+            app:layout_constraintTop_toBottomOf="@+id/tv_username"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="300dp" />
 
-            <TextView
-                android:id="@+id/tv_location"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView"
-                android:textColor="#000000" />
-
-        </LinearLayout>
 
         <ImageButton
             android:id="@+id/ib_detailsBtn"
@@ -63,9 +76,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:backgroundTint="#FFFFFF"
-            app:srcCompat="@drawable/baseline_more_vert_24" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_more_vert_24"
+            tools:layout_conversion_absoluteHeight="42dp"
+            tools:layout_conversion_absoluteWidth="43dp" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/imageLayout"
