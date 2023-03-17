@@ -13,11 +13,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.fondesa.kpermissions.extension.checkPermissionsStatus
 import com.fondesa.kpermissions.extension.permissionsBuilder
+import com.fondesa.kpermissions.extension.send
 import com.mobdeve.gunplamp.databinding.ActivityCreatePostBinding
 import java.net.URI
+import java.security.AccessController.getContext
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -39,8 +42,23 @@ class CreatePostActivity : AppCompatActivity() {
         val viewBinding : ActivityCreatePostBinding = ActivityCreatePostBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        permissionsBuilder(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA).build().send();
-        val permStatus = checkPermissionsStatus(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA);
+        permissionsBuilder(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA).build().send {
+            result ->
+            Log.d("jkdlsjakldjsakldjaslkdasjld;", "onCreate: " + result[0])
+            Log.d("jkdlsjakldjsakldjaslkdasjld;", "onCreate Manifest: " + android.Manifest.permission.CAMERA)
+
+
+                if(result[0].toString().contains("Granted") && result[1].toString().contains("Granted")){
+                    imageString = intent.getStringExtra("imagePost").toString();
+                    imagePostURI = Uri.parse(imageString);
+                    viewBinding.ivImagePost.setImageURI(imagePostURI)
+                }
+                else{
+                    finish()
+                }
+
+        };
+//        val permStatus = checkPermissionsStatus(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA);
         viewBinding.tvStoreAddress.visibility = View.GONE
         viewBinding.tvStoreName.visibility = View.GONE
         viewBinding.etStoreAddress.visibility = View.GONE
@@ -52,18 +70,11 @@ class CreatePostActivity : AppCompatActivity() {
         storeNames.add("Add New Store")
         val adapter : ArrayAdapter<String> =  ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, storeNames)
         viewBinding.spinnerStore.adapter = adapter
+//
+//        val storagePermission: String = android.Manifest.permission.READ_EXTERNAL_STORAGE
+//        val checkStoragePerm : Int = getContext().checkPermission()
 
-        for (res in permStatus){
-            if(res.toString().contains("Granted")){
-                imageString = intent.getStringExtra("imagePost").toString();
-                imagePostURI = Uri.parse(imageString);
-//                viewBinding.ivImagePost.setImageBitmap(selectedImage)
-                viewBinding.ivImagePost.setImageURI(imagePostURI)
-            }
-            else{
-                finish()
-            }
-        }
+
 
         viewBinding.spinnerStore?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {

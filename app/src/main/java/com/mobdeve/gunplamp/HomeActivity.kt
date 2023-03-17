@@ -3,6 +3,7 @@ package com.mobdeve.gunplamp
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
     private val createPostLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {result: ActivityResult ->
-
+        
         if (result.resultCode == RESULT_OK) {
 //            Toast.makeText(this, "SUCCESS:" + result.data?.getStringExtra("caption"), Toast.LENGTH_SHORT).show()
             user = User(username,"djkslajdksad",firstName,lastName,profilePic)
@@ -50,8 +51,8 @@ class HomeActivity : AppCompatActivity() {
     private val galleryViewLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
-
         if (result.resultCode == RESULT_OK) {
+            Toast.makeText(this, "gallery view:" + RESULT_OK, Toast.LENGTH_SHORT).show()
             val imageURI = result?.data?.data
             val intent = Intent(this, CreatePostActivity::class.java)
             intent.putExtra("imagePost", imageURI.toString())
