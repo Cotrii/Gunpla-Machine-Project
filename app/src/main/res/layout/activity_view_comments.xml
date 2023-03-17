@@ -13,36 +13,46 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_addview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#2E2828"
-        android:orientation="horizontal"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/commentsRecyclerView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
             android:id="@+id/et_entry"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            app:backgroundTint="#FFFFFF"
+            android:layout_width="290dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="2dp"
             android:ems="10"
             android:hint="Add comment"
             android:inputType="textMultiLine|textPersonName"
             android:textColor="#FFFFFF"
             android:textColorHighlight="#FFB320"
-            android:textColorHint="#FFFFFF" />
+            android:textColorHint="#FFFFFF"
+            app:backgroundTint="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="45dp"
+            tools:layout_conversion_absoluteWidth="300dp" />
 
         <Button
             android:id="@+id/btn_submitCmmt"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#4CAF50"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#FEB220"
             android:text="Submit"
-            android:textColor="#FFFFFF" />
-
-    </LinearLayout>
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="48dp"
+            tools:layout_conversion_absoluteWidth="100dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
