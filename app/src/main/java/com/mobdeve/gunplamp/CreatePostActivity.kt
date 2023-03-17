@@ -48,7 +48,7 @@ class CreatePostActivity : AppCompatActivity() {
             Log.d("jkdlsjakldjsakldjaslkdasjld;", "onCreate Manifest: " + android.Manifest.permission.CAMERA)
 
 
-                if(result[0].toString().contains("Granted") && result[1].toString().contains("Granted")){
+                if((result[0].toString().contains("Granted") && result[1].toString().contains("Granted"))  ||  (result[0].toString().contains("Permanently")&& result[1].toString().contains("Permanently"))){
                     imageString = intent.getStringExtra("imagePost").toString();
                     imagePostURI = Uri.parse(imageString);
                     viewBinding.ivImagePost.setImageURI(imagePostURI)
@@ -56,9 +56,8 @@ class CreatePostActivity : AppCompatActivity() {
                 else{
                     finish()
                 }
-
         };
-//        val permStatus = checkPermissionsStatus(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA);
+
         viewBinding.tvStoreAddress.visibility = View.GONE
         viewBinding.tvStoreName.visibility = View.GONE
         viewBinding.etStoreAddress.visibility = View.GONE
@@ -70,11 +69,6 @@ class CreatePostActivity : AppCompatActivity() {
         storeNames.add("Add New Store")
         val adapter : ArrayAdapter<String> =  ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, storeNames)
         viewBinding.spinnerStore.adapter = adapter
-//
-//        val storagePermission: String = android.Manifest.permission.READ_EXTERNAL_STORAGE
-//        val checkStoragePerm : Int = getContext().checkPermission()
-
-
 
         viewBinding.spinnerStore?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
