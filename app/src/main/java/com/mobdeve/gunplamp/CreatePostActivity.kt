@@ -45,10 +45,9 @@ class CreatePostActivity : AppCompatActivity() {
         permissionsBuilder(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA).build().send {
             result ->
             Log.d("jkdlsjakldjsakldjaslkdasjld;", "onCreate: " + result[0])
-            Log.d("jkdlsjakldjsakldjaslkdasjld;", "onCreate Manifest: " + android.Manifest.permission.CAMERA)
 
 
-                if((result[0].toString().contains("Granted") && result[1].toString().contains("Granted"))  ||  (result[0].toString().contains("Permanently")&& result[1].toString().contains("Permanently"))){
+                if((result[0].toString().contains("Granted") || result[0].toString().contains("Permanently"))  && ( result[1].toString().contains("Granted") || result[1].toString().contains("Permanently"))){
                     imageString = intent.getStringExtra("imagePost").toString();
                     imagePostURI = Uri.parse(imageString);
                     viewBinding.ivImagePost.setImageURI(imagePostURI)
