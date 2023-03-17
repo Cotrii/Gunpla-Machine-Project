@@ -22,7 +22,7 @@ class DataHelper {
                 Post(
                     users[0],
                     R.drawable.aerialsd.toString(),
-                    "that's a tall boi",
+                    "It can fly! It can dance! Aerial!",
                     stores[0],
                     "February 14, 2021",
                     false
@@ -42,7 +42,7 @@ class DataHelper {
                 Post(
                     users[2],
                     R.drawable.zowort.toString(),
-                    "just made lunch! ready to dig in #food #burgers #coke",
+                    "Available for P899! (Red tag)",
                     stores[2],
                     "December 25, 2020",
                     false
