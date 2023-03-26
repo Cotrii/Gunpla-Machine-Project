@@ -200,7 +200,6 @@ class UserProfileActivity : AppCompatActivity() {
                     viewBinding.email.setText(user.email)
                     viewBinding.username.setText(user.username)
                     viewBinding.ivProfilePic.setImageResource(getProfilePic(user.profilePic))
-
                 }
             }
         }
