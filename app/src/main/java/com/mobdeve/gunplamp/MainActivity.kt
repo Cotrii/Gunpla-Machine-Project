@@ -7,10 +7,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.firebase.auth.FirebaseAuth
 import com.mobdeve.gunplamp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
     companion object{
         private val data = ArrayList<User>()
     }
@@ -21,17 +23,17 @@ class MainActivity : AppCompatActivity() {
 
         if (result.resultCode == RESULT_OK) {
             //TODO
-            val username: String = result.data?.getStringExtra("username").toString()
-            val password: String = result.data?.getStringExtra("password").toString()
-            val fullName: String = result.data?.getStringExtra("fullName").toString()
-            val email: String = result.data?.getStringExtra("email").toString()
-            val profilePic: Int = 0
-            data.add(User(username,password,fullName,email,profilePic))
+//            val username: String = result.data?.getStringExtra("username").toString()
+//            val password: String = result.data?.getStringExtra("password").toString()
+//            val fullName: String = result.data?.getStringExtra("fullName").toString()
+//            val email: String = result.data?.getStringExtra("email").toString()
+//            val profilePic: Int = 0
+//            data.add(User(username,password,fullName,email,profilePic))
             val intent = Intent(applicationContext, HomeActivity::class.java)
-            intent.putExtra("username", username)
-            intent.putExtra("fullName", fullName)
-            intent.putExtra("email", email)
-            intent.putExtra("profilePic", profilePic)
+//            intent.putExtra("username", username)
+//            intent.putExtra("fullName", fullName)
+//            intent.putExtra("email", email)
+//            intent.putExtra("profilePic", profilePic)
             startActivity(intent)
         }
     }
@@ -61,6 +63,7 @@ class MainActivity : AppCompatActivity() {
 
         val viewBinding : ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        auth = FirebaseAuth.getInstance()
 
         viewBinding.btnLogin.setOnClickListener(View.OnClickListener {
             val intent = Intent(applicationContext, LoginActivity::class.java)
@@ -77,9 +80,16 @@ class MainActivity : AppCompatActivity() {
 //            intent.putExtra(, data)
             homeActivityLauncher.launch(intent)
         })
+    }
 
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if(currentUser != null){
+            val intent = Intent(this@MainActivity, HomeActivity::class.java)
 
-
-
+            homeActivityLauncher.launch(intent)
+        }
     }
 }

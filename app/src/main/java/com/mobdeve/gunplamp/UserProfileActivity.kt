@@ -8,19 +8,20 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.toDrawable
-import androidx.core.view.drawToBitmap
-import com.google.android.material.internal.ContextUtils.getActivity
-import com.mobdeve.gunplamp.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityUserProfileBinding
 
 class UserProfileActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+    private val db = Firebase.firestore
+    private lateinit var user : User
+    private lateinit var viewBinding: ActivityUserProfileBinding
 
     private val homeActivityLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -36,18 +37,19 @@ class UserProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var edit: Boolean = false
+
+        var editFullName: Boolean = false
         var editUsername : Boolean = false
         var editPassword : Boolean = false
         var editProfilePic: Boolean = false
 
-        val viewBinding : ActivityUserProfileBinding = ActivityUserProfileBinding.inflate(layoutInflater)
+        viewBinding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        auth = FirebaseAuth.getInstance()
 
         viewBinding.saveButton.visibility = View.INVISIBLE
 
-        val originalFirstName = viewBinding.firstName.text.toString()
-        val originalLastName = viewBinding.lastName.text.toString()
+        val originalFullName = viewBinding.fullName.text.toString()
         val originalUserName = viewBinding.username.text.toString()
 
         viewBinding.oldPassword.visibility = View.GONE
@@ -59,7 +61,7 @@ class UserProfileActivity : AppCompatActivity() {
         viewBinding.svProfilePics.visibility = View.GONE
 
         fun showSavedButton(){
-            if(originalLastName != viewBinding.lastName.text.toString() || originalFirstName != viewBinding.firstName.text.toString() || originalUserName != viewBinding.username.text.toString()){
+            if(originalFullName != viewBinding.fullName.text.toString() ||  originalUserName != viewBinding.username.text.toString()){
                 viewBinding.saveButton.visibility = View.VISIBLE
             }
             else{
@@ -73,15 +75,19 @@ class UserProfileActivity : AppCompatActivity() {
                 viewBinding.svProfilePics.visibility = View.VISIBLE
                 viewBinding.saveButton.visibility = View.VISIBLE
                 viewBinding.ivProfPic1.setOnClickListener({
+                    user.profilePic = 1
                     viewBinding.ivProfilePic.setImageResource(R.drawable.person1)
                 })
                 viewBinding.ivProfPic2.setOnClickListener({
+                    user.profilePic = 2
                     viewBinding.ivProfilePic.setImageResource(R.drawable.person2)
                 })
                 viewBinding.ivProfPic3.setOnClickListener({
+                    user.profilePic = 3
                     viewBinding.ivProfilePic.setImageResource(R.drawable.person3)
                 })
                 viewBinding.ivProfPic4.setOnClickListener({
+                    user.profilePic = 4
                     viewBinding.ivProfilePic.setImageResource(R.drawable.person4)
                 })
             } else {
@@ -92,6 +98,7 @@ class UserProfileActivity : AppCompatActivity() {
         viewBinding.buttonLogout.setOnClickListener {
             val logoutIntent = Intent(applicationContext, MainActivity::class.java)
             logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            auth.signOut()
             startActivity(logoutIntent)
         }
 
@@ -119,54 +126,22 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
 
-        viewBinding.saveButton.setOnClickListener {
-            val intent = Intent()
-            if(originalUserName != viewBinding.username.text.toString())
-            intent.putExtra("username", viewBinding.username.text.toString())
 
-            if(originalFirstName != viewBinding.firstName.text.toString())
-            intent.putExtra("firstName", viewBinding.firstName.text.toString())
-
-            if(originalLastName != viewBinding.lastName.text.toString())
-            intent.putExtra("lastName", viewBinding.firstName.text.toString())
-
-            if(viewBinding.confirmNewPassword.text.toString() == viewBinding.newPassword.text.toString() && viewBinding.newPassword.text.toString().length > 0)
-            intent.putExtra("password", viewBinding.newPassword.text.toString())
-
-            intent.putExtra("profilePic", viewBinding.ivProfilePic.drawable.toString())
-
-            setResult(RESULT_OK, intent)
-            finish()
-        }
 
         viewBinding.backButton.setOnClickListener{
             setResult(RESULT_CANCELED)
             finish()
         }
 
-        viewBinding.editFirstNameButton.setOnClickListener{
-            edit =! edit
-            if (edit){
-                findViewById<EditText>(R.id.firstName).isEnabled = true
-                viewBinding.editFirstNameButton.setImageResource(R.drawable.baseline_cancel_24)
+        viewBinding.editFullNameButton.setOnClickListener{
+            editFullName =! editFullName
+            if (editFullName){
+                findViewById<EditText>(R.id.fullName).isEnabled = true
+                viewBinding.editFullNameButton.setImageResource(R.drawable.baseline_cancel_24)
             }
             else{
-                findViewById<EditText>(R.id.firstName).isEnabled = false
-                viewBinding.editFirstNameButton.setImageResource(R.drawable.baseline_edit_24)
-
-            }
-        }
-
-        viewBinding.editLastNameButton.setOnClickListener{
-            edit =! edit
-            if (edit){
-                findViewById<EditText>(R.id.lastName).isEnabled = true
-                viewBinding.editLastNameButton.setImageResource(R.drawable.baseline_cancel_24)
-            }
-            else{
-                findViewById<EditText>(R.id.lastName).isEnabled = false
-                viewBinding.editLastNameButton.setImageResource(R.drawable.baseline_edit_24)
-
+                findViewById<EditText>(R.id.fullName).isEnabled = false
+                viewBinding.editFullNameButton.setImageResource(R.drawable.baseline_edit_24)
             }
         }
 
@@ -183,7 +158,7 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
 
-        viewBinding.firstName.addTextChangedListener(object: TextWatcher {
+        viewBinding.fullName.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -195,17 +170,6 @@ class UserProfileActivity : AppCompatActivity() {
             }
         })
 
-        viewBinding.lastName.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                showSavedButton()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
 
         viewBinding.username.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -219,10 +183,62 @@ class UserProfileActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if(currentUser != null){
+            db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {document ->
+                if(document != null) {
+                    user = User(document!!.getString("username").toString(),document!!.getString("fullName").toString(),document!!.getString("email").toString(),
+                        Integer.parseInt(document!!.getLong("profilePic").toString())
+                    )
+                    Toast.makeText(this, "profile pic:" + user.profilePic, Toast.LENGTH_SHORT).show()
+                    viewBinding.fullName.setText(user.fullName)
+                    viewBinding.email.setText(user.email)
+                    viewBinding.username.setText(user.username)
+                    viewBinding.ivProfilePic.setImageResource(getProfilePic(user.profilePic))
+
+                }
+            }
+        }
+
+        viewBinding.saveButton.setOnClickListener {
+            val intent = Intent()
+
+            db.collection("users").document(currentUser!!.uid).update("fullName", viewBinding.fullName.text.toString(), "username", viewBinding.username.text.toString(),"profilePic", user.profilePic).addOnSuccessListener { document ->
+                if(document != null){
+                    setResult(RESULT_OK, intent)
+                    finish()
+                }
+                else{
+                    setResult(RESULT_CANCELED, intent)
+                    finish()
+                }
+            }
+        }
+    }
 
 
 
-
+    fun getProfilePic(index : Int): Int {
+        if(index == 1){
+            return R.drawable.person1
+        }
+        else if(index == 2){
+            return  R.drawable.person2
+        }
+        else if(index == 3){
+            return  R.drawable.person3
+        }
+        else if(index == 4){
+            return  R.drawable.person4
+        }
+        else{
+            return R.drawable.person1
+        }
     }
 
 

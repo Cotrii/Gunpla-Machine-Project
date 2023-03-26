@@ -41,19 +41,17 @@ class RegisterActivity : AppCompatActivity() {
                                     "fullName" to viewBinding.editTextFullName.text.toString(),
                                     "email" to viewBinding.editTextEmail.text.toString(),
                                     "username" to  viewBinding.editTextUsername.text.toString(),
-                                    "profilePic" to 1
+                                    "profilePic" to 0
                                 )
 
                                 db.collection("users").document(auth.currentUser!!.uid).set(user).addOnSuccessListener {
                                     val returnIntent = Intent()
-                                    intent.putExtra("fullName", viewBinding.editTextFullName.text.toString())
                                     intent.putExtra("email", viewBinding.editTextEmail.text.toString())
                                     intent.putExtra("username", viewBinding.editTextUsername.text.toString())
-                                    intent.putExtra("password", viewBinding.editTextPassword.text.toString())
                                     setResult(RESULT_OK,intent)
                                     finish()
                                 }
-                                
+
                                 Toast.makeText(this, "user is:" + user, Toast.LENGTH_SHORT).show()
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -86,6 +84,7 @@ class RegisterActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         if(currentUser != null){
             Toast.makeText(this, "current user is:" + currentUser, Toast.LENGTH_SHORT).show()
+            auth.signOut()
         }
     }
 }

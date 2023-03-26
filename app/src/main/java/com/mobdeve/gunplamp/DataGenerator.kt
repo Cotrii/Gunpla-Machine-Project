@@ -6,15 +6,15 @@ class DataGenerator{
             val data = ArrayList<User>()
 
             data.add(
-                User("nugundam237", "pass1", "Amuro", "Ray", R.drawable.emblem)
+                User("nugundam237", "pass1", "Amuro", R.drawable.emblem)
             )
 
             data.add(
-                User("thehawk", "pass2", "Borat", "Sagdiyev", R.drawable.borat)
+                User("thehawk", "pass2", "Borat",  R.drawable.borat)
             )
 
             data.add(
-                User("mechagaikotsu", "pass3", "Mecha", "Gaikotsu", R.drawable.mechagaikotsu)
+                User("mechagaikotsu", "pass3", "Mecha",  R.drawable.mechagaikotsu)
             )
 
 

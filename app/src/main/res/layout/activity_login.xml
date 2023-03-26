@@ -64,20 +64,20 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/et_usernameInput"
+                android:id="@+id/et_emailInput"
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
                 android:layout_margin="16dp"
                 android:backgroundTint="#528CE7"
                 android:ems="10"
-                android:hint="USERNAME"
+                android:hint="EMAIL"
                 android:inputType="textPersonName"
                 android:textColor="#000000"
                 android:textColorHint="#528CE7"
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/et_usernameInput2"
+                android:id="@+id/et_passwordInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"

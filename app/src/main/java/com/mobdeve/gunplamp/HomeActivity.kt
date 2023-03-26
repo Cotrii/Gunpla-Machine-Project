@@ -12,7 +12,11 @@ import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityHomeBinding
+import java.lang.Integer.parseInt
 import kotlin.properties.Delegates
 
 
@@ -25,6 +29,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var lastName : String
     private var profilePic by Delegates.notNull<Int>()
     private lateinit var user : User
+    private lateinit var auth: FirebaseAuth
+    private val db = Firebase.firestore
 
     companion object {
         private val data : ArrayList<Post> = DataHelper.initializeData()
@@ -36,7 +42,6 @@ class HomeActivity : AppCompatActivity() {
         
         if (result.resultCode == RESULT_OK) {
 //            Toast.makeText(this, "SUCCESS:" + result.data?.getStringExtra("caption"), Toast.LENGTH_SHORT).show()
-            user = User(username,"djkslajdksad",firstName,lastName,profilePic)
             val imagePost = result.data?.getStringExtra("imagePost")
             val caption = result.data?.getStringExtra("caption")
             val datePost = result.data?.getStringExtra("datePosted")
@@ -79,7 +84,6 @@ class HomeActivity : AppCompatActivity() {
             else //DELETE
             {
                 data.remove(data[position])
-
                 myAdapter.notifyDataSetChanged()
             }
         }
@@ -89,27 +93,27 @@ class HomeActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result : ActivityResult ->
         if (result.resultCode == RESULT_OK){
-            val username = result.data!!.getStringExtra("username")
-            val fullName = result.data!!.getStringExtra("fullName")
-            val email = result.data!!.getStringExtra("email")
-            val password = result.data!!.getStringExtra("password")
-            val profilePic = result.data!!.getStringExtra("profilePic")
-
-            if (username != null) {
-                user.username = username
-            }
-
-            if(fullName != null){
-                user.fullName = fullName
-            }
-
-            if(email != null){
-                user.email = email
-            }
-
-            if(password != null){
-                user.password = password
-            }
+//            val username = result.data!!.getStringExtra("username")
+//            val fullName = result.data!!.getStringExtra("fullName")
+//            val email = result.data!!.getStringExtra("email")
+//            val password = result.data!!.getStringExtra("password")
+//            val profilePic = result.data!!.getStringExtra("profilePic")
+//
+//            if (username != null) {
+//                user.username = username
+//            }
+//
+//            if(fullName != null){
+//                user.fullName = fullName
+//            }
+//
+//            if(email != null){
+//                user.email = email
+//            }
+//
+//            if(password != null){
+//                user.password = password
+//            }
 
 //            if(profilePic != null){
 //                user.profilePic
@@ -123,13 +127,7 @@ class HomeActivity : AppCompatActivity() {
         //Initialize ViewBinding for HomeActivity
         val viewBinding : ActivityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-
-        username= intent.getStringExtra("username").toString()
-        firstName =intent.getStringExtra("firstName").toString()
-        lastName = intent.getStringExtra("lastName").toString()
-        profilePic = intent.getIntExtra("profilePic",0)
-
-        user = User(username,"djskal", firstName, lastName, profilePic)
+        auth = FirebaseAuth.getInstance()
 
         val createPostButton = viewBinding.fabCreatePost
 
@@ -170,6 +168,18 @@ class HomeActivity : AppCompatActivity() {
         if (animator is SimpleItemAnimator) {
             (animator as SimpleItemAnimator).supportsChangeAnimations = false
         }
+    }
 
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if(currentUser != null){
+            db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {document ->
+                if(document != null) {
+                    user = User(document!!.getString("username").toString(),document!!.getString("fullName").toString(),document!!.getString("email").toString(), parseInt(document!!.getLong("profilePic").toString()) )
+                }
+            }
+        }
     }
 }

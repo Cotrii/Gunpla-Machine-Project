@@ -8,9 +8,9 @@ class DataHelper {
     companion object {
         fun initializeData(): ArrayList<Post> {
             val users = arrayOf(
-                User("nugundam237", "pass1", "Amuro", "Ray", R.drawable.emblem),
-                User("thehawk", "pass2", "Borat", "Sagdiyev", R.drawable.borat),
-                User("mechagaikotsu", "pass3", "Mecha", "Gaikotsu", R.drawable.mechagaikotsu))
+                User("nugundam237", "pass1", "Amuro",  R.drawable.emblem),
+                User("thehawk", "pass2", "Borat",  R.drawable.borat),
+                User("mechagaikotsu", "pass3", "Mecha",  R.drawable.mechagaikotsu))
 
             val stores = arrayOf(
                 Store("Toys R Us Uptown Mall", "Taguig"),
