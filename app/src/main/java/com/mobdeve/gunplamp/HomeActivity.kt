@@ -90,8 +90,8 @@ class HomeActivity : AppCompatActivity() {
     ) { result : ActivityResult ->
         if (result.resultCode == RESULT_OK){
             val username = result.data!!.getStringExtra("username")
-            val firstName = result.data!!.getStringExtra("firstName")
-            val lastName = result.data!!.getStringExtra("lastName")
+            val fullName = result.data!!.getStringExtra("fullName")
+            val email = result.data!!.getStringExtra("email")
             val password = result.data!!.getStringExtra("password")
             val profilePic = result.data!!.getStringExtra("profilePic")
 
@@ -99,12 +99,12 @@ class HomeActivity : AppCompatActivity() {
                 user.username = username
             }
 
-            if(firstName != null){
-                user.firstName = firstName
+            if(fullName != null){
+                user.fullName = fullName
             }
 
-            if(lastName != null){
-                user.lastName = lastName
+            if(email != null){
+                user.email = email
             }
 
             if(password != null){

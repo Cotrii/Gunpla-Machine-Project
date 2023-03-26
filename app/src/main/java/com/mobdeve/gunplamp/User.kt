@@ -3,14 +3,14 @@ package com.mobdeve.gunplamp
 class User(
     username: String,
     password: String,
-    firstName: String,
-    lastName: String,
+    fullName: String,
+    email: String,
     profilePic: Int,
 
    ) {
     var username: String = username
     var password: String = password
-    var firstName: String = firstName
-    var lastName: String = lastName
+    var fullName: String = fullName
+    var email: String = email
     var profilePic: Int = profilePic
 }

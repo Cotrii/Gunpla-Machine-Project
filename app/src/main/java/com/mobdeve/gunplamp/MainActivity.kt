@@ -23,14 +23,14 @@ class MainActivity : AppCompatActivity() {
             //TODO
             val username: String = result.data?.getStringExtra("username").toString()
             val password: String = result.data?.getStringExtra("password").toString()
-            val firstName: String = result.data?.getStringExtra("firstName").toString()
-            val lastName: String = result.data?.getStringExtra("lastName").toString()
+            val fullName: String = result.data?.getStringExtra("fullName").toString()
+            val email: String = result.data?.getStringExtra("email").toString()
             val profilePic: Int = 0
-            data.add(User(username,password,firstName,lastName,profilePic))
+            data.add(User(username,password,fullName,email,profilePic))
             val intent = Intent(applicationContext, HomeActivity::class.java)
             intent.putExtra("username", username)
-            intent.putExtra("firstName", firstName)
-            intent.putExtra("lastName", lastName)
+            intent.putExtra("fullName", fullName)
+            intent.putExtra("email", email)
             intent.putExtra("profilePic", profilePic)
             startActivity(intent)
         }

@@ -7,12 +7,14 @@ import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
 
-    lateinit var auth : FirebaseAuth
+    private lateinit var auth : FirebaseAuth
+    private val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //
@@ -35,7 +37,23 @@ class RegisterActivity : AppCompatActivity() {
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
-                                val user = auth.currentUser
+                                val user = hashMapOf(
+                                    "fullName" to viewBinding.editTextFullName.text.toString(),
+                                    "email" to viewBinding.editTextEmail.text.toString(),
+                                    "username" to  viewBinding.editTextUsername.text.toString(),
+                                    "profilePic" to 1
+                                )
+
+                                db.collection("users").document(auth.currentUser!!.uid).set(user).addOnSuccessListener {
+                                    val returnIntent = Intent()
+                                    intent.putExtra("fullName", viewBinding.editTextFullName.text.toString())
+                                    intent.putExtra("email", viewBinding.editTextEmail.text.toString())
+                                    intent.putExtra("username", viewBinding.editTextUsername.text.toString())
+                                    intent.putExtra("password", viewBinding.editTextPassword.text.toString())
+                                    setResult(RESULT_OK,intent)
+                                    finish()
+                                }
+                                
                                 Toast.makeText(this, "user is:" + user, Toast.LENGTH_SHORT).show()
                             } else {
                                 // If sign in fails, display a message to the user.
