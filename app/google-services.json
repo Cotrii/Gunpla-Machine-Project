@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1088968408028",
-    "project_id": "gunpla-finds",
-    "storage_bucket": "gunpla-finds.appspot.com"
+    "project_number": "266072716935",
+    "project_id": "gunplafinds-9e05c",
+    "storage_bucket": "gunplafinds-9e05c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1088968408028:android:b5799eb58ac69e17c72d19",
+        "mobilesdk_app_id": "1:266072716935:android:0033fa405e201ce50eea22",
         "android_client_info": {
           "package_name": "com.mobdeve.gunplamp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1088968408028-hr6lka9nsson0galmthet7mq426a2jbo.apps.googleusercontent.com",
+          "client_id": "266072716935-pgtea24vvj1lst12k48u0e777rdl86c3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAU0W3Wiel_M6EMl-MELMRbmAAx3C3Cpm8"
+          "current_key": "AIzaSyBRaeMtelZg5J6_EcwolNwKWFbi6AH4b2c"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1088968408028-hr6lka9nsson0galmthet7mq426a2jbo.apps.googleusercontent.com",
+              "client_id": "266072716935-pgtea24vvj1lst12k48u0e777rdl86c3.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
