@@ -33,20 +33,22 @@ class RegisterActivity : AppCompatActivity() {
                 if (viewBinding.editTextPassword.text.toString() == viewBinding.editTextConfirmPassword.text.toString()
                 ) {
 
-                    auth.createUserWithEmailAndPassword(viewBinding.editTextEmail.text.toString(), viewBinding.editTextPassword.text.toString())
+                    Log.d("watdafak", viewBinding.editTextEmail.text.toString())
+
+                    auth.createUserWithEmailAndPassword(viewBinding.editTextEmail.text.trim().toString(), viewBinding.editTextPassword.text.toString())
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
                                 val user = hashMapOf(
                                     "fullName" to viewBinding.editTextFullName.text.toString(),
-                                    "email" to viewBinding.editTextEmail.text.toString(),
+                                    "email" to viewBinding.editTextEmail.text.trim().toString(),
                                     "username" to  viewBinding.editTextUsername.text.toString(),
                                     "profilePic" to 0
                                 )
 
                                 db.collection("users").document(auth.currentUser!!.uid).set(user).addOnSuccessListener {
                                     val returnIntent = Intent()
-                                    intent.putExtra("email", viewBinding.editTextEmail.text.toString())
+                                    intent.putExtra("email", viewBinding.editTextEmail.text.trim().toString())
                                     intent.putExtra("username", viewBinding.editTextUsername.text.toString())
                                     setResult(RESULT_OK,intent)
                                     finish()

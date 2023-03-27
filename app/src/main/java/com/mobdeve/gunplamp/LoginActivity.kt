@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
 
         viewBinding.btnSavelogin.setOnClickListener {
                 if(viewBinding.etPasswordInput.text.isNotEmpty() && viewBinding.etEmailInput.text.isNotEmpty()) {
-                    auth.signInWithEmailAndPassword(viewBinding.etEmailInput.text.toString(), viewBinding.etPasswordInput.text.toString())
+                    auth.signInWithEmailAndPassword(viewBinding.etEmailInput.text.trim().toString(), viewBinding.etPasswordInput.text.toString())
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
                                 val user = auth.currentUser
