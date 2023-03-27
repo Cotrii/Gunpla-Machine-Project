@@ -33,7 +33,7 @@ class RegisterActivity : AppCompatActivity() {
                 if (viewBinding.editTextPassword.text.toString() == viewBinding.editTextConfirmPassword.text.toString()
                 ) {
 
-                    Log.d("watdafak", viewBinding.editTextEmail.text.toString())
+                    //     Log.d("test for email", viewBinding.editTextEmail.text.toString())
 
                     auth.createUserWithEmailAndPassword(viewBinding.editTextEmail.text.trim().toString(), viewBinding.editTextPassword.text.toString())
                         .addOnCompleteListener(this) { task ->
