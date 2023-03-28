@@ -82,14 +82,8 @@ class ViewPostDetails : AppCompatActivity() {
 
         viewBinding.btnSave.setOnClickListener(View.OnClickListener {
 
-            val changedIntent : Intent = Intent()
-
-            changedIntent.putExtra(ViewPostDetails.CAPTION_KEY, viewBinding.etEditCaption.text.toString())
-            changedIntent.putExtra(ViewPostDetails.POSITION_KEY, position)
-
-
             //Update the database
-//            val id = intent.getStringExtra(ViewPostDetails.POST_ID_KEY).toString()
+            //val id = intent.getStringExtra(ViewPostDetails.POST_ID_KEY).toString()
             val docRef = db.collection("posts").document(id)
 
             val updates = hashMapOf(
@@ -103,6 +97,12 @@ class ViewPostDetails : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.w("failed", "Error updating document", e)
                 }
+            // *************
+
+            val changedIntent : Intent = Intent()
+
+            changedIntent.putExtra(ViewPostDetails.CAPTION_KEY, viewBinding.etEditCaption.text.toString())
+            changedIntent.putExtra(ViewPostDetails.POSITION_KEY, position)
 
             changedIntent.putExtra(ViewPostDetails.STATUS_KEY, "Edit")
 
@@ -112,6 +112,15 @@ class ViewPostDetails : AppCompatActivity() {
         })
 
         viewBinding.btnDelete.setOnClickListener(View.OnClickListener {
+
+
+            //Delete a document from the database
+            //val id = intent.getStringExtra(ViewPostDetails.POST_ID_KEY).toString()
+            val docRef = db.collection("posts").document(id)
+            docRef.delete()
+
+            // *************
+
 
             val deleteIntent : Intent = Intent()
 
