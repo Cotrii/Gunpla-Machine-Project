@@ -9,6 +9,8 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityViewPostDetailsBinding
 import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
@@ -27,6 +29,9 @@ class ViewPostDetails : AppCompatActivity() {
 
     private lateinit var captionStr: String
     private lateinit var viewBinding: ActivityViewPostDetailsBinding  // Holds the views of the ActivityViewNoteBinding
+
+    //Declaration of firestore
+    val db = Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +86,23 @@ class ViewPostDetails : AppCompatActivity() {
 
             changedIntent.putExtra(ViewPostDetails.CAPTION_KEY, viewBinding.etEditCaption.text.toString())
             changedIntent.putExtra(ViewPostDetails.POSITION_KEY, position)
+
+
+            //Update the database
+//            val id = intent.getStringExtra(ViewPostDetails.POST_ID_KEY).toString()
+            val docRef = db.collection("posts").document(id)
+
+            val updates = hashMapOf(
+                "caption" to viewBinding.etEditCaption.text.toString()
+            )
+
+            docRef.update(updates as Map<String, String>)
+                .addOnSuccessListener {
+                    Log.d("success", "DocumentSnapshot successfully updated!")
+                }
+                .addOnFailureListener { e ->
+                    Log.w("failed", "Error updating document", e)
+                }
 
             changedIntent.putExtra(ViewPostDetails.STATUS_KEY, "Edit")
 
