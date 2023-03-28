@@ -21,6 +21,8 @@ class ViewPostDetails : AppCompatActivity() {
         const val CAPTION_KEY: String = "CAPTION_KEY"
         const val POSITION_KEY: String = "POSITION_KEY"
         const val STATUS_KEY: String = "STATUS_KEY"
+
+        const val POST_ID_KEY: String = "POST_ID_KEY"
     }
 
     private lateinit var captionStr: String
@@ -52,6 +54,11 @@ class ViewPostDetails : AppCompatActivity() {
         val position = intent.getIntExtra(ViewPostDetails.POSITION_KEY, 0)
 
 
+        //Display id of Post
+        val id = intent.getStringExtra(ViewPostDetails.POST_ID_KEY).toString()
+        viewBinding.tvPostid.text = id
+
+
         viewBinding.etEditCaption.setText(captionStr)
 
         viewBinding.btnSave.isEnabled = false;
@@ -76,6 +83,7 @@ class ViewPostDetails : AppCompatActivity() {
             changedIntent.putExtra(ViewPostDetails.POSITION_KEY, position)
 
             changedIntent.putExtra(ViewPostDetails.STATUS_KEY, "Edit")
+
             setResult(RESULT_OK, changedIntent)
             finish()
 
