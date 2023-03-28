@@ -65,6 +65,8 @@ class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultL
         holder.setViewCommentsOnClickListener(View.OnClickListener {
            val intent : Intent = Intent(holder.itemView.context, ViewCommentsActivity::class.java)
 
+            intent.putExtra(ViewCommentsActivity.POST_ID_KEY, data[position].id)
+
 //            intent.putExtra()
             this.myActivityResultLauncher.launch(intent)
         })
