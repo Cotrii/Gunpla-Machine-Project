@@ -9,7 +9,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -20,7 +20,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#2C2C2C"
+                android:background="#FFFFFF"
                 android:paddingBottom="50sp">
 
                 <Button
@@ -68,7 +68,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:background="#CBC6C6C6"
+                    android:background="#CBBDBDBD"
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
@@ -83,17 +83,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Select Store"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#000000"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/etCaption"
                     app:layout_constraintTop_toBottomOf="@+id/etCaption" />
 
                 <Spinner
                     android:id="@+id/spinnerStore"
-                    android:layout_width="wrap_content"
+                    style="@android:style/Widget.Material.Light.Spinner"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:backgroundTint="#FFFFFF"
+                    android:backgroundTint="#000000"
                     app:layout_constraintEnd_toEndOf="@+id/etCaption"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/etCaption"
@@ -105,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Caption"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#000000"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/etCaption"
                     app:layout_constraintTop_toBottomOf="@+id/iv_imagePost" />
@@ -116,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="New Store Name"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#000000"
                     android:textSize="16sp"
                     android:visibility="visible"
                     app:layout_constraintStart_toStartOf="@+id/spinnerStore"
@@ -127,7 +128,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:backgroundTint="#FFFFFF"
+                    android:backgroundTint="#000000"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:textSize="16sp"
@@ -141,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="New Store Address"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#000000"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/tvStoreName"
                     app:layout_constraintTop_toBottomOf="@+id/etStoreName" />
@@ -151,10 +152,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:backgroundTint="#FFFFFF"
+                    android:backgroundTint="#000000"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#000000"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="@+id/etStoreName"
                     app:layout_constraintStart_toStartOf="@+id/tvStoreAddress"

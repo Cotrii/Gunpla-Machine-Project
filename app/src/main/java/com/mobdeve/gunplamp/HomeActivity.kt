@@ -43,13 +43,13 @@ class HomeActivity : AppCompatActivity() {
         
         if (result.resultCode == RESULT_OK) {
 //            Toast.makeText(this, "SUCCESS:" + result.data?.getStringExtra("caption"), Toast.LENGTH_SHORT).show()
-            val imagePost = result.data?.getStringExtra("imagePost")
-            val caption = result.data?.getStringExtra("caption")
-            val datePost = result.data?.getStringExtra("datePosted")
-            val storeName = result.data?.getStringExtra("storeName")
-            val storeCity = result.data?.getStringExtra("storeCity")
-
-            data.add(Post(user, imagePost, caption, Store(storeName,storeCity),datePost.toString(), false))
+//            val imagePost = result.data?.getStringExtra("imagePost")
+//            val caption = result.data?.getStringExtra("caption")
+//            val datePost = result.data?.getStringExtra("datePosted")
+//            val storeName = result.data?.getStringExtra("storeName")
+//            val storeCity = result.data?.getStringExtra("storeCity")
+//
+//            data.add(Post(user, imagePost, caption, Store("",storeName,storeCity),datePost.toString(), false))
             this.myAdapter.notifyDataSetChanged()
         }
     }
@@ -171,7 +171,7 @@ class HomeActivity : AppCompatActivity() {
         if(currentUser != null){
             db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {document ->
                 if(document != null) {
-                    user = User(document!!.getString("username").toString(),document!!.getString("fullName").toString(),document!!.getString("email").toString(), parseInt(document!!.getLong("profilePic").toString()) )
+                    user = User(auth.currentUser!!.uid,document!!.getString("username").toString(),document!!.getString("fullName").toString(),document!!.getString("email").toString(), parseInt(document!!.getLong("profilePic").toString()) )
                 }
             }
         }

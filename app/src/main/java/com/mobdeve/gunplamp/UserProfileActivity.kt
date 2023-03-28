@@ -192,7 +192,7 @@ class UserProfileActivity : AppCompatActivity() {
         if(currentUser != null){
             db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {document ->
                 if(document != null) {
-                    user = User(document!!.getString("username").toString(),document!!.getString("fullName").toString(),document!!.getString("email").toString(),
+                    user = User(auth.currentUser!!.uid, document!!.getString("username").toString(),document!!.getString("fullName").toString(),document!!.getString("email").toString(),
                         Integer.parseInt(document!!.getLong("profilePic").toString())
                     )
                     Toast.makeText(this, "profile pic:" + user.profilePic, Toast.LENGTH_SHORT).show()

@@ -34,11 +34,11 @@ class ViewCommentsActivity : AppCompatActivity() {
 
         val commentsList = ArrayList<Comment>()
 
-        commentsList.add(Comment(  User("nugundam237", "pass1", "Amuro",  R.drawable.emblem)
+        commentsList.add(Comment(  User("123","nugundam237", "pass1", "Amuro",  R.drawable.emblem)
             , "Thanks"))
-        commentsList.add(Comment(  User("thehawk", "pass2", "Borat",  R.drawable.borat)
+        commentsList.add(Comment(  User("123","thehawk", "pass2", "Borat",  R.drawable.borat)
             , "It's just by my place. TYYYY"))
-        commentsList.add(Comment(  User("thehawk", "pass2", "Borat",  R.drawable.borat)
+        commentsList.add(Comment(  User("123","thehawk", "pass2", "Borat",  R.drawable.borat)
             , "Any zakus perhaps?"))
 
 
@@ -54,7 +54,7 @@ class ViewCommentsActivity : AppCompatActivity() {
         viewBinding.btnSubmitCmmt.setOnClickListener(View.OnClickListener {
 
             if (viewBinding.etEntry.text.toString() != "") {
-                commentsList.add(Comment(  User("thehawk", "pass2", "Borat",  R.drawable.borat)
+                commentsList.add(Comment(  User("123","thehawk", "pass2", "Borat",  R.drawable.borat)
                     , viewBinding.etEntry.text.toString()))
 
                 this.myCommentsAdapter.notifyDataSetChanged()
