@@ -132,6 +132,44 @@ class HomeActivity : AppCompatActivity() {
             (animator as SimpleItemAnimator).supportsChangeAnimations = false
         }
 
+//        db.collection("posts").get().addOnSuccessListener { documents ->
+//            if(documents != null){
+//                var index=0
+//                for (document in documents) {
+//                    Log.d("SDAJKDLJWIOJLOOOOOOOOOOOOOOOOK", "onCreate: document is:" + document.getString("storeID").toString())
+//                    db.collection("users").document(document.getString("userID").toString()).get().addOnSuccessListener {user ->
+//                        db.collection("stores").document(document.getString("storeID").toString()).get().addOnSuccessListener { store ->
+//                            val poster = User(user.id,user.getString("username").toString(),user.getString("fullName").toString(),user.getString("email").toString(),user.getLong("profilePic")!!.toInt())
+//                            val store = Store(store.id, store.getString("name"), store.getString("city"))
+//                            val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
+//                            posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false))
+//                            this.myAdapter.notifyItemInserted(index)
+//                            index++
+//                        }
+//                    }
+//                }
+//
+//            }
+//
+//        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if(currentUser != null){
+            db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {document ->
+                if(document != null) {
+                    user = User(auth.currentUser!!.uid,document!!.getString("username").toString(),document!!.getString("fullName").toString(),document!!.getString("email").toString(), parseInt(document!!.getLong("profilePic").toString()) )
+                }
+            }
+        }
+
+        posts.clear()
+        this.myAdapter.notifyDataSetChanged()
+
+
         db.collection("posts").get().addOnSuccessListener { documents ->
             if(documents != null){
                 var index=0
@@ -154,17 +192,11 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        if(currentUser != null){
-            db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {document ->
-                if(document != null) {
-                    user = User(auth.currentUser!!.uid,document!!.getString("username").toString(),document!!.getString("fullName").toString(),document!!.getString("email").toString(), parseInt(document!!.getLong("profilePic").toString()) )
-                }
-            }
-        }
-    }
+    //Last resort dont touch
+//    override fun onResume() {
+//        super.onResume()
+//
+//        this.recreate()
+//    }
 
 }
