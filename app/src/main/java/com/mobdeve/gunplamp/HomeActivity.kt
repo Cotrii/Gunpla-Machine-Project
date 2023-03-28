@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,6 +19,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityHomeBinding
 import java.lang.Integer.parseInt
+import java.text.SimpleDateFormat
 import kotlin.properties.Delegates
 
 
@@ -32,24 +34,13 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var user : User
     private lateinit var auth: FirebaseAuth
     private val db = Firebase.firestore
-
-    companion object {
-        private val data : ArrayList<Post> = DataHelper.initializeData()
-    }
+    private var posts : MutableList<Post> = ArrayList<Post>()
 
     private val createPostLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {result: ActivityResult ->
         
         if (result.resultCode == RESULT_OK) {
-//            Toast.makeText(this, "SUCCESS:" + result.data?.getStringExtra("caption"), Toast.LENGTH_SHORT).show()
-//            val imagePost = result.data?.getStringExtra("imagePost")
-//            val caption = result.data?.getStringExtra("caption")
-//            val datePost = result.data?.getStringExtra("datePosted")
-//            val storeName = result.data?.getStringExtra("storeName")
-//            val storeCity = result.data?.getStringExtra("storeCity")
-//
-//            data.add(Post(user, imagePost, caption, Store("",storeName,storeCity),datePost.toString(), false))
             this.myAdapter.notifyDataSetChanged()
         }
     }
@@ -73,20 +64,20 @@ class HomeActivity : AppCompatActivity() {
     ) { result: ActivityResult ->
 
         if (result.resultCode == RESULT_OK) {
-            val position = result.data!!.getIntExtra(ViewPostDetails.POSITION_KEY, 0)
-            val newCaption = result.data!!.getStringExtra(ViewPostDetails.CAPTION_KEY).toString()
-
-            val status = result.data!!.getStringExtra(ViewPostDetails.STATUS_KEY).toString()
-            if (status == "Edit")
-            {
-                data[position].changeCaption(newCaption)
-                myAdapter.notifyItemChanged(position)
-            }
-            else //DELETE
-            {
-                data.remove(data[position])
-                myAdapter.notifyDataSetChanged()
-            }
+//            val position = result.data!!.getIntExtra(ViewPostDetails.POSITION_KEY, 0)
+//            val newCaption = result.data!!.getStringExtra(ViewPostDetails.CAPTION_KEY).toString()
+//
+//            val status = result.data!!.getStringExtra(ViewPostDetails.STATUS_KEY).toString()
+//            if (status == "Edit")
+//            {
+//                data[position].changeCaption(newCaption)
+//                myAdapter.notifyItemChanged(position)
+//            }
+//            else //DELETE
+//            {
+//                data.remove(data[position])
+//                myAdapter.notifyDataSetChanged()
+//            }
         }
     }
 
@@ -94,31 +85,7 @@ class HomeActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result : ActivityResult ->
         if (result.resultCode == RESULT_OK){
-//            val username = result.data!!.getStringExtra("username")
-//            val fullName = result.data!!.getStringExtra("fullName")
-//            val email = result.data!!.getStringExtra("email")
-//            val password = result.data!!.getStringExtra("password")
-//            val profilePic = result.data!!.getStringExtra("profilePic")
-//
-//            if (username != null) {
-//                user.username = username
-//            }
-//
-//            if(fullName != null){
-//                user.fullName = fullName
-//            }
-//
-//            if(email != null){
-//                user.email = email
-//            }
-//
-//            if(password != null){
-//                user.password = password
-//            }
 
-//            if(profilePic != null){
-//                user.profilePic
-//            }
         }
     }
 
@@ -129,6 +96,12 @@ class HomeActivity : AppCompatActivity() {
         val viewBinding : ActivityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         auth = FirebaseAuth.getInstance()
+
+        //RecyclerView setup; Note how MyAdapter has viewPostResultLauncher
+        this.recyclerView = viewBinding.myRecyclerView
+        this.myAdapter = MyAdapter(posts as ArrayList<Post>, viewPostDetailsLauncher)
+        viewBinding.myRecyclerView.adapter = myAdapter
+        viewBinding.myRecyclerView.layoutManager = LinearLayoutManager(this)
 
         val createPostButton = viewBinding.fabCreatePost
 
@@ -151,20 +124,37 @@ class HomeActivity : AppCompatActivity() {
         }
 
 
-        //RecyclerView setup; Note how MyAdapter has viewPostResultLauncher
-        this.recyclerView = viewBinding.myRecyclerView
-        this.myAdapter = MyAdapter(data, viewPostDetailsLauncher)
-        viewBinding.myRecyclerView.adapter = myAdapter
-        viewBinding.myRecyclerView.layoutManager = LinearLayoutManager(this)
+
 
         //Remove flickering of item
         val animator = recyclerView.itemAnimator
         if (animator is SimpleItemAnimator) {
             (animator as SimpleItemAnimator).supportsChangeAnimations = false
         }
+
+        db.collection("posts").get().addOnSuccessListener { documents ->
+            if(documents != null){
+                var index=0
+                for (document in documents) {
+                    Log.d("SDAJKDLJWIOJLOOOOOOOOOOOOOOOOK", "onCreate: document is:" + document.getString("storeID").toString())
+                    db.collection("users").document(document.getString("userID").toString()).get().addOnSuccessListener {user ->
+                        db.collection("stores").document(document.getString("storeID").toString()).get().addOnSuccessListener { store ->
+                            val poster = User(user.id,user.getString("username").toString(),user.getString("fullName").toString(),user.getString("email").toString(),user.getLong("profilePic")!!.toInt())
+                            val store = Store(store.id, store.getString("name"), store.getString("city"))
+                            val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
+                            posts.add(Post(poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false))
+                            this.myAdapter.notifyItemInserted(index)
+                            index++
+                        }
+                    }
+                }
+
+            }
+
+        }
     }
 
-    public override fun onStart() {
+    override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
@@ -176,4 +166,5 @@ class HomeActivity : AppCompatActivity() {
             }
         }
     }
+
 }

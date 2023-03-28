@@ -7,12 +7,13 @@ import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
+import com.squareup.picasso.Picasso
 import kotlin.reflect.typeOf
 
 class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root) {
 
     fun bindData(post: Post) {
-        this.viewBinding.ivUserIcon.setImageResource(post.profilePic)
+        this.viewBinding.ivUserIcon.setImageResource(getProfilePic(post.profilePic))
         this.viewBinding.tvUsername.text = post.username
 
 
@@ -23,8 +24,7 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
                 this.viewBinding.ivImagePosted.setImageResource((post.imagePost.toInt()))
             }
             else{
-                val imagePostURI = Uri.parse(post.imagePost);
-                this.viewBinding.ivImagePosted.setImageURI(imagePostURI)
+                Picasso.get().load(post.imagePost).into(this.viewBinding.ivImagePosted)
             }
         }
 
@@ -66,6 +66,24 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
         post.liked = !(post.liked)
         this.viewBinding.tvLikeCounter.text = post.countLikes().toString() + " Likes"
         return post.liked
+    }
+
+    fun getProfilePic(index : Int): Int {
+        if(index == 1){
+            return R.drawable.person1
+        }
+        else if(index == 2){
+            return  R.drawable.person2
+        }
+        else if(index == 3){
+            return  R.drawable.person3
+        }
+        else if(index == 4){
+            return  R.drawable.person4
+        }
+        else{
+            return R.drawable.person1
+        }
     }
 
 
