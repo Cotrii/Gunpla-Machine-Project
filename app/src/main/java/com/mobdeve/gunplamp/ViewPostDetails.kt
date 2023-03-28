@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.mobdeve.gunplamp.databinding.ActivityViewPostDetailsBinding
+import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 
 class ViewPostDetails : AppCompatActivity() {
@@ -39,8 +40,11 @@ class ViewPostDetails : AppCompatActivity() {
                 this.viewBinding.ivImage.setImageResource(imageString.toInt())
             }
             else{
-                val imagePostURI = Uri.parse(imageString);
-                this.viewBinding.ivImage.setImageURI(imagePostURI)
+
+                Picasso.get().load(imageString).into(this.viewBinding.ivImage)
+//
+//                val imagePostURI = Uri.parse(imageString);
+//                this.viewBinding.ivImage.setImageURI(imagePostURI)
             }
         }
 
