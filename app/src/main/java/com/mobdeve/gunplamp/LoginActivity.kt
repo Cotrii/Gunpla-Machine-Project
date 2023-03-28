@@ -16,6 +16,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private val db = Firebase.firestore
+//    private var dbHelper = DBHelper
 
     companion object {
         const val INPUT_USER_KEY = "INPUT_USER_KEY"
@@ -58,6 +59,15 @@ class LoginActivity : AppCompatActivity() {
 
         viewBinding.btnSavelogin.setOnClickListener {
                 if(viewBinding.etPasswordInput.text.isNotEmpty() && viewBinding.etEmailInput.text.isNotEmpty()) {
+//                    if(dbHelper.login(viewBinding.etEmailInput.text.toString(), viewBinding.etPasswordInput.text.toString())){
+//                        finish()
+//                        val intent = Intent(applicationContext, HomeActivity::class.java)
+//                        registerResultLauncher.launch(intent)
+//                    }
+//                    else{
+//                        Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+//                    }
+
                     auth.signInWithEmailAndPassword(viewBinding.etEmailInput.text.trim().toString(), viewBinding.etPasswordInput.text.toString())
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {

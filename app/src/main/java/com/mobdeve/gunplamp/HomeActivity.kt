@@ -3,6 +3,7 @@ package com.mobdeve.gunplamp
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.MediaStore.Audio.Media
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -57,12 +58,12 @@ class HomeActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
-            Toast.makeText(this, "gallery view:" + RESULT_OK, Toast.LENGTH_SHORT).show()
             val imageURI = result?.data?.data
             val intent = Intent(this, CreatePostActivity::class.java)
             intent.putExtra("imagePost", imageURI.toString())
-            intent.putExtra("username", username)
+//            intent.putExtra("username", username)
             createPostLauncher.launch(intent)
+
         }
     }
 
@@ -132,13 +133,6 @@ class HomeActivity : AppCompatActivity() {
         val createPostButton = viewBinding.fabCreatePost
 
         createPostButton.setOnClickListener {
-//            val intent = Intent(applicationContext, CreatePostActivity::class.java)
-////            intent.putExtra("username", username)
-////            intent.putExtra("firstName", firstName)
-////            intent.putExtra("lastName", lastName)
-////            intent.putExtra("profilePic", profilePic)
-//            createPostLauncher.launch(intent)
-
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             gallery.type = "image/*";
             galleryViewLauncher.launch(gallery)
