@@ -166,9 +166,12 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-        posts.clear()
-        this.myAdapter.notifyDataSetChanged()
 
+        //Remove all posts, if posts is empty, then notify the adapter
+        if (posts.isEmpty() != true) {
+            posts.clear()
+            this.myAdapter.notifyDataSetChanged()
+        }
 
         db.collection("posts").get().addOnSuccessListener { documents ->
             if(documents != null){
