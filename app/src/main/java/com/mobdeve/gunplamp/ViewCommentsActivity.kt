@@ -73,20 +73,27 @@ class ViewCommentsActivity : AppCompatActivity() {
         db.collection("comments").get().addOnSuccessListener { result ->
 
             for (document in result) {
+
+                var index = 0
+
 //                val persons = documents.map { doc ->
 //                    val name = doc.getString("name") ?: ""
 //                    val age = doc.getLong("age")?.toInt() ?: 0
 //                    Person(name, age)
 //                }
                 val comment =  Comment(  document.getString("username").toString(),
-                    document.getString("comment").toString(),
+                    document.getString("content").toString(),
                     document.getString("postID").toString())
 
 //                val comment = document.toObject(Comment::class.java)
 //                Log.d("hai", comment.toString())
                 commentsList.add(comment)
+                this.myCommentsAdapter.notifyItemInserted(index)
+                index++
             }
         }
+
+        Log.d("haiii", commentsList.toString())
     }
 
 
