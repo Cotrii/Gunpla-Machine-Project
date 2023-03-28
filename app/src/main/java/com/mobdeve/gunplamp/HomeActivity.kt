@@ -142,7 +142,7 @@ class HomeActivity : AppCompatActivity() {
                             val poster = User(user.id,user.getString("username").toString(),user.getString("fullName").toString(),user.getString("email").toString(),user.getLong("profilePic")!!.toInt())
                             val store = Store(store.id, store.getString("name"), store.getString("city"))
                             val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
-                            posts.add(Post(poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false))
+                            posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false))
                             this.myAdapter.notifyItemInserted(index)
                             index++
                         }

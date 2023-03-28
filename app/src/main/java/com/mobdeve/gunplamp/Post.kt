@@ -5,7 +5,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class Post(poster: User, imagePost: String?, caption: String?, store: Store, date: String, isLiked: Boolean) {
+class Post(id: String,poster: User, imagePost: String?, caption: String?, store: Store, date: String, isLiked: Boolean) {
+    val id: String = id
     val username: String = poster.username
     val profilePic: Int = poster.profilePic
 

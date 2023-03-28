@@ -157,10 +157,6 @@ class CreatePostActivity : AppCompatActivity() {
         }
     }
 
-    fun createStore(){
-
-    }
-
     private fun initializeSpinner(){
         val adapter : ArrayAdapter<String> =  ArrayAdapter(this, android.R.layout.simple_spinner_item, storeNames)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
