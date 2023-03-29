@@ -9,10 +9,12 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityViewCommentsBinding
+import java.lang.Integer.parseInt
 
 class ViewCommentsActivity : AppCompatActivity() {
 
@@ -22,7 +24,9 @@ class ViewCommentsActivity : AppCompatActivity() {
 
     private var db = Firebase.firestore
     private var commentsList: MutableList<Comment> = ArrayList<Comment>()
+    private lateinit var auth: FirebaseAuth
 
+    private lateinit var user : User
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var myCommentsAdapter: MyCommentsAdapter
@@ -44,19 +48,21 @@ class ViewCommentsActivity : AppCompatActivity() {
 
         this.recyclerView = viewBinding.commentsRecyclerView
 
-
-//        commentsList.add(Comment(  User("123","nugundam237", "pass1", "Amuro",  R.drawable.emblem)
-//            , "Thanks"))
-//        commentsList.add(Comment(  User("123","thehawk", "pass2", "Borat",  R.drawable.borat)
-//            , "It's just by my place. TYYYY"))
-//        commentsList.add(Comment(  User("123","thehawk", "pass2", "Borat",  R.drawable.borat)
-//            , "Any zakus perhaps?"))
-
-
         this.myCommentsAdapter = MyCommentsAdapter(commentsList as ArrayList<Comment>, addCommentLauncher)
         viewBinding.commentsRecyclerView.adapter = myCommentsAdapter
 
         this.recyclerView.layoutManager = LinearLayoutManager(this)
+
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+
+        if(currentUser != null){
+            db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener {document ->
+                if(document != null) {
+                    user = User(auth.currentUser!!.uid,document!!.getString("username").toString(),document!!.getString("fullName").toString(),document!!.getString("email").toString(), parseInt(document!!.getLong("profilePic").toString()) )
+                }
+            }
+        }
 
 
         viewBinding.btnSubmitCmmt.setOnClickListener(View.OnClickListener {
@@ -64,6 +70,22 @@ class ViewCommentsActivity : AppCompatActivity() {
             if (viewBinding.etEntry.text.toString() != "") {
 //                commentsList.add(Comment(  User("123","thehawk", "pass2", "Borat",  R.drawable.borat)
 //                    , viewBinding.etEntry.text.toString()))
+
+
+                //Add new comment to database
+                val comments = db.collection("comments")
+
+                val postid = intent.getStringExtra(ViewCommentsActivity.POST_ID_KEY).toString()
+
+                val data1 = hashMapOf(
+                    "username" to user.username,
+                    "content" to viewBinding.etEntry.text.toString(),
+                    "postID" to postid
+                )
+
+                comments.add(data1)
+
+                commentsList.add(Comment(user.username, viewBinding.etEntry.text.toString(), postid))
 
                 this.myCommentsAdapter.notifyDataSetChanged()
             }
@@ -73,27 +95,17 @@ class ViewCommentsActivity : AppCompatActivity() {
         db.collection("comments").get().addOnSuccessListener { result ->
 
             for (document in result) {
-
                 var index = 0
 
-//                val persons = documents.map { doc ->
-//                    val name = doc.getString("name") ?: ""
-//                    val age = doc.getLong("age")?.toInt() ?: 0
-//                    Person(name, age)
-//                }
                 val comment =  Comment(  document.getString("username").toString(),
                     document.getString("content").toString(),
                     document.getString("postID").toString())
 
-//                val comment = document.toObject(Comment::class.java)
-//                Log.d("hai", comment.toString())
                 commentsList.add(comment)
                 this.myCommentsAdapter.notifyItemInserted(index)
                 index++
             }
         }
-
-        Log.d("haiii", commentsList.toString())
     }
 
 
