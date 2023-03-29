@@ -64,6 +64,8 @@ class ViewCommentsActivity : AppCompatActivity() {
             }
         }
 
+        val postid = intent.getStringExtra(ViewCommentsActivity.POST_ID_KEY).toString()
+
 
         viewBinding.btnSubmitCmmt.setOnClickListener(View.OnClickListener {
 
@@ -75,7 +77,6 @@ class ViewCommentsActivity : AppCompatActivity() {
                 //Add new comment to database
                 val comments = db.collection("comments")
 
-                val postid = intent.getStringExtra(ViewCommentsActivity.POST_ID_KEY).toString()
 
                 val data1 = hashMapOf(
                     "username" to user.username,
@@ -92,7 +93,10 @@ class ViewCommentsActivity : AppCompatActivity() {
         })
 
 
-        db.collection("comments").get().addOnSuccessListener { result ->
+        db.collection("comments")
+            .whereEqualTo("postID", postid)
+            .get()
+            .addOnSuccessListener { result ->
 
             for (document in result) {
                 var index = 0
