@@ -42,7 +42,6 @@
             android:backgroundTint="#FFFFFF"
             android:padding="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_filter"
             app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_search_24" />
@@ -51,7 +50,7 @@
             android:id="@+id/editTextTextPersonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="8dp"
             android:background="#FFFFFF"
             android:ems="10"
             android:hint="Search"
@@ -59,7 +58,7 @@
             android:paddingLeft="8dp"
             android:textColor="#000000"
             android:textColorHint="#000000"
-            android:textSize="10sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageButton2"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -68,14 +67,12 @@
         <Button
             android:id="@+id/btn_filter"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_height="35dp"
             android:backgroundTint="#FEB220"
             android:gravity="center_vertical"
             android:text="Store"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageButton"
-            app:layout_constraintStart_toEndOf="@+id/imageButton2"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
