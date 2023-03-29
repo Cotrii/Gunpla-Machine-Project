@@ -4,15 +4,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.MediaStore.Audio.Media
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toDrawable
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -140,10 +136,12 @@ class HomeActivity : AppCompatActivity() {
                                 for (document in result) {
                                     unknownID = document.id
                                 }
+                                filter = "userID"
+
+                                callPostQuery(filter, unknownID)
                             }
                         }
 
-                    filter = "userID"
                 } else {
                     db.collection("stores")
                         .whereEqualTo("name", viewBinding.etSearchInput.text.toString())
@@ -152,9 +150,11 @@ class HomeActivity : AppCompatActivity() {
                             if (result != null) {
                                 for (document in result) {
                                     unknownID = document.id
-                                    Log.d("yes", unknownID)
-                                    Log.d("yes", document.getString("name").toString())
                                 }
+                                filter = "storeID"
+
+                                callPostQuery(filter, unknownID)
+
                             }
                         }
 
@@ -163,60 +163,6 @@ class HomeActivity : AppCompatActivity() {
                 }
 
 
-
-                db.collection("posts")
-                    .whereEqualTo(filter, unknownID)
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        if (documents != null) {
-                            var index = 0
-                            for (document in documents) {
-                                Log.d(
-                                    "SDAJKDLJWIOJLOOOOOOOOOOOOOOOOK",
-                                    "onCreate: document is:" + document.getString("storeID")
-                                        .toString()
-                                )
-                                db.collection("users")
-                                    .document(document.getString("userID").toString()).get()
-                                    .addOnSuccessListener { user ->
-                                        db.collection("stores")
-                                            .document(document.getString("storeID").toString())
-                                            .get().addOnSuccessListener { store ->
-                                            val poster = User(
-                                                user.id,
-                                                user.getString("username").toString(),
-                                                user.getString("fullName").toString(),
-                                                user.getString("email").toString(),
-                                                user.getLong("profilePic")!!.toInt()
-                                            )
-                                            val store = Store(
-                                                store.id,
-                                                store.getString("name"),
-                                                store.getString("city")
-                                            )
-                                            val datePosted = SimpleDateFormat("MMM d, yyyy").format(
-                                                document.getDate("datePosted")
-                                            )
-                                            posts.add(
-                                                Post(
-                                                    document.id,
-                                                    poster,
-                                                    document.getString("imagePost"),
-                                                    document.getString("caption"),
-                                                    store,
-                                                    datePosted,
-                                                    false
-                                                )
-                                            )
-                                            this.myAdapter.notifyItemInserted(index)
-                                            index++
-                                        }
-                                    }
-                            }
-
-                        }
-
-                    }
             }
         })
 
@@ -234,9 +180,6 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this@HomeActivity, UserProfileActivity::class.java)
 //            intent.putExtra("username", user.username)
 //            intent.putExtra("firstName", user.firstName)
-//            intent.putExtra("lastName", user.lastName)
-//            intent.putExtra("profilePic", user.profilePic)
-//            intent.putExtra("password", user.password)
             this.userProfileLauncher.launch(intent)
         }
 
@@ -290,11 +233,62 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    //Last resort dont touch
-//    override fun onResume() {
-//        super.onResume()
-//
-//        this.recreate()
-//    }
+    fun callPostQuery(filter: String, unknownID: String) {
+        db.collection("posts")
+            .whereEqualTo(filter, unknownID)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (documents != null) {
+                    var index = 0
+                    for (document in documents) {
+                        Log.d(
+                            "SDAJKDLJWIOJLOOOOOOOOOOOOOOOOK",
+                            "onCreate: document is:" + document.getString("storeID")
+                                .toString()
+                        )
+                        db.collection("users")
+                            .document(document.getString("userID").toString()).get()
+                            .addOnSuccessListener { user ->
+                                db.collection("stores")
+                                    .document(document.getString("storeID").toString())
+                                    .get().addOnSuccessListener { store ->
+                                        val poster = User(
+                                            user.id,
+                                            user.getString("username").toString(),
+                                            user.getString("fullName").toString(),
+                                            user.getString("email").toString(),
+                                            user.getLong("profilePic")!!.toInt()
+                                        )
+                                        val store = Store(
+                                            store.id,
+                                            store.getString("name"),
+                                            store.getString("city")
+                                        )
+                                        val datePosted = SimpleDateFormat("MMM d, yyyy").format(
+                                            document.getDate("datePosted")
+                                        )
+                                        posts.add(
+                                            Post(
+                                                document.id,
+                                                poster,
+                                                document.getString("imagePost"),
+                                                document.getString("caption"),
+                                                store,
+                                                datePosted,
+                                                false
+                                            )
+                                        )
+                                        this.myAdapter.notifyItemInserted(index)
+                                        index++
+                                    }
+                            }
+                    }
+
+                }
+
+            }
+    }
+
+
 
 }
