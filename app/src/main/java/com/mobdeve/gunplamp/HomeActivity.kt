@@ -1,10 +1,12 @@
 package com.mobdeve.gunplamp
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -103,6 +105,118 @@ class HomeActivity : AppCompatActivity() {
         viewBinding.myRecyclerView.adapter = myAdapter
         viewBinding.myRecyclerView.layoutManager = LinearLayoutManager(this)
 
+        viewBinding.btnFilter.setOnClickListener(View.OnClickListener {
+
+                if (viewBinding.btnFilter.text == "Store") {
+                    viewBinding.btnFilter.text = "User"
+                    viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#E9494A"))
+                } else {
+                    viewBinding.btnFilter.text = "Store"
+                    viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#FEB220"))
+                }
+        })
+
+        viewBinding.ibSearchBtn.setOnClickListener(View.OnClickListener {
+
+            if (viewBinding.etSearchInput.text.toString() != "") {
+
+                //Remove all posts, if posts is empty, then notify the adapter
+                if (posts.isEmpty() != true) {
+                    posts.clear()
+                    this.myAdapter.notifyDataSetChanged()
+                }
+
+                var filter: String = ""
+                var unknownID: String = ""
+
+
+                if (viewBinding.btnFilter.text.toString() == "User") {
+                    db.collection("users")
+                        .whereEqualTo("username", viewBinding.etSearchInput.text.toString())
+                        .get()
+                        .addOnSuccessListener { result ->
+                            if (result != null) {
+                                for (document in result) {
+                                    unknownID = document.id
+                                }
+                            }
+                        }
+
+                    filter = "userid"
+                } else {
+                    db.collection("stores")
+                        .whereEqualTo("name", viewBinding.etSearchInput.text.toString())
+                        .get()
+                        .addOnSuccessListener { result ->
+                            if (result != null) {
+                                for (document in result) {
+                                    unknownID = document.id
+                                }
+                            }
+                        }
+
+
+                    filter = "storeid"
+                }
+
+
+
+                db.collection("posts")
+                    .whereEqualTo(filter, unknownID)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        if (documents != null) {
+                            var index = 0
+                            for (document in documents) {
+                                Log.d(
+                                    "SDAJKDLJWIOJLOOOOOOOOOOOOOOOOK",
+                                    "onCreate: document is:" + document.getString("storeID")
+                                        .toString()
+                                )
+                                db.collection("users")
+                                    .document(document.getString("userID").toString()).get()
+                                    .addOnSuccessListener { user ->
+                                        db.collection("stores")
+                                            .document(document.getString("storeID").toString())
+                                            .get().addOnSuccessListener { store ->
+                                            val poster = User(
+                                                user.id,
+                                                user.getString("username").toString(),
+                                                user.getString("fullName").toString(),
+                                                user.getString("email").toString(),
+                                                user.getLong("profilePic")!!.toInt()
+                                            )
+                                            val store = Store(
+                                                store.id,
+                                                store.getString("name"),
+                                                store.getString("city")
+                                            )
+                                            val datePosted = SimpleDateFormat("MMM d, yyyy").format(
+                                                document.getDate("datePosted")
+                                            )
+                                            posts.add(
+                                                Post(
+                                                    document.id,
+                                                    poster,
+                                                    document.getString("imagePost"),
+                                                    document.getString("caption"),
+                                                    store,
+                                                    datePosted,
+                                                    false
+                                                )
+                                            )
+                                            this.myAdapter.notifyItemInserted(index)
+                                            index++
+                                        }
+                                    }
+                            }
+
+                        }
+
+                    }
+            }
+        })
+
         val createPostButton = viewBinding.fabCreatePost
 
         createPostButton.setOnClickListener {
@@ -124,34 +238,12 @@ class HomeActivity : AppCompatActivity() {
         }
 
 
-
-
         //Remove flickering of item
         val animator = recyclerView.itemAnimator
         if (animator is SimpleItemAnimator) {
             (animator as SimpleItemAnimator).supportsChangeAnimations = false
         }
 
-//        db.collection("posts").get().addOnSuccessListener { documents ->
-//            if(documents != null){
-//                var index=0
-//                for (document in documents) {
-//                    Log.d("SDAJKDLJWIOJLOOOOOOOOOOOOOOOOK", "onCreate: document is:" + document.getString("storeID").toString())
-//                    db.collection("users").document(document.getString("userID").toString()).get().addOnSuccessListener {user ->
-//                        db.collection("stores").document(document.getString("storeID").toString()).get().addOnSuccessListener { store ->
-//                            val poster = User(user.id,user.getString("username").toString(),user.getString("fullName").toString(),user.getString("email").toString(),user.getLong("profilePic")!!.toInt())
-//                            val store = Store(store.id, store.getString("name"), store.getString("city"))
-//                            val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
-//                            posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false))
-//                            this.myAdapter.notifyItemInserted(index)
-//                            index++
-//                        }
-//                    }
-//                }
-//
-//            }
-//
-//        }
     }
 
     override fun onStart() {
