@@ -9,6 +9,7 @@ class Post(id: String,poster: User, imagePost: String?, caption: String?, store:
     val id: String = id
     val username: String = poster.username
     val profilePic: Int = poster.profilePic
+    val userID: String = poster.id
 
     val imagePost: String? = imagePost
     var caption: String? = caption

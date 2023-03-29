@@ -99,7 +99,7 @@ class HomeActivity : AppCompatActivity() {
 
         //RecyclerView setup; Note how MyAdapter has viewPostResultLauncher
         this.recyclerView = viewBinding.myRecyclerView
-        this.myAdapter = MyAdapter(posts as ArrayList<Post>, viewPostDetailsLauncher)
+        this.myAdapter = MyAdapter(posts as ArrayList<Post>, viewPostDetailsLauncher, auth.currentUser!!.uid)
         viewBinding.myRecyclerView.adapter = myAdapter
         viewBinding.myRecyclerView.layoutManager = LinearLayoutManager(this)
 

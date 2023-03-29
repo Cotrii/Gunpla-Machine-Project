@@ -1,6 +1,7 @@
 package com.mobdeve.gunplamp
 
 import android.net.Uri
+import android.opengl.Visibility
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
@@ -12,11 +13,9 @@ import kotlin.reflect.typeOf
 
 class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root) {
 
-    fun bindData(post: Post) {
+    fun bindData(post: Post, userID: String) {
         this.viewBinding.ivUserIcon.setImageResource(getProfilePic(post.profilePic))
         this.viewBinding.tvUsername.text = post.username
-
-
         this.viewBinding.tvLocation.text = post.store.name
 
         if(post.imagePost != null){
@@ -26,6 +25,13 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
             else{
                 Picasso.get().load(post.imagePost).into(this.viewBinding.ivImagePosted)
             }
+        }
+
+        if(userID != post.userID){
+            this.viewBinding.ibDetailsBtn.visibility = View.GONE
+        }
+        else{
+            this.viewBinding.ibDetailsBtn.visibility = View.VISIBLE
         }
 
         //How will we track every user's activity with likes (Solution: add or check if user

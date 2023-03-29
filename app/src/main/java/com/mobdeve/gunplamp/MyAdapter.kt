@@ -16,7 +16,7 @@ import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
 
 //class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultLauncher:
 ////ActivityResultLauncher<Intent>) : Adapter<MyViewHolder>()
-class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>) : Adapter<MyViewHolder>() {
+class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>, private val userID : String) : Adapter<MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
 //        companion object {
@@ -38,7 +38,7 @@ class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultL
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bindData(this.data[position])
+        holder.bindData(this.data[position], userID)
 
         holder.setLikeOnClickListener(View.OnClickListener {
             if(holder.changeLike(this.data[position])){
@@ -50,17 +50,21 @@ class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultL
             notifyItemChanged(position)
         })
 
-        holder.setEditOnClickListener(View.OnClickListener {
-            val intent : Intent = Intent(holder.itemView.context, ViewPostDetails::class.java)
+        if(userID == data[position].userID){
+            holder.setEditOnClickListener(View.OnClickListener {
+                val intent : Intent = Intent(holder.itemView.context, ViewPostDetails::class.java)
 
-            intent.putExtra(ViewPostDetails.CAPTION_KEY, data[position].caption)
-            intent.putExtra(ViewPostDetails.IMAGE_KEY, data[position].imagePost)
-            intent.putExtra(ViewPostDetails.POSITION_KEY, position)
-            intent.putExtra(ViewPostDetails.USERNAME_KEY, data[position].username)
+                intent.putExtra(ViewPostDetails.CAPTION_KEY, data[position].caption)
+                intent.putExtra(ViewPostDetails.IMAGE_KEY, data[position].imagePost)
+                intent.putExtra(ViewPostDetails.POSITION_KEY, position)
+                intent.putExtra(ViewPostDetails.USERNAME_KEY, data[position].username)
 
-            intent.putExtra(ViewPostDetails.POST_ID_KEY, data[position].id)
-            this.myActivityResultLauncher.launch(intent)
-        })
+                intent.putExtra(ViewPostDetails.POST_ID_KEY, data[position].id)
+                this.myActivityResultLauncher.launch(intent)
+            })
+        }
+
+
 
         holder.setViewCommentsOnClickListener(View.OnClickListener {
            val intent : Intent = Intent(holder.itemView.context, ViewCommentsActivity::class.java)
