@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.util.TypedValue
+import android.util.TypedValue.COMPLEX_UNIT_SP
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -104,8 +106,12 @@ class HomeActivity : AppCompatActivity() {
         viewBinding.btnFilter.setOnClickListener(View.OnClickListener {
 
                 if (viewBinding.btnFilter.text == "Store") {
-                    viewBinding.btnFilter.text = "User"
+                    viewBinding.btnFilter.text = "Caption"
                     viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#E9494A"))
+                } else if (viewBinding.btnFilter.text == "Caption") {
+                    viewBinding.btnFilter.text = "User"
+                    viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#2C52B3"))
+                    viewBinding.btnFilter.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
                 } else {
                     viewBinding.btnFilter.text = "Store"
                     viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#FEB220"))
@@ -118,8 +124,8 @@ class HomeActivity : AppCompatActivity() {
 
                 //Remove all posts, if posts is empty, then notify the adapter
                 if (posts.isEmpty() != true) {
-                    posts.clear()
-                    this.myAdapter.notifyDataSetChanged()
+                        posts.clear()
+                        this.myAdapter.notifyDataSetChanged()
                 }
 
                 var filter: String = ""
@@ -141,6 +147,43 @@ class HomeActivity : AppCompatActivity() {
                                 callPostQuery(filter, unknownID)
                             }
                         }
+
+                } else if (viewBinding.btnFilter.text.toString() == "Caption") {
+
+                    db.collection("posts").get().addOnSuccessListener { documents ->
+                        if(documents != null){
+                            var index=0
+                            for (document in documents) {
+                                Log.d("SDAJKDLJWIOJLOOOOOOOOOOOOOOOOK", "onCreate: document is:" + document.getString("storeID").toString())
+                                db.collection("users").document(document.getString("userID").toString()).get().addOnSuccessListener {user ->
+                                    db.collection("stores").document(document.getString("storeID").toString()).get().addOnSuccessListener { store ->
+                                        val poster = User(user.id,user.getString("username").toString(),user.getString("fullName").toString(),user.getString("email").toString(),user.getLong("profilePic")!!.toInt())
+                                        val store = Store(store.id, store.getString("name"), store.getString("city"))
+                                        val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
+
+                                        if ( (document.getString("caption").toString()).contains(viewBinding.etSearchInput.text)) {
+                                            posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false))
+                                            this.myAdapter.notifyItemInserted(index)
+                                            index++
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+
+                    }
+
+                    for (post in posts) {
+                        if ((!(viewBinding.etSearchInput.text.toString() in post.caption!!))) {
+                            posts.remove(post)
+                        }
+                    }
+
+                    this.myAdapter.notifyDataSetChanged()
+
+
+
 
                 } else {
                     db.collection("stores")
