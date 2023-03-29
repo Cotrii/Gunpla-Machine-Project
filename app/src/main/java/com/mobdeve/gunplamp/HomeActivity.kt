@@ -131,6 +131,7 @@ class HomeActivity : AppCompatActivity() {
 
 
                 if (viewBinding.btnFilter.text.toString() == "User") {
+
                     db.collection("users")
                         .whereEqualTo("username", viewBinding.etSearchInput.text.toString())
                         .get()
@@ -142,7 +143,7 @@ class HomeActivity : AppCompatActivity() {
                             }
                         }
 
-                    filter = "userid"
+                    filter = "userID"
                 } else {
                     db.collection("stores")
                         .whereEqualTo("name", viewBinding.etSearchInput.text.toString())
@@ -151,12 +152,14 @@ class HomeActivity : AppCompatActivity() {
                             if (result != null) {
                                 for (document in result) {
                                     unknownID = document.id
+                                    Log.d("yes", unknownID)
+                                    Log.d("yes", document.getString("name").toString())
                                 }
                             }
                         }
 
-
-                    filter = "storeid"
+                    Log.d("no way", unknownID)
+                    filter = "storeID"
                 }
 
 
