@@ -20,6 +20,8 @@ import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityHomeBinding
 import java.lang.Integer.parseInt
 import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
 
 
@@ -121,7 +123,6 @@ class HomeActivity : AppCompatActivity() {
         viewBinding.ibSearchBtn.setOnClickListener(View.OnClickListener {
 
             if (viewBinding.etSearchInput.text.toString() != "") {
-
                 //Remove all posts, if posts is empty, then notify the adapter
                 if (posts.isEmpty() != true) {
                         posts.clear()
@@ -171,7 +172,6 @@ class HomeActivity : AppCompatActivity() {
                             }
 
                         }
-
                     }
 
                     for (post in posts) {
@@ -204,8 +204,29 @@ class HomeActivity : AppCompatActivity() {
                     Log.d("no way", unknownID)
                     filter = "storeID"
                 }
+            }
+            else{
+                posts.clear()
+                this.myAdapter.notifyDataSetChanged()
+                db.collection("posts").get().addOnSuccessListener { documents ->
+                    if(documents != null){
+                        var index=0
+                        for (document in documents) {
+                            Log.d("SDAJKDLJWIOJLOOOOOOOOOOOOOOOOK", "onCreate: document is:" + document.getString("storeID").toString())
+                            db.collection("users").document(document.getString("userID").toString()).get().addOnSuccessListener {user ->
+                                db.collection("stores").document(document.getString("storeID").toString()).get().addOnSuccessListener { store ->
+                                    val poster = User(user.id,user.getString("username").toString(),user.getString("fullName").toString(),user.getString("email").toString(),user.getLong("profilePic")!!.toInt())
+                                    val store = Store(store.id, store.getString("name"), store.getString("city"))
+                                    val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
+                                    posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false))
+                                    this.myAdapter.notifyItemInserted(index)
+                                    index++
+                                }
+                            }
+                        }
+                    }
 
-
+                }
             }
         })
 
@@ -270,15 +291,13 @@ class HomeActivity : AppCompatActivity() {
                         }
                     }
                 }
-
             }
-
         }
     }
 
     fun callPostQuery(filter: String, unknownID: String) {
         db.collection("posts").orderBy(filter)
-            .startAt(unknownID).endAt("$unknownID\\uf88f")
+            .startAt(unknownID.uppercase(Locale.ROOT)).endAt(unknownID.lowercase(Locale.ROOT) + "\uf88f")
             .get()
             .addOnSuccessListener { documents ->
                 if (documents != null) {

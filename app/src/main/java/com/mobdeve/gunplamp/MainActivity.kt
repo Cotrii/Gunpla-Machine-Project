@@ -75,11 +75,6 @@ class MainActivity : AppCompatActivity() {
             registerResultLauncher.launch(intent)
         })
 
-        viewBinding.btnHome.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@MainActivity, HomeActivity::class.java)
-//            intent.putExtra(, data)
-            homeActivityLauncher.launch(intent)
-        })
     }
 
     public override fun onStart() {
@@ -88,7 +83,6 @@ class MainActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         if(currentUser != null){
             val intent = Intent(this@MainActivity, HomeActivity::class.java)
-
             homeActivityLauncher.launch(intent)
         }
     }

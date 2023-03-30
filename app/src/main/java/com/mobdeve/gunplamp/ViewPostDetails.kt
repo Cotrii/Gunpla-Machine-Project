@@ -61,7 +61,6 @@ class ViewPostDetails : AppCompatActivity() {
 
         //Display id of Post
         val id = intent.getStringExtra(ViewPostDetails.POST_ID_KEY).toString()
-        viewBinding.tvPostid.text = id
 
 
         viewBinding.etEditCaption.setText(captionStr)
@@ -119,22 +118,17 @@ class ViewPostDetails : AppCompatActivity() {
             val docRef = db.collection("posts").document(id)
             docRef.delete()
 
-            // *************
-
 
             val deleteIntent : Intent = Intent()
 
-            deleteIntent.putExtra(ViewPostDetails.CAPTION_KEY, viewBinding.etEditCaption.text.toString())
-            deleteIntent.putExtra(ViewPostDetails.POSITION_KEY, position)
-
-            deleteIntent.putExtra(ViewPostDetails.STATUS_KEY, "Delete")
+//            deleteIntent.putExtra(ViewPostDetails.CAPTION_KEY, viewBinding.etEditCaption.text.toString())
+//            deleteIntent.putExtra(ViewPostDetails.POSITION_KEY, position)
+//
+//            deleteIntent.putExtra(ViewPostDetails.STATUS_KEY, "Delete")
             setResult(RESULT_OK, deleteIntent)
             finish()
 
         })
-
-
-
     }
 
     private fun isTextStillOriginal() : Boolean {
