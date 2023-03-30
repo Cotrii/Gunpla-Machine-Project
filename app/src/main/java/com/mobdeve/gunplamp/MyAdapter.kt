@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
 
 
@@ -17,6 +19,8 @@ import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
 //class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultLauncher:
 ////ActivityResultLauncher<Intent>) : Adapter<MyViewHolder>()
 class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>, private val userID : String) : Adapter<MyViewHolder>() {
+
+    private val db = Firebase.firestore
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
 //        companion object {
@@ -42,12 +46,20 @@ class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultL
 
         holder.setLikeOnClickListener(View.OnClickListener {
             if(holder.changeLike(this.data[position])){
-                this.data[position].likes?.add("USER1")
+                this.data[position].likes?.add(userID)
+
             }else{
-                this.data[position].likes?.remove("USER1")
+                this.data[position].likes?.remove(userID)
             }
             Log.d("ASDJKLASJDKLAJSDKLJSAK", "onBindViewHolder: " + this.data[position].likes)
             notifyItemChanged(position)
+
+            Log.d("moshi", this.data[position].likes.toString())
+            Log.d("moshi", this.data[position].id.toString())
+
+            val docRef = db.collection("posts").document(data[position].id)
+
+            docRef.update("likes", this.data[position].likes)
         })
 
         if(userID == data[position].userID){
@@ -74,6 +86,7 @@ class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultL
 //            intent.putExtra()
             this.myActivityResultLauncher.launch(intent)
         })
+
     }
 
     override fun getItemCount(): Int {

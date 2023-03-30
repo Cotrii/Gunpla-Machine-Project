@@ -7,6 +7,9 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
 import com.squareup.picasso.Picasso
 import kotlin.reflect.typeOf
@@ -37,6 +40,7 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
         //How will we track every user's activity with likes (Solution: add or check if user
         // is in list/array of strings?
 
+        post.liked = userInLikeList(post, userID)
         //
         this.viewBinding.ibFavorite.setImageResource(isLikedDrawable(post.liked))
 
@@ -93,11 +97,10 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
     }
 
 
-    //Suggestion
-//    fun userInLikeList(post: Post, user: User): Boolean {
-//
-//        return (post.likeCounter).contains(user.username)
-//    }
+    fun userInLikeList(post: Post, userID: String): Boolean {
+
+        return post.likes.contains(userID)
+    }
 
 
 }

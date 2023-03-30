@@ -163,7 +163,7 @@ class HomeActivity : AppCompatActivity() {
                                         val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
 
                                         if ( (document.getString("caption").toString()).contains(viewBinding.etSearchInput.text)) {
-                                            posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false))
+                                            posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false, document["likes"] as ArrayList<String>))
                                             this.myAdapter.notifyItemInserted(index)
                                             index++
                                         }
@@ -218,7 +218,7 @@ class HomeActivity : AppCompatActivity() {
                                     val poster = User(user.id,user.getString("username").toString(),user.getString("fullName").toString(),user.getString("email").toString(),user.getLong("profilePic")!!.toInt())
                                     val store = Store(store.id, store.getString("name"), store.getString("city"))
                                     val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
-                                    posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false))
+                                    posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false, document["likes"] as ArrayList<String>))
                                     this.myAdapter.notifyItemInserted(index)
                                     index++
                                 }
@@ -254,6 +254,7 @@ class HomeActivity : AppCompatActivity() {
             (animator as SimpleItemAnimator).supportsChangeAnimations = false
         }
 
+
     }
 
     override fun onStart() {
@@ -285,7 +286,7 @@ class HomeActivity : AppCompatActivity() {
                             val poster = User(user.id,user.getString("username").toString(),user.getString("fullName").toString(),user.getString("email").toString(),user.getLong("profilePic")!!.toInt())
                             val store = Store(store.id, store.getString("name"), store.getString("city"))
                             val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
-                            posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false))
+                            posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false, document["likes"] as ArrayList<String>))
                             this.myAdapter.notifyItemInserted(index)
                             index++
                         }
@@ -337,7 +338,8 @@ class HomeActivity : AppCompatActivity() {
                                                 document.getString("caption"),
                                                 store,
                                                 datePosted,
-                                                false
+                                                false,
+                                                document["likes"] as ArrayList<String>
                                             )
                                         )
                                         this.myAdapter.notifyItemInserted(index)

@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class Post(id: String,poster: User, imagePost: String?, caption: String?, store: Store, date: String, isLiked: Boolean) {
+class Post(id: String,poster: User, imagePost: String?, caption: String?, store: Store, date: String, isLiked: Boolean, likes: ArrayList<String>) {
     val id: String = id
     val username: String = poster.username
     val profilePic: Int = poster.profilePic
@@ -17,14 +17,15 @@ class Post(id: String,poster: User, imagePost: String?, caption: String?, store:
     val store: Store = store
 
     var liked: Boolean = isLiked
-    var likes: ArrayList<String> = ArrayList()
-    var comments: ArrayList<Comment>? = ArrayList()
+    var likes: ArrayList<String> = likes
+    var commentsID: String = ""
 
     fun changeCaption(newCap: String) {
         caption = newCap
     }
 
     fun countLikes(): Int? {
+
         if(likes != null){
             return likes?.size
         } else{
