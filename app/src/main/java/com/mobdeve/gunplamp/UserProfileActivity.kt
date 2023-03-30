@@ -195,7 +195,7 @@ class UserProfileActivity : AppCompatActivity() {
                     user = User(auth.currentUser!!.uid, document!!.getString("username").toString(),document!!.getString("fullName").toString(),document!!.getString("email").toString(),
                         Integer.parseInt(document!!.getLong("profilePic").toString())
                     )
-                    Toast.makeText(this, "profile pic:" + user.profilePic, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "profile pic:" + user.profilePic, Toast.LENGTH_SHORT).show()
                     viewBinding.fullName.setText(user.fullName)
                     viewBinding.email.setText(user.email)
                     viewBinding.username.setText(user.username)

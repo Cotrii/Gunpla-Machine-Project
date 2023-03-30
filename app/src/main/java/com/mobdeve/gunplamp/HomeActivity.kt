@@ -277,8 +277,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun callPostQuery(filter: String, unknownID: String) {
-        db.collection("posts")
-            .whereEqualTo(filter, unknownID)
+        db.collection("posts").orderBy(filter)
+            .startAt(unknownID).endAt("$unknownID\\uf88f")
             .get()
             .addOnSuccessListener { documents ->
                 if (documents != null) {
