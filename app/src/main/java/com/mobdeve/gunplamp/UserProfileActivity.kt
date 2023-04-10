@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -22,6 +23,7 @@ class UserProfileActivity : AppCompatActivity() {
     private val db = Firebase.firestore
     private lateinit var user : User
     private lateinit var viewBinding: ActivityUserProfileBinding
+    private var editPassword : Boolean = false
 
     private val homeActivityLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -40,7 +42,6 @@ class UserProfileActivity : AppCompatActivity() {
 
         var editFullName: Boolean = false
         var editUsername : Boolean = false
-        var editPassword : Boolean = false
         var editProfilePic: Boolean = false
 
         viewBinding = ActivityUserProfileBinding.inflate(layoutInflater)
@@ -206,17 +207,50 @@ class UserProfileActivity : AppCompatActivity() {
 
         viewBinding.saveButton.setOnClickListener {
             val intent = Intent()
+            if(editPassword && (viewBinding.oldPassword.text.length <8 ||viewBinding.newPassword.text.length < 8 || viewBinding.newPassword.text.toString() != viewBinding.confirmNewPassword.text.toString())){
+                Toast.makeText(this, "Invalid Password", Toast.LENGTH_SHORT).show()
+            }
+            else if(viewBinding.fullName.text.length == 0 || viewBinding.username.text.length == 0){
+                Toast.makeText(this, "Invalid Fields", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                db.collection("users").document(currentUser!!.uid).update("fullName", viewBinding.fullName.text.toString(), "username", viewBinding.username.text.toString(),"profilePic", user.profilePic).addOnSuccessListener { document ->
+                    if(editPassword){
+                        val credential = EmailAuthProvider.getCredential(currentUser?.email ?: "", viewBinding.oldPassword.text.toString())
+                        currentUser.reauthenticate(credential)?.addOnCompleteListener { task ->
+                            if(task.isSuccessful){
+                                currentUser.updatePassword(viewBinding.confirmNewPassword.text.toString())?.addOnCompleteListener{task->
+                                    if(task.isSuccessful){
+                                        if(document != null){
+                                            setResult(RESULT_OK, intent)
+                                            finish()
+                                        }
+                                    }
+                                    else{
+                                        setResult(RESULT_CANCELED, intent)
+                                        finish()
+                                    }
+                                }
+                            }
+                            else{
+                                setResult(RESULT_CANCELED, intent)
+                                finish()
+                            }
+                        }
+                    }
 
-            db.collection("users").document(currentUser!!.uid).update("fullName", viewBinding.fullName.text.toString(), "username", viewBinding.username.text.toString(),"profilePic", user.profilePic).addOnSuccessListener { document ->
-                if(document != null){
-                    setResult(RESULT_OK, intent)
-                    finish()
-                }
-                else{
-                    setResult(RESULT_CANCELED, intent)
-                    finish()
+                    if(document != null){
+                        setResult(RESULT_OK, intent)
+                        finish()
+                    }else{
+                        setResult(RESULT_CANCELED, intent)
+                        finish()
+                    }
+
                 }
             }
+
+
         }
     }
 
