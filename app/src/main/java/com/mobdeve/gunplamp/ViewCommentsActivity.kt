@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityViewCommentsBinding
@@ -99,6 +100,7 @@ class ViewCommentsActivity : AppCompatActivity() {
 
 
         db.collection("comments")
+//            .orderBy("datePosted", Query.Direction.ASCENDING)
             .whereEqualTo("postID", postid)
             .get()
             .addOnSuccessListener { result ->
