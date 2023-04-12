@@ -223,13 +223,9 @@ class HomeActivity : AppCompatActivity() {
             gallery.type = "image/*";
             galleryViewLauncher.launch(gallery)
         }
-//
-//        viewBinding.imageButton.setImageDrawable(profilePic.toDrawable())
 
         viewBinding.imageButton.setOnClickListener{
             val intent = Intent(this@HomeActivity, UserProfileActivity::class.java)
-//            intent.putExtra("username", user.username)
-//            intent.putExtra("firstName", user.firstName)
             this.userProfileLauncher.launch(intent)
         }
 

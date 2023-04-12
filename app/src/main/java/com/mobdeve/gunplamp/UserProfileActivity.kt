@@ -75,22 +75,22 @@ class UserProfileActivity : AppCompatActivity() {
             if (editProfilePic) {
                 viewBinding.svProfilePics.visibility = View.VISIBLE
                 viewBinding.saveButton.visibility = View.VISIBLE
-                viewBinding.ivProfPic1.setOnClickListener({
+                viewBinding.ivProfPic1.setOnClickListener {
                     user.profilePic = 1
-                    viewBinding.ivProfilePic.setImageResource(R.drawable.person1)
-                })
-                viewBinding.ivProfPic2.setOnClickListener({
+                    viewBinding.ivProfilePic.setImageResource(R.drawable.profpic1)
+                }
+                viewBinding.ivProfPic2.setOnClickListener {
                     user.profilePic = 2
-                    viewBinding.ivProfilePic.setImageResource(R.drawable.person2)
-                })
-                viewBinding.ivProfPic3.setOnClickListener({
+                    viewBinding.ivProfilePic.setImageResource(R.drawable.profpic2)
+                }
+                viewBinding.ivProfPic3.setOnClickListener {
                     user.profilePic = 3
-                    viewBinding.ivProfilePic.setImageResource(R.drawable.person3)
-                })
-                viewBinding.ivProfPic4.setOnClickListener({
+                    viewBinding.ivProfilePic.setImageResource(R.drawable.profpic3)
+                }
+                viewBinding.ivProfPic4.setOnClickListener {
                     user.profilePic = 4
-                    viewBinding.ivProfilePic.setImageResource(R.drawable.person4)
-                })
+                    viewBinding.ivProfilePic.setImageResource(R.drawable.profpic4)
+                }
             } else {
                 viewBinding.svProfilePics.visibility = View.GONE
             }

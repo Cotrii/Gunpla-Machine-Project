@@ -46,7 +46,7 @@
                             android:layout_height="80dp"
                             android:layout_margin="10dp"
                             android:padding="5dp"
-                            app:srcCompat="@drawable/person1" />
+                            app:srcCompat="@drawable/profpic1" />
 
                         <ImageView
                             android:id="@+id/ivProfPic2"
@@ -54,7 +54,7 @@
                             android:layout_height="80dp"
                             android:layout_margin="10dp"
                             android:padding="5dp"
-                            app:srcCompat="@drawable/person2" />
+                            app:srcCompat="@drawable/profpic2" />
 
                         <ImageView
                             android:id="@+id/ivProfPic3"
@@ -62,7 +62,7 @@
                             android:layout_height="80dp"
                             android:layout_margin="10dp"
                             android:padding="5dp"
-                            app:srcCompat="@drawable/person3" />
+                            app:srcCompat="@drawable/profpic3" />
 
                         <ImageView
                             android:id="@+id/ivProfPic4"
@@ -70,7 +70,7 @@
                             android:layout_height="80dp"
                             android:layout_margin="10dp"
                             android:padding="5dp"
-                            app:srcCompat="@drawable/person4" />
+                            app:srcCompat="@drawable/profpic4" />
 
                     </LinearLayout>
                 </ScrollView>
