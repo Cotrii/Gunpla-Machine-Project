@@ -15,6 +15,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityViewCommentsBinding
 import java.lang.Integer.parseInt
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * ViewCommentsActivity is used to determine
@@ -29,6 +31,8 @@ class ViewCommentsActivity : AppCompatActivity() {
     private var db = Firebase.firestore
     private var commentsList: MutableList<Comment> = ArrayList<Comment>()
     private lateinit var auth: FirebaseAuth
+
+    var datePosted : Date = Date()
 
     private lateinit var user : User
 
@@ -81,7 +85,8 @@ class ViewCommentsActivity : AppCompatActivity() {
                 val data1 = hashMapOf(
                     "username" to user.username,
                     "content" to viewBinding.etEntry.text.toString(),
-                    "postID" to postid
+                    "postID" to postid,
+                    "datePosted" to datePosted
                 )
 
                 comments.add(data1)

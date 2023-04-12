@@ -280,7 +280,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun callPostQuery(filter: String, unknownID: String) {
-        db.collection("posts").orderBy("datePosted", Query.Direction.DESCENDING).orderBy(filter)
+        db.collection("posts").orderBy(filter)
             .startAt(unknownID.uppercase(Locale.ROOT)).endAt(unknownID.lowercase(Locale.ROOT) + "\uf88f")
             .get()
             .addOnSuccessListener { documents ->
