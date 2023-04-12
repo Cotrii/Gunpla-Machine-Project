@@ -32,10 +32,8 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var myAdapter: MyAdapter
-    private lateinit var username : String
-    private lateinit var firstName : String
-    private lateinit var lastName : String
-    private var profilePic by Delegates.notNull<Int>()
+//    private lateinit var username : String  //    private lateinit var firstName : String  //    private lateinit var lastName : String
+//    private var profilePic by Delegates.notNull<Int>()
     private lateinit var user : User
     private lateinit var auth: FirebaseAuth
     private val db = Firebase.firestore
@@ -94,22 +92,16 @@ class HomeActivity : AppCompatActivity() {
         viewBinding.myRecyclerView.adapter = myAdapter
         viewBinding.myRecyclerView.layoutManager = LinearLayoutManager(this)
 
+        //If a user branches off from the filter group, then make radiogroup invisible
+
+        viewBinding.myRecyclerView.setOnTouchListener { _, _ ->
+            viewBinding.rgFilter.isVisible = false
+            false
+        }
+
 
         viewBinding.btnFilter.setOnClickListener(View.OnClickListener {
-
                 viewBinding.rgFilter.isVisible = true
-
-//                if (viewBinding.btnFilter.text == "Store") {
-//                    viewBinding.btnFilter.text = "Caption"
-//                    viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#E9494A"))
-//                } else if (viewBinding.btnFilter.text == "Caption") {
-//                    viewBinding.btnFilter.text = "User"
-//                    viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#2C52B3"))
-//                    viewBinding.btnFilter.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
-//                } else {
-//                    viewBinding.btnFilter.text = "Store"
-//                    viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#FEB220"))
-//                }
         })
 
         viewBinding.btnClear.setOnClickListener(View.OnClickListener {
@@ -119,10 +111,7 @@ class HomeActivity : AppCompatActivity() {
         viewBinding.ibSearchBtn.setOnClickListener(View.OnClickListener {
 
             viewBinding.rgFilter.isVisible = false
-
             val selectedId = viewBinding.rgFilter.checkedRadioButtonId
-
-            Log.d("hey", selectedId.toString())
 
             if (selectedId != -1) {
 
@@ -160,10 +149,8 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
             else{
-
                 posts.clear()
                 this.myAdapter.notifyDataSetChanged()
-
                 callPostQuery()
             }
         })
@@ -203,7 +190,6 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-
         //Remove all posts, if posts is empty, then notify the adapter
         if (posts.isEmpty() != true) {
             posts.clear()
@@ -233,7 +219,6 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
-
 
     }
 
