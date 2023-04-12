@@ -33,8 +33,6 @@ class RegisterActivity : AppCompatActivity() {
                 if (viewBinding.editTextPassword.text.toString() == viewBinding.editTextConfirmPassword.text.toString()
                 ) {
 
-                    //     Log.d("test for email", viewBinding.editTextEmail.text.toString())
-
                     auth.createUserWithEmailAndPassword(viewBinding.editTextEmail.text.trim().toString(), viewBinding.editTextPassword.text.toString())
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
@@ -61,15 +59,6 @@ class RegisterActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT).show()
                             }
                         }
-
-//                    Toast.makeText(this, "Successfully Registered!", Toast.LENGTH_SHORT).show()
-//                    val returnIntent = Intent()
-//                    intent.putExtra("fullName", viewBinding.editTextFullName.text.toString())
-//                    intent.putExtra("email", viewBinding.editTextEmail.text.toString())
-//                    intent.putExtra("username", viewBinding.editTextUsername.text.toString())
-//                    intent.putExtra("password", viewBinding.editTextPassword.text.toString())
-//                    setResult(RESULT_OK,intent)
-//                    finish()
                 } else {
                     Toast.makeText(this, "Mismatched Password", Toast.LENGTH_SHORT).show()
                 }
