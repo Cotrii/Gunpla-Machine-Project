@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityHomeBinding
@@ -137,7 +138,7 @@ class HomeActivity : AppCompatActivity() {
 
                 } else if (viewBinding.btnFilter.text.toString() == "Caption") {
 
-                    db.collection("posts").get().addOnSuccessListener { documents ->
+                    db.collection("posts").orderBy("datePosted", Query.Direction.DESCENDING).get().addOnSuccessListener { documents ->
                         if(documents != null){
                             var index=0
                             for (document in documents) {
@@ -194,7 +195,7 @@ class HomeActivity : AppCompatActivity() {
             else{
                 posts.clear()
                 this.myAdapter.notifyDataSetChanged()
-                db.collection("posts").get().addOnSuccessListener { documents ->
+                db.collection("posts").orderBy("datePosted", Query.Direction.DESCENDING).get().addOnSuccessListener { documents ->
                     if(documents != null){
                         var index=0
                         for (document in documents) {
@@ -262,7 +263,7 @@ class HomeActivity : AppCompatActivity() {
             this.myAdapter.notifyDataSetChanged()
         }
 
-        db.collection("posts").get().addOnSuccessListener { documents ->
+        db.collection("posts").orderBy("datePosted", Query.Direction.DESCENDING).get().addOnSuccessListener { documents ->
             if(documents != null){
                 var index=0
                 for (document in documents) {
@@ -283,7 +284,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun callPostQuery(filter: String, unknownID: String) {
-        db.collection("posts").orderBy(filter)
+        db.collection("posts").orderBy("datePosted", Query.Direction.DESCENDING).orderBy(filter)
             .startAt(unknownID.uppercase(Locale.ROOT)).endAt(unknownID.lowercase(Locale.ROOT) + "\uf88f")
             .get()
             .addOnSuccessListener { documents ->
