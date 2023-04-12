@@ -9,7 +9,7 @@ import com.mobdeve.gunplamp.CommentViewHolder
 import com.mobdeve.gunplamp.databinding.CommentsLayoutBinding
 import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
 
-class MyCommentsAdapter(private val data: ArrayList<Comment>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>) : RecyclerView.Adapter<CommentViewHolder>()
+class MyCommentsAdapter(private val data: ArrayList<Comment>) : RecyclerView.Adapter<CommentViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
 

@@ -16,8 +16,12 @@ import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityViewCommentsBinding
 import java.lang.Integer.parseInt
 
+/**
+ * ViewCommentsActivity is used to determine
+ */
 class ViewCommentsActivity : AppCompatActivity() {
 
+    // This key is used to get the POST ID and get comments that are part of it
     companion object {
         const val POST_ID_KEY: String = "POST_ID_KEY"
     }
@@ -31,13 +35,13 @@ class ViewCommentsActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var myCommentsAdapter: MyCommentsAdapter
 
-    private val addCommentLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result: ActivityResult ->
-
-        if (result.resultCode == RESULT_OK) {
-        }
-    }
+//    private val addCommentLauncher = registerForActivityResult(
+//        ActivityResultContracts.StartActivityForResult()
+//    ) { result: ActivityResult ->
+//
+//        if (result.resultCode == RESULT_OK) {
+//        }
+//    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +52,7 @@ class ViewCommentsActivity : AppCompatActivity() {
 
         this.recyclerView = viewBinding.commentsRecyclerView
 
-        this.myCommentsAdapter = MyCommentsAdapter(commentsList as ArrayList<Comment>, addCommentLauncher)
+        this.myCommentsAdapter = MyCommentsAdapter(commentsList as ArrayList<Comment>)
         viewBinding.commentsRecyclerView.adapter = myCommentsAdapter
 
         this.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -70,14 +74,10 @@ class ViewCommentsActivity : AppCompatActivity() {
         viewBinding.btnSubmitCmmt.setOnClickListener(View.OnClickListener {
 
             if (viewBinding.etEntry.text.toString() != "") {
-//                commentsList.add(Comment(  User("123","thehawk", "pass2", "Borat",  R.drawable.borat)
-//                    , viewBinding.etEntry.text.toString()))
-
-
-                //Add new comment to database
+                // Add new comment to database
                 val comments = db.collection("comments")
 
-
+                // Get all data input to a hashmap then add it to the database and recyclerview
                 val data1 = hashMapOf(
                     "username" to user.username,
                     "content" to viewBinding.etEntry.text.toString(),
