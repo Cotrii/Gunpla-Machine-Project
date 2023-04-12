@@ -70,6 +70,7 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
 
+        // Sets profile pic based on image selected
         viewBinding.ivProfilePic.setOnClickListener {
             editProfilePic = !editProfilePic
             if (editProfilePic) {
@@ -96,6 +97,7 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
 
+        // Logs out user from auth
         viewBinding.buttonLogout.setOnClickListener {
             val logoutIntent = Intent(applicationContext, MainActivity::class.java)
             logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -103,6 +105,7 @@ class UserProfileActivity : AppCompatActivity() {
             startActivity(logoutIntent)
         }
 
+        // checks if user wants to change password and shows appropriate fields for it
         viewBinding.buttonChangePass.setOnClickListener {
             editPassword = !editPassword
             if (editPassword) {
@@ -128,12 +131,13 @@ class UserProfileActivity : AppCompatActivity() {
         }
 
 
-
+        //goes back to previous activity
         viewBinding.backButton.setOnClickListener{
             setResult(RESULT_CANCELED)
             finish()
         }
 
+        //Listeners for editing fields
         viewBinding.editFullNameButton.setOnClickListener{
             editFullName =! editFullName
             if (editFullName){
@@ -159,6 +163,7 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
 
+        // text changed listeners to enable saved button if fields are changed
         viewBinding.fullName.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -205,44 +210,54 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
 
+        // saves changes to db
         viewBinding.saveButton.setOnClickListener {
             val intent = Intent()
+
+            // check if password and confirm password is valid as well as if user wants password to be edited
             if(editPassword && (viewBinding.oldPassword.text.length <8 ||viewBinding.newPassword.text.length < 8 || viewBinding.newPassword.text.toString() != viewBinding.confirmNewPassword.text.toString())){
                 Toast.makeText(this, "Invalid Password", Toast.LENGTH_SHORT).show()
             }
+            // fields are left empty
             else if(viewBinding.fullName.text.length == 0 || viewBinding.username.text.length == 0){
                 Toast.makeText(this, "Invalid Fields", Toast.LENGTH_SHORT).show()
             }
             else{
-                db.collection("users").document(currentUser!!.uid).update("fullName", viewBinding.fullName.text.toString(), "username", viewBinding.username.text.toString(),"profilePic", user.profilePic).addOnSuccessListener { document ->
-                    if(editPassword){
-                        val credential = EmailAuthProvider.getCredential(currentUser?.email ?: "", viewBinding.oldPassword.text.toString())
-                        currentUser.reauthenticate(credential)?.addOnCompleteListener { task ->
-                            if(task.isSuccessful){
-                                currentUser.updatePassword(viewBinding.confirmNewPassword.text.toString())?.addOnCompleteListener{task->
-                                    if(task.isSuccessful){
-                                        if(document != null){
-                                            setResult(RESULT_OK, intent)
-                                            finish()
+                // updates values of the user in DB
+                db.collection("users").document(currentUser!!.uid).update("fullName", viewBinding.fullName.text.toString(),
+                    "username", viewBinding.username.text.toString(),"profilePic", user.profilePic).addOnSuccessListener { document ->
+                    // if editPassword is true then...
+                    if(document != null) {
+                        if (editPassword) {
+                            // get credential and reauthenticate user
+                            val credential = EmailAuthProvider.getCredential(
+                                currentUser?.email ?: "",
+                                viewBinding.oldPassword.text.toString()
+                            )
+                            currentUser.reauthenticate(credential)?.addOnCompleteListener { task ->
+                                // update password to the new password
+                                if (task.isSuccessful) {
+                                    currentUser.updatePassword(viewBinding.confirmNewPassword.text.toString())
+                                        ?.addOnCompleteListener { task ->
+                                            if (task.isSuccessful) {
+                                                if (document != null) {
+                                                    setResult(RESULT_OK, intent)
+                                                    finish()
+                                                }
+                                            } else {
+                                                setResult(RESULT_CANCELED, intent)
+                                                finish()
+                                            }
                                         }
-                                    }
-                                    else{
-                                        setResult(RESULT_CANCELED, intent)
-                                        finish()
-                                    }
+                                } else {
+                                    setResult(RESULT_CANCELED, intent)
+                                    finish()
                                 }
-                            }
-                            else{
-                                setResult(RESULT_CANCELED, intent)
-                                finish()
                             }
                         }
                     }
-
-                    if(document != null){
-                        setResult(RESULT_OK, intent)
-                        finish()
-                    }else{
+                    // if user wasnt found
+                    else{
                         setResult(RESULT_CANCELED, intent)
                         finish()
                     }
@@ -255,22 +270,22 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
 
-
+    // gets profile pic corresponding to integer saved in the DB for each user
     fun getProfilePic(index : Int): Int {
         if(index == 1){
-            return R.drawable.person1
+            return R.drawable.profpic1
         }
         else if(index == 2){
-            return  R.drawable.person2
+            return  R.drawable.profpic2
         }
         else if(index == 3){
-            return  R.drawable.person3
+            return  R.drawable.profpic3
         }
         else if(index == 4){
-            return  R.drawable.person4
+            return  R.drawable.profpic4
         }
         else{
-            return R.drawable.person1
+            return R.drawable.profpic1
         }
     }
 
