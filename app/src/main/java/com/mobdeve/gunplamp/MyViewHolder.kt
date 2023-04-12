@@ -80,19 +80,19 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
 
     fun getProfilePic(index : Int): Int {
         if(index == 1){
-            return R.drawable.person1
+            return R.drawable.profpic1
         }
         else if(index == 2){
-            return  R.drawable.person2
+            return  R.drawable.profpic2
         }
         else if(index == 3){
-            return  R.drawable.person3
+            return  R.drawable.profpic3
         }
         else if(index == 4){
-            return  R.drawable.person4
+            return  R.drawable.profpic4
         }
         else{
-            return R.drawable.person1
+            return R.drawable.profpic1
         }
     }
 

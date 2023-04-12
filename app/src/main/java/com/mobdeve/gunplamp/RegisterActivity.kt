@@ -43,7 +43,7 @@ class RegisterActivity : AppCompatActivity() {
                                     "fullName" to viewBinding.editTextFullName.text.toString(),
                                     "email" to viewBinding.editTextEmail.text.trim().toString(),
                                     "username" to  viewBinding.editTextUsername.text.toString(),
-                                    "profilePic" to 0
+                                    "profilePic" to 1
                                 )
 
                                 db.collection("users").document(auth.currentUser!!.uid).set(user).addOnSuccessListener {
