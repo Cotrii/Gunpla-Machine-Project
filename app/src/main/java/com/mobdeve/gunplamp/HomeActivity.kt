@@ -60,27 +60,13 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    //Edit (?)
+    //The viewPostDetailsLauncher is used to
     private val viewPostDetailsLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
 
-        if (result.resultCode == RESULT_OK) {
-//            val position = result.data!!.getIntExtra(ViewPostDetails.POSITION_KEY, 0)
-//            val newCaption = result.data!!.getStringExtra(ViewPostDetails.CAPTION_KEY).toString()
-//
-//            val status = result.data!!.getStringExtra(ViewPostDetails.STATUS_KEY).toString()
-//            if (status == "Edit")
-//            {
-//                data[position].changeCaption(newCaption)
-//                myAdapter.notifyItemChanged(position)
-//            }
-//            else //DELETE
-//            {
-//                data.remove(data[position])
-//                myAdapter.notifyDataSetChanged()
-//            }
-        }
+            if (result.resultCode == RESULT_OK) {
+            }
     }
 
     private val userProfileLauncher = registerForActivityResult(

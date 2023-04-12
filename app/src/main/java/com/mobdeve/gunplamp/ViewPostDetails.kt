@@ -1,6 +1,7 @@
 package com.mobdeve.gunplamp
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -73,6 +74,7 @@ class ViewPostDetails : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewBinding.btnSave.isEnabled = !isTextStillOriginal()
+                viewBinding.btnSave.setBackgroundColor(Color.parseColor("#4CAF50"))
             }
 
             override fun afterTextChanged(s: Editable?) {

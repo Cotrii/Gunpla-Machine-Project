@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="false"
-            android:backgroundTint="#4CAF50"
+            android:backgroundTint="#364CAF50"
             android:text="Save"
             android:textColor="#FFFFFF" />
     </RelativeLayout>

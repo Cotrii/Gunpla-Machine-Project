@@ -1,5 +1,8 @@
 package com.mobdeve.gunplamp
 
+/**
+ * The class "Comment" contains a username, content, postID (all in String format)
+ */
 class Comment(username: String, content: String, postID: String) {
     val username: String = username
     val content: String = content
