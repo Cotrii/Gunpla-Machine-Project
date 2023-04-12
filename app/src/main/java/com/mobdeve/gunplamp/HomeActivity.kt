@@ -111,10 +111,10 @@ class HomeActivity : AppCompatActivity() {
 
             if (viewBinding.etSearchInput.text.toString() != "") {
                 //Remove all posts, if posts is empty, then notify the adapter
-                if (posts.isEmpty() != true && viewBinding.btnFilter.text.toString() != "Caption") {
-                        posts.clear()
-                        this.myAdapter.notifyDataSetChanged()
-                }
+//                if (posts.isEmpty() != true && viewBinding.btnFilter.text.toString() != "Caption") {
+//                        posts.clear()
+//                        this.myAdapter.notifyDataSetChanged()
+//                }
 
                 var filter: String = ""
                 var unknownID: String = ""
@@ -122,82 +122,36 @@ class HomeActivity : AppCompatActivity() {
 
                 if (viewBinding.btnFilter.text.toString() == "User") {
 
-                    db.collection("users")
-                        .whereEqualTo("username", viewBinding.etSearchInput.text.toString())
-                        .get()
-                        .addOnSuccessListener { result ->
-                            if (result != null) {
-                                for (document in result) {
-                                    unknownID = document.id
-                                }
-                                filter = "userID"
+                    val filteredList = posts.filter { post ->
+                        post.username!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                    }
 
-                                callPostQuery(filter, unknownID)
-                            }
-                        }
+                    myAdapter.setData(filteredList)
 
                 } else if (viewBinding.btnFilter.text.toString() == "Caption") {
-
-                    Log.d("moshi", posts.toString())
 
                     val filteredList = posts.filter { post ->
                         post.caption!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
 
-                    Log.d("moshi", filteredList.toString())
-
                     myAdapter.setData(filteredList)
-
-//                    recyclerView.adapter = MyAdapter(filteredList as ArrayList<Post>,  viewPostDetailsLauncher, auth.currentUser!!.uid)
-
-//                    myAdapter.notifyDataSetChanged()
-
-
 
 
                 } else {
-                    db.collection("stores")
-                        .whereEqualTo("name", viewBinding.etSearchInput.text.toString())
-                        .get()
-                        .addOnSuccessListener { result ->
-                            if (result != null) {
-                                for (document in result) {
-                                    unknownID = document.id
-                                }
-                                filter = "storeID"
 
-                                callPostQuery(filter, unknownID)
+                    val filteredList = posts.filter { post ->
+                        post.store!!.name!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                    }
 
-                            }
-                        }
-
-                    Log.d("no way", unknownID)
-                    filter = "storeID"
+                    myAdapter.setData(filteredList)
                 }
             }
             else{
 
                 posts.clear()
                 this.myAdapter.notifyDataSetChanged()
-                db.collection("posts").orderBy("datePosted", Query.Direction.DESCENDING).get().addOnSuccessListener { documents ->
-                    if(documents != null){
-                        var index=0
-                        for (document in documents) {
-                            Log.d("SDAJKDLJWIOJLOOOOOOOOOOOOOOOOK", "onCreate: document is:" + document.getString("storeID").toString())
-                            db.collection("users").document(document.getString("userID").toString()).get().addOnSuccessListener {user ->
-                                db.collection("stores").document(document.getString("storeID").toString()).get().addOnSuccessListener { store ->
-                                    val poster = User(user.id,user.getString("username").toString(),user.getString("fullName").toString(),user.getString("email").toString(),user.getLong("profilePic")!!.toInt())
-                                    val store = Store(store.id, store.getString("name"), store.getString("city"))
-                                    val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
-                                    posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false, document["likes"] as ArrayList<String>))
-                                    this.myAdapter.notifyItemInserted(index)
-                                    index++
-                                }
-                            }
-                        }
-                    }
 
-                }
+                callPostQuery()
             }
         })
 
@@ -243,6 +197,11 @@ class HomeActivity : AppCompatActivity() {
             this.myAdapter.notifyDataSetChanged()
         }
 
+        this.callPostQuery()
+    }
+
+    private fun callPostQuery() {
+
         db.collection("posts").orderBy("datePosted", Query.Direction.DESCENDING).get().addOnSuccessListener { documents ->
             if(documents != null){
                 var index=0
@@ -261,63 +220,8 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
-    }
 
-    fun callPostQuery(filter: String, unknownID: String) {
-        db.collection("posts").orderBy(filter)
-            .startAt(unknownID.uppercase(Locale.ROOT)).endAt(unknownID.lowercase(Locale.ROOT) + "\uf88f")
-            .get()
-            .addOnSuccessListener { documents ->
-                if (documents != null) {
-                    var index = 0
-                    for (document in documents) {
-                        Log.d(
-                            "SDAJKDLJWIOJLOOOOOOOOOOOOOOOOK",
-                            "onCreate: document is:" + document.getString("storeID")
-                                .toString()
-                        )
-                        db.collection("users")
-                            .document(document.getString("userID").toString()).get()
-                            .addOnSuccessListener { user ->
-                                db.collection("stores")
-                                    .document(document.getString("storeID").toString())
-                                    .get().addOnSuccessListener { store ->
-                                        val poster = User(
-                                            user.id,
-                                            user.getString("username").toString(),
-                                            user.getString("fullName").toString(),
-                                            user.getString("email").toString(),
-                                            user.getLong("profilePic")!!.toInt()
-                                        )
-                                        val store = Store(
-                                            store.id,
-                                            store.getString("name"),
-                                            store.getString("city")
-                                        )
-                                        val datePosted = SimpleDateFormat("MMM d, yyyy").format(
-                                            document.getDate("datePosted")
-                                        )
-                                        posts.add(
-                                            Post(
-                                                document.id,
-                                                poster,
-                                                document.getString("imagePost"),
-                                                document.getString("caption"),
-                                                store,
-                                                datePosted,
-                                                false,
-                                                document["likes"] as ArrayList<String>
-                                            )
-                                        )
-                                        this.myAdapter.notifyItemInserted(index)
-                                        index++
-                                    }
-                            }
-                    }
 
-                }
-
-            }
     }
 
 
