@@ -111,7 +111,7 @@ class HomeActivity : AppCompatActivity() {
 
             if (viewBinding.etSearchInput.text.toString() != "") {
                 //Remove all posts, if posts is empty, then notify the adapter
-                if (posts.isEmpty() != true) {
+                if (posts.isEmpty() != true && viewBinding.btnFilter.text.toString() != "Caption") {
                         posts.clear()
                         this.myAdapter.notifyDataSetChanged()
                 }
@@ -138,36 +138,19 @@ class HomeActivity : AppCompatActivity() {
 
                 } else if (viewBinding.btnFilter.text.toString() == "Caption") {
 
-                    db.collection("posts").orderBy("datePosted", Query.Direction.DESCENDING).get().addOnSuccessListener { documents ->
-                        if(documents != null){
-                            var index=0
-                            for (document in documents) {
-                                Log.d("SDAJKDLJWIOJLOOOOOOOOOOOOOOOOK", "onCreate: document is:" + document.getString("storeID").toString())
-                                db.collection("users").document(document.getString("userID").toString()).get().addOnSuccessListener {user ->
-                                    db.collection("stores").document(document.getString("storeID").toString()).get().addOnSuccessListener { store ->
-                                        val poster = User(user.id,user.getString("username").toString(),user.getString("fullName").toString(),user.getString("email").toString(),user.getLong("profilePic")!!.toInt())
-                                        val store = Store(store.id, store.getString("name"), store.getString("city"))
-                                        val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
+                    Log.d("moshi", posts.toString())
 
-                                        if ( (document.getString("caption").toString()).contains(viewBinding.etSearchInput.text)) {
-                                            posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false, document["likes"] as ArrayList<String>))
-                                            this.myAdapter.notifyItemInserted(index)
-                                            index++
-                                        }
-                                    }
-                                }
-                            }
-
-                        }
+                    val filteredList = posts.filter { post ->
+                        post.caption!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
 
-                    for (post in posts) {
-                        if ((!(viewBinding.etSearchInput.text.toString() in post.caption!!))) {
-                            posts.remove(post)
-                        }
-                    }
+                    Log.d("moshi", filteredList.toString())
 
-                    this.myAdapter.notifyDataSetChanged()
+                    myAdapter.setData(filteredList)
+
+//                    recyclerView.adapter = MyAdapter(filteredList as ArrayList<Post>,  viewPostDetailsLauncher, auth.currentUser!!.uid)
+
+//                    myAdapter.notifyDataSetChanged()
 
 
 
@@ -193,6 +176,7 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
             else{
+
                 posts.clear()
                 this.myAdapter.notifyDataSetChanged()
                 db.collection("posts").orderBy("datePosted", Query.Direction.DESCENDING).get().addOnSuccessListener { documents ->

@@ -51,11 +51,11 @@ class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultL
             }else{
                 this.data[position].likes?.remove(userID)
             }
-            Log.d("ASDJKLASJDKLAJSDKLJSAK", "onBindViewHolder: " + this.data[position].likes)
+//            Log.d("ASDJKLASJDKLAJSDKLJSAK", "onBindViewHolder: " + this.data[position].likes)
             notifyItemChanged(position)
 
-            Log.d("moshi", this.data[position].likes.toString())
-            Log.d("moshi", this.data[position].id.toString())
+//            Log.d("moshi", this.data[position].likes.toString())
+//            Log.d("moshi", this.data[position].id.toString())
 
             val docRef = db.collection("posts").document(data[position].id)
 
@@ -91,6 +91,15 @@ class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultL
 
     override fun getItemCount(): Int {
         return data.size
+    }
+
+    fun setData(newPostList: List<Post>) {
+        // Clear the existing data.
+        data.clear()
+        // Add the new data to the list.
+        data.addAll(newPostList)
+        // Notify the adapter that the data has changed.
+        notifyDataSetChanged()
     }
 
 
