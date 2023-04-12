@@ -19,7 +19,7 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
     fun bindData(post: Post, userID: String) {
         this.viewBinding.ivUserIcon.setImageResource(getProfilePic(post.profilePic))
         this.viewBinding.tvUsername.text = post.username
-        this.viewBinding.tvLocation.text = post.store.name
+        this.viewBinding.tvLocation.text = post.store.name + " - "+ post.store.city
 
         if(post.imagePost != null){
             if(post.imagePost.toIntOrNull() != null ){
