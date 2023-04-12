@@ -8,9 +8,11 @@ import android.util.Log
 import android.util.TypedValue
 import android.util.TypedValue.COMPLEX_UNIT_SP
 import android.view.View
+import android.widget.RadioButton
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -92,58 +94,69 @@ class HomeActivity : AppCompatActivity() {
         viewBinding.myRecyclerView.adapter = myAdapter
         viewBinding.myRecyclerView.layoutManager = LinearLayoutManager(this)
 
+
         viewBinding.btnFilter.setOnClickListener(View.OnClickListener {
 
-                if (viewBinding.btnFilter.text == "Store") {
-                    viewBinding.btnFilter.text = "Caption"
-                    viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#E9494A"))
-                } else if (viewBinding.btnFilter.text == "Caption") {
-                    viewBinding.btnFilter.text = "User"
-                    viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#2C52B3"))
-                    viewBinding.btnFilter.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
-                } else {
-                    viewBinding.btnFilter.text = "Store"
-                    viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#FEB220"))
-                }
+                viewBinding.rgFilter.isVisible = true
+
+//                if (viewBinding.btnFilter.text == "Store") {
+//                    viewBinding.btnFilter.text = "Caption"
+//                    viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#E9494A"))
+//                } else if (viewBinding.btnFilter.text == "Caption") {
+//                    viewBinding.btnFilter.text = "User"
+//                    viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#2C52B3"))
+//                    viewBinding.btnFilter.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12F)
+//                } else {
+//                    viewBinding.btnFilter.text = "Store"
+//                    viewBinding.btnFilter.setBackgroundColor(Color.parseColor("#FEB220"))
+//                }
+        })
+
+        viewBinding.btnClear.setOnClickListener(View.OnClickListener {
+            viewBinding.rgFilter.clearCheck()
         })
 
         viewBinding.ibSearchBtn.setOnClickListener(View.OnClickListener {
 
-            if (viewBinding.etSearchInput.text.toString() != "") {
-                //Remove all posts, if posts is empty, then notify the adapter
-//                if (posts.isEmpty() != true && viewBinding.btnFilter.text.toString() != "Caption") {
-//                        posts.clear()
-//                        this.myAdapter.notifyDataSetChanged()
-//                }
+            viewBinding.rgFilter.isVisible = false
 
-                var filter: String = ""
-                var unknownID: String = ""
+            val selectedId = viewBinding.rgFilter.checkedRadioButtonId
+
+            Log.d("hey", selectedId.toString())
+
+            if (selectedId != -1) {
+
+                val radioButton = viewBinding.root.findViewById<RadioButton>(selectedId)
+                val selectedText = radioButton.text.toString()
 
 
-                if (viewBinding.btnFilter.text.toString() == "User") {
+                if (selectedText == "Store") {
+                    //Store
+                    val filteredList = posts.filter { post ->
+                        post.store!!.name!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                    }
 
+                    myAdapter.setData(filteredList)
+
+
+                } else if (selectedText == "User") {
+
+                    //User
                     val filteredList = posts.filter { post ->
                         post.username!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
 
                     myAdapter.setData(filteredList)
 
-                } else if (viewBinding.btnFilter.text.toString() == "Caption") {
+                } else {
 
+                    //Caption
                     val filteredList = posts.filter { post ->
                         post.caption!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
 
                     myAdapter.setData(filteredList)
 
-
-                } else {
-
-                    val filteredList = posts.filter { post ->
-                        post.store!!.name!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
-                    }
-
-                    myAdapter.setData(filteredList)
                 }
             }
             else{

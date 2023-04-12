@@ -84,9 +84,9 @@
             android:id="@+id/btn_filter"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:backgroundTint="#FEB220"
+            android:backgroundTint="#3F51B5"
             android:gravity="center_vertical"
-            android:text="Store"
+            android:text="Filter"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageButton"
@@ -130,5 +130,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/baseline_add_24"
         app:tint="#FFFFFF" />
+
+    <RadioGroup
+        android:id="@+id/rg_filter"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:background="#FDFDFD"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_headerBar">
+
+        <RadioButton
+            android:id="@+id/rb_store"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="Store"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rb_user"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="User"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/rb_caption"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="Caption"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Clear"
+            android:textSize="12sp" />
+
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
