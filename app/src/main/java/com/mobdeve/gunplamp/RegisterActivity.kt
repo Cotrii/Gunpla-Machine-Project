@@ -33,11 +33,6 @@ class RegisterActivity : AppCompatActivity() {
                 if (viewBinding.editTextPassword.text.toString() == viewBinding.editTextConfirmPassword.text.toString()
                 ) {
                     db.collection("users").whereEqualTo("username", viewBinding.editTextUsername.text.toString()).get().addOnCompleteListener {result ->
-                        Toast.makeText(
-                            baseContext,
-                            "here" + result.toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
                         if(result == null){
                             auth.createUserWithEmailAndPassword(viewBinding.editTextEmail.text.trim().toString(), viewBinding.editTextPassword.text.toString())
                                 .addOnCompleteListener(this) { task ->
@@ -86,7 +81,7 @@ class RegisterActivity : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if(currentUser != null){
-            Toast.makeText(this, "current user is:" + currentUser, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "current user is:" + currentUser, Toast.LENGTH_SHORT).show()
             auth.signOut()
         }
     }
