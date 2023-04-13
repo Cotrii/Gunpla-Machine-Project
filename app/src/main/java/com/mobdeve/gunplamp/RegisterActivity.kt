@@ -32,8 +32,8 @@ class RegisterActivity : AppCompatActivity() {
 
                 if (viewBinding.editTextPassword.text.toString() == viewBinding.editTextConfirmPassword.text.toString()
                 ) {
-                    db.collection("users").whereEqualTo("username", viewBinding.editTextFullName).get().addOnCompleteListener(this) {result ->
-                        if(result.isSuccessful){
+                    db.collection("users").whereEqualTo("username", viewBinding.editTextUsername.text.toString()).get().addOnCompleteListener(this) {result ->
+                        if(!result.isSuccessful){
                             auth.createUserWithEmailAndPassword(viewBinding.editTextEmail.text.trim().toString(), viewBinding.editTextPassword.text.toString())
                                 .addOnCompleteListener(this) { task ->
                                     if (task.isSuccessful) {
