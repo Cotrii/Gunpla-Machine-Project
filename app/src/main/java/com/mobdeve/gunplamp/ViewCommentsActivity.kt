@@ -116,8 +116,9 @@ class ViewCommentsActivity : AppCompatActivity() {
                 db.collection("users").document(document.getString("userID").toString()).get().addOnSuccessListener {user ->
                     if(user != null) {
                         val username = user!!.getString("username").toString()
+
                         val comment =  Comment(
-                            username,
+                            username + " - " + document.getDate("commentDate").toString().substring(4, 16),
                             document.getString("content").toString(),
                             document.getString("postID").toString(),
                             document.getDate("commentDate").toString())
@@ -127,7 +128,7 @@ class ViewCommentsActivity : AppCompatActivity() {
 
 
                         //
-                        val sortedData = commentsList.sortedByDescending {
+                        val sortedData = commentsList.sortedBy {
                             it.commentDate
                         }
 
