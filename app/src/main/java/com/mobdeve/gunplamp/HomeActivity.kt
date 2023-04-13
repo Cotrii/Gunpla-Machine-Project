@@ -107,23 +107,7 @@ class HomeActivity : AppCompatActivity() {
             viewBinding.rgFilter.clearCheck()
         })
 
-        viewBinding.etSearchInput.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                // Do something when keyboard enter is pressed
-
-                true
-            } else {
-                Toast.makeText(
-                    baseContext,
-                    "wat",
-                    Toast.LENGTH_SHORT
-                ).show()
-                false
-            }
-        }
-
-        viewBinding.ibSearchBtn.setOnClickListener(View.OnClickListener {
-
+        fun doFilter() {
             viewBinding.rgFilter.isVisible = false
             val selectedId = viewBinding.rgFilter.checkedRadioButtonId
 
@@ -167,6 +151,25 @@ class HomeActivity : AppCompatActivity() {
                 this.myAdapter.notifyDataSetChanged()
                 callPostQuery()
             }
+
+        }
+
+        viewBinding.etSearchInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                doFilter()
+                true
+            } else {
+                Toast.makeText(
+                    baseContext,
+                    "Invalid",
+                    Toast.LENGTH_SHORT
+                ).show()
+                false
+            }
+        }
+
+        viewBinding.ibSearchBtn.setOnClickListener(View.OnClickListener {
+            doFilter()
         })
 
         val createPostButton = viewBinding.fabCreatePost
@@ -182,12 +185,13 @@ class HomeActivity : AppCompatActivity() {
             this.userProfileLauncher.launch(intent)
         }
 
-
         //Remove flickering of item
         val animator = recyclerView.itemAnimator
         if (animator is SimpleItemAnimator) {
             (animator as SimpleItemAnimator).supportsChangeAnimations = false
         }
+
+
 
 
     }
