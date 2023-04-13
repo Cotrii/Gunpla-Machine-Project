@@ -9,6 +9,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.util.TypedValue.COMPLEX_UNIT_SP
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
 import android.widget.Toast
@@ -111,15 +112,29 @@ class HomeActivity : AppCompatActivity() {
             viewBinding.rgFilter.clearCheck()
         })
 
+        viewBinding.etSearchInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                // Do something when keyboard enter is pressed
+
+                true
+            } else {
+                Toast.makeText(
+                    baseContext,
+                    "wat",
+                    Toast.LENGTH_SHORT
+                ).show()
+                false
+            }
+        }
+
         viewBinding.ibSearchBtn.setOnClickListener(View.OnClickListener {
 
             viewBinding.rgFilter.isVisible = false
             val selectedId = viewBinding.rgFilter.checkedRadioButtonId
 
-            // Get a reference to the InputMethodManager
+            // Get reference to InputMethodManager
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-            // Hide the keyboard
+            // Hide keyboard
             imm.hideSoftInputFromWindow(viewBinding.root.windowToken, 0)
 
             if (selectedId != -1) {
@@ -127,46 +142,33 @@ class HomeActivity : AppCompatActivity() {
                 val radioButton = viewBinding.root.findViewById<RadioButton>(selectedId)
                 val selectedText = radioButton.text.toString()
 
-
                 if (selectedText == "Store") {
                     //Store
                     val filteredList = posts.filter { post ->
                         post.store!!.name!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
 
-                    myAdapter.setData(filteredList)
-                    showToast(filteredList as ArrayList<Post>)
+                    updateFilter(filteredList as ArrayList<Post>)
 
                 } else if (selectedText == "User") {
-
                     //User
                     val filteredList = posts.filter { post ->
                         post.username!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
-
-                    myAdapter.setData(filteredList)
-                    showToast(filteredList as ArrayList<Post>)
+                    updateFilter(filteredList as ArrayList<Post>)
 
                 } else if (selectedText == "Caption"){
-
                     //Caption
                     val filteredList = posts.filter { post ->
                         post.caption!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
-
-                    myAdapter.setData(filteredList)
-                    showToast(filteredList as ArrayList<Post>)
-
+                    updateFilter(filteredList as ArrayList<Post>)
                 } else {
-
                     //City
                     val filteredList = posts.filter { post ->
                         post.store!!.city!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
-
-                    myAdapter.setData(filteredList)
-                    showToast(filteredList as ArrayList<Post>)
-
+                    updateFilter(filteredList as ArrayList<Post>)
                 }
             }
             else{
@@ -199,6 +201,8 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+
+    // Once the user comes is redirected to the home activity, reload the current data
     override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -251,6 +255,11 @@ class HomeActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+    }
+
+    private fun updateFilter(filteredList: ArrayList<Post>){
+        myAdapter.setData(filteredList)
+        showToast(filteredList)
     }
 
 
