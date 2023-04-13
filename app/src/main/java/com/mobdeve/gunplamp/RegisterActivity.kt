@@ -11,6 +11,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityRegisterBinding
 
+/**
+ * RegisterActivity allows the user to input its full name, username, and password
+ */
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth
@@ -76,6 +79,8 @@ class RegisterActivity : AppCompatActivity() {
         }
 
     }
+
+    /** onStart contains the code to check whether if a user is signed in or not */
     override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.

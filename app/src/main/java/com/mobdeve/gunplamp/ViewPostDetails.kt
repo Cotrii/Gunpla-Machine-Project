@@ -16,6 +16,9 @@ import com.mobdeve.gunplamp.databinding.ActivityViewPostDetailsBinding
 import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 
+/**
+ * In ViewPostDetails Activity, a user is able to view a post, edit or delete the post iself
+ */
 class ViewPostDetails : AppCompatActivity() {
 
     companion object {
@@ -81,6 +84,7 @@ class ViewPostDetails : AppCompatActivity() {
             }
         })
 
+        // Save changes done to the post
         viewBinding.btnSave.setOnClickListener(View.OnClickListener {
 
             //Update the database
@@ -112,11 +116,10 @@ class ViewPostDetails : AppCompatActivity() {
 
         })
 
+
+        // If a user presses delete, delete it from the database and returnback to home screen
         viewBinding.btnDelete.setOnClickListener(View.OnClickListener {
-
-
             //Delete a document from the database
-            //val id = intent.getStringExtra(ViewPostDetails.POST_ID_KEY).toString()
             val docRef = db.collection("posts").document(id)
             docRef.delete()
 

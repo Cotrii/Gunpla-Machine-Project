@@ -21,7 +21,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 /**
- * ViewCommentsActivity is used to determine
+ * ViewCommentsActivity is used to view and determine the amount of comments in a post
+ * A user will also be allowed to add its own comment
  */
 class ViewCommentsActivity : AppCompatActivity() {
 
@@ -64,7 +65,7 @@ class ViewCommentsActivity : AppCompatActivity() {
 
         val postid = intent.getStringExtra(ViewCommentsActivity.POST_ID_KEY).toString()
 
-
+        // If input is not empty, then add the comment to the list
         viewBinding.btnSubmitCmmt.setOnClickListener(View.OnClickListener {
             viewBinding.btnSubmitCmmt.isEnabled = false
             if (viewBinding.etEntry.text.toString() != "") {
@@ -89,7 +90,7 @@ class ViewCommentsActivity : AppCompatActivity() {
             viewBinding.etEntry.setText("")
         })
 
-
+        // Get all the comments according to its postID
         db.collection("comments")
 //            .orderBy("datePosted", Query.Direction.ASCENDING)
             .whereEqualTo("postID", postid)
@@ -113,7 +114,7 @@ class ViewCommentsActivity : AppCompatActivity() {
                         index++
 
 
-                        //
+                        // Sort the comments by date it was created
                         val sortedData = commentsList.sortedBy {
                             it.commentDate
                         }

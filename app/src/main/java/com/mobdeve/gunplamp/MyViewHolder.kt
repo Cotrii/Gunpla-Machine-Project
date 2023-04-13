@@ -39,11 +39,8 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
             this.viewBinding.ibDetailsBtn.visibility = View.VISIBLE
         }
 
-        //How will we track every user's activity with likes (Solution: add or check if user
-        // is in list/array of strings?
-
         post.liked = userInLikeList(post, userID)
-        //
+
         this.viewBinding.ibFavorite.setImageResource(isLikedDrawable(post.liked))
 
         this.viewBinding.tvBotUsername.text = post.username
@@ -52,19 +49,20 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
 
         this.viewBinding.tvDate.text = post.datePosted
     }
-
+    // Listen if a user wants to like a post
     fun setLikeOnClickListener(onClickListener: View.OnClickListener) {
         this.viewBinding.ibFavorite.setOnClickListener(onClickListener)
     }
-
+    // Listen if a user wants to edit its post
     fun setEditOnClickListener(onClickListener: View.OnClickListener) {
         this.viewBinding.ibDetailsBtn.setOnClickListener(onClickListener)
     }
-
+    // This allows the user to view comments of a post
     fun setViewCommentsOnClickListener(onClickListener: View.OnClickListener) {
         this.viewBinding.tvComments.setOnClickListener(onClickListener)
     }
 
+    /** isLikedDrawable() - Return a solid heart if a user liked the post, else if not*/
     fun isLikedDrawable(like: Boolean): Int {
 
         if (like) {
@@ -74,12 +72,13 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
         return R.drawable.not_favorite_24
     }
 
+    /** changeLike() - Post the number of likes in a post*/
     fun changeLike(post: Post) : Boolean {
         post.liked = !(post.liked)
         this.viewBinding.tvLikeCounter.text = post.countLikes().toString() + " Likes"
         return post.liked
     }
-
+    /** getProfilePic() - allow the user to get a drawable according to its prof pic index */
     fun getProfilePic(index : Int): Int {
         if(index == 1){
             return R.drawable.profpic1
@@ -98,7 +97,7 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
         }
     }
 
-
+    /** Check if a user is present in the post's like list or not */
     fun userInLikeList(post: Post, userID: String): Boolean {
 
         return post.likes.contains(userID)

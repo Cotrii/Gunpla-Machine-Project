@@ -17,6 +17,10 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityUserProfileBinding
 
+/**
+ * UserProfileActivity - In this activity a user may view its current profile pic, username
+ * and full name. It will also be allowed to edit content in it
+ */
 class UserProfileActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
@@ -210,7 +214,7 @@ class UserProfileActivity : AppCompatActivity() {
             }
         }
 
-        // saves changes to db
+        // Saves changes to db
         viewBinding.saveButton.setOnClickListener {
             val intent = Intent()
 
