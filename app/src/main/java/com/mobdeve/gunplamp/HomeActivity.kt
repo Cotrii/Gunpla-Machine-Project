@@ -160,8 +160,6 @@ class HomeActivity : AppCompatActivity() {
                     updateFilter(filteredList as ArrayList<Post>)
                 } else { //City
 
-                    Log.d("try", oldPosts.toString())
-
                     var filteredList = posts.filter { post ->
                         post.store!!.city!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
@@ -178,9 +176,38 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
             else{
-                posts.clear()
-                this.myAdapter.notifyDataSetChanged()
-                callPostQuery()
+
+                if (viewBinding.etSearchInput.text.toString() != "") {
+                    myAdapter.setData(oldPosts)
+                    var filList1 = posts.filter { post ->
+                        post.store!!.name!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                    }
+
+                    var filList2 = posts.filter { post ->
+                        post.username!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                    }
+
+                    var filList3 = posts.filter { post ->
+                        post.caption!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                    }
+
+                    var filList4 = posts.filter { post ->
+                        post.store!!.city!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                    }
+
+                    val combinedArr = filList1.plus(filList2).plus(filList3).plus(filList4)
+
+                    if (combinedArr.isEmpty()) {
+                        showToast(combinedArr as ArrayList<Post>)
+                    }
+
+                    myAdapter.setData(combinedArr)
+
+                } else {
+                    posts.clear()
+                    this.myAdapter.notifyDataSetChanged()
+                    callPostQuery()
+                }
             }
 
         }
@@ -277,7 +304,7 @@ class HomeActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT).show()
         }
 
-        callPostQuery()
+//        callPostQuery()
 
     }
 
