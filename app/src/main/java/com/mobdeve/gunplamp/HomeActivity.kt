@@ -37,6 +37,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private val db = Firebase.firestore
     private var posts : MutableList<Post> = ArrayList<Post>()
+    private var oldPosts: MutableList<Post> = ArrayList<Post>()
 
     private val createPostLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -116,27 +117,63 @@ class HomeActivity : AppCompatActivity() {
                 val selectedText = radioButton.text.toString()
 
                 if (selectedText == "Store") {  //Store
-                    val filteredList = posts.filter { post ->
+
+                    var filteredList = posts.filter { post ->
                         post.store!!.name!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                    }
+
+                    if (filteredList.isEmpty()) {
+                        myAdapter.setData(oldPosts)
+                        filteredList = posts.filter {  post ->
+                            post.store!!.name!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                        }
                     }
 
                     updateFilter(filteredList as ArrayList<Post>)
 
                 } else if (selectedText == "User") {  //User
-                    val filteredList = posts.filter { post ->
+                    var filteredList = posts.filter { post ->
                         post.username!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
+
+                    if (filteredList.isEmpty()) {
+                        myAdapter.setData(oldPosts)
+                        filteredList = posts.filter { post ->
+                            post.username!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                        }
+                    }
+
                     updateFilter(filteredList as ArrayList<Post>)
 
                 } else if (selectedText == "Caption"){ //Caption
-                    val filteredList = posts.filter { post ->
+                    var filteredList = posts.filter { post ->
                         post.caption!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
+
+                    if (filteredList.isEmpty()) {
+                        myAdapter.setData(oldPosts)
+                        filteredList = posts.filter { post ->
+                            post.caption!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                        }
+                    }
+
                     updateFilter(filteredList as ArrayList<Post>)
                 } else { //City
-                    val filteredList = posts.filter { post ->
+
+                    Log.d("try", oldPosts.toString())
+
+                    var filteredList = posts.filter { post ->
                         post.store!!.city!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
+
+                    if (filteredList.isEmpty()) {
+                        myAdapter.setData(oldPosts)
+                        filteredList = posts.filter { post ->
+                            post.store!!.city!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                        }
+                    }
+
+
                     updateFilter(filteredList as ArrayList<Post>)
                 }
             }
@@ -223,6 +260,7 @@ class HomeActivity : AppCompatActivity() {
                             val store = Store(store.id, store.getString("name"), store.getString("city"))
                             val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
                             posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false, document["likes"] as ArrayList<String>))
+                            oldPosts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false, document["likes"] as ArrayList<String>))
                             this.myAdapter.notifyItemInserted(index)
                             index++
                         }
@@ -238,6 +276,9 @@ class HomeActivity : AppCompatActivity() {
             Toast.makeText(baseContext, "Invalid. Clear filter then search",
                 Toast.LENGTH_SHORT).show()
         }
+
+        callPostQuery()
+
     }
 
     private fun updateFilter(filteredList: ArrayList<Post>){
