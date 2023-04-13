@@ -70,16 +70,11 @@ class HomeActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
 
-            if (result.resultCode == RESULT_OK) {
-            }
     }
 
     private val userProfileLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result : ActivityResult ->
-        if (result.resultCode == RESULT_OK){
-
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -142,29 +137,25 @@ class HomeActivity : AppCompatActivity() {
                 val radioButton = viewBinding.root.findViewById<RadioButton>(selectedId)
                 val selectedText = radioButton.text.toString()
 
-                if (selectedText == "Store") {
-                    //Store
+                if (selectedText == "Store") {  //Store
                     val filteredList = posts.filter { post ->
                         post.store!!.name!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
 
                     updateFilter(filteredList as ArrayList<Post>)
 
-                } else if (selectedText == "User") {
-                    //User
+                } else if (selectedText == "User") {  //User
                     val filteredList = posts.filter { post ->
                         post.username!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
                     updateFilter(filteredList as ArrayList<Post>)
 
-                } else if (selectedText == "Caption"){
-                    //Caption
+                } else if (selectedText == "Caption"){ //Caption
                     val filteredList = posts.filter { post ->
                         post.caption!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
                     updateFilter(filteredList as ArrayList<Post>)
-                } else {
-                    //City
+                } else { //City
                     val filteredList = posts.filter { post ->
                         post.store!!.city!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
