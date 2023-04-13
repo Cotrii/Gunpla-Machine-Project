@@ -171,7 +171,6 @@ class HomeActivity : AppCompatActivity() {
                         }
                     }
 
-
                     updateFilter(filteredList as ArrayList<Post>)
                 }
             }
@@ -300,12 +299,9 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showToast(filteredList : ArrayList<Post>){
         if (filteredList.isEmpty()) {
-            Toast.makeText(baseContext, "Invalid. Clear filter then search",
+            Toast.makeText(baseContext, "Invalid. Clear Filter & Text then search",
                 Toast.LENGTH_SHORT).show()
         }
-
-//        callPostQuery()
-
     }
 
     private fun updateFilter(filteredList: ArrayList<Post>){
