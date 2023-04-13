@@ -118,7 +118,7 @@ class ViewCommentsActivity : AppCompatActivity() {
                         val username = user!!.getString("username").toString()
 
                         val comment =  Comment(
-                            username + " - " + document.getDate("commentDate").toString().substring(4, 16),
+                            username,
                             document.getString("content").toString(),
                             document.getString("postID").toString(),
                             document.getDate("commentDate").toString())

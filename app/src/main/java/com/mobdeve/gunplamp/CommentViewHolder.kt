@@ -1,5 +1,6 @@
 package com.mobdeve.gunplamp
 
+import android.text.TextUtils.substring
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.gunplamp.Comment
 import com.mobdeve.gunplamp.databinding.CommentsLayoutBinding
@@ -14,6 +15,8 @@ class CommentViewHolder(private val viewBinding: CommentsLayoutBinding): Recycle
 
         this.viewBinding.tvUser.text = comment.username
         this.viewBinding.tvComment.text = comment.content
+
+        this.viewBinding.tvCmtDate.text = comment.commentDate.substring(4, 16)
 
     }
 }
