@@ -89,6 +89,7 @@
             android:gravity="center_vertical"
             android:text="Filter"
             android:textAlignment="center"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageButton"
             app:layout_constraintStart_toEndOf="@+id/cl_searchBar"
