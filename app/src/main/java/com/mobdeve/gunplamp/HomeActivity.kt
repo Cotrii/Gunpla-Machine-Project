@@ -1,5 +1,6 @@
 package com.mobdeve.gunplamp
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -8,7 +9,9 @@ import android.util.Log
 import android.util.TypedValue
 import android.util.TypedValue.COMPLEX_UNIT_SP
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -113,6 +116,12 @@ class HomeActivity : AppCompatActivity() {
             viewBinding.rgFilter.isVisible = false
             val selectedId = viewBinding.rgFilter.checkedRadioButtonId
 
+            // Get a reference to the InputMethodManager
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+            // Hide the keyboard
+            imm.hideSoftInputFromWindow(viewBinding.root.windowToken, 0)
+
             if (selectedId != -1) {
 
                 val radioButton = viewBinding.root.findViewById<RadioButton>(selectedId)
@@ -126,7 +135,7 @@ class HomeActivity : AppCompatActivity() {
                     }
 
                     myAdapter.setData(filteredList)
-
+                    showToast(filteredList as ArrayList<Post>)
 
                 } else if (selectedText == "User") {
 
@@ -136,6 +145,7 @@ class HomeActivity : AppCompatActivity() {
                     }
 
                     myAdapter.setData(filteredList)
+                    showToast(filteredList as ArrayList<Post>)
 
                 } else if (selectedText == "Caption"){
 
@@ -145,6 +155,7 @@ class HomeActivity : AppCompatActivity() {
                     }
 
                     myAdapter.setData(filteredList)
+                    showToast(filteredList as ArrayList<Post>)
 
                 } else {
 
@@ -154,6 +165,7 @@ class HomeActivity : AppCompatActivity() {
                     }
 
                     myAdapter.setData(filteredList)
+                    showToast(filteredList as ArrayList<Post>)
 
                 }
             }
@@ -229,6 +241,16 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun showToast(filteredList : ArrayList<Post>){
+        if (filteredList.isEmpty()) {
+            Toast.makeText(
+                baseContext,
+                "Clear filter then search",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
 
