@@ -12,18 +12,19 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityLoginBinding
 
+/**
+ * LoginActivity contains the logic of login whether if the user exists or not
+ */
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private val db = Firebase.firestore
-//    private var dbHelper = DBHelper
 
     companion object {
         const val INPUT_USER_KEY = "INPUT_USER_KEY"
-//        private lateinit var USERLIST_KEY: ArrayList<User> =
     }
 
-
+    // Launcher if the user needs to register first
     private val registerResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {result: ActivityResult ->
@@ -34,17 +35,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private val openHomeLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {result: ActivityResult ->
-
-//        if (result.resultCode == RESULT_OK) {
-//            //TODO
-//            Toast.makeText(this, "RESULT IS:" + result.data?.getStringExtra("firstName") + " " + result.data?.getStringExtra("password") + " " +result.data?.getStringExtra("username"), Toast.LENGTH_SHORT).show()
-//        }
-    }
-
-
+    /** OnCreate - Contains the login logic for firebase Auth */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

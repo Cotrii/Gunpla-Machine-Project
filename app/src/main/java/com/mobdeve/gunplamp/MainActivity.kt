@@ -10,6 +10,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.google.firebase.auth.FirebaseAuth
 import com.mobdeve.gunplamp.databinding.ActivityMainBinding
 
+/**
+ * MainActivity is more of a launcher activity, rather than a main (which could probably
+ * be the HomeActivity). This is where the user is welcomed to register or login
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
@@ -17,27 +21,18 @@ class MainActivity : AppCompatActivity() {
         private val data = ArrayList<User>()
     }
 
+    // Launcher for Register
     private val registerResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {result: ActivityResult ->
 
         if (result.resultCode == RESULT_OK) {
-            //TODO
-//            val username: String = result.data?.getStringExtra("username").toString()
-//            val password: String = result.data?.getStringExtra("password").toString()
-//            val fullName: String = result.data?.getStringExtra("fullName").toString()
-//            val email: String = result.data?.getStringExtra("email").toString()
-//            val profilePic: Int = 0
-//            data.add(User(username,password,fullName,email,profilePic))
             val intent = Intent(applicationContext, HomeActivity::class.java)
-//            intent.putExtra("username", username)
-//            intent.putExtra("fullName", fullName)
-//            intent.putExtra("email", email)
-//            intent.putExtra("profilePic", profilePic)
             startActivity(intent)
         }
     }
 
+    // Launcher for Login
     private val loginResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {result: ActivityResult ->
@@ -47,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    // Launcher for Home Activity
     private val homeActivityLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {result: ActivityResult ->
@@ -57,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    // Contains Layout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -77,6 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // onStart contains the code to check whether if a user is signed in or not
     public override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.

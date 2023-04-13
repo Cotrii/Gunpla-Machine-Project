@@ -29,6 +29,10 @@ import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
 
 
+/***
+ *  Home Activity contains most of the functions to be used by a user.
+ *  It also contains the data retrieved from the query that are considered as Posts.
+ */
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
@@ -39,6 +43,7 @@ class HomeActivity : AppCompatActivity() {
     private var posts : MutableList<Post> = ArrayList<Post>()
     private var oldPosts: MutableList<Post> = ArrayList<Post>()
 
+    // Launcher for Create Post
     private val createPostLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {result: ActivityResult ->
@@ -47,7 +52,7 @@ class HomeActivity : AppCompatActivity() {
             this.myAdapter.notifyDataSetChanged()
         }
     }
-
+    //Launcher for Gallery View
     private val galleryViewLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
@@ -121,7 +126,7 @@ class HomeActivity : AppCompatActivity() {
                     var filteredList = posts.filter { post ->
                         post.store!!.name!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
-
+                    //If current posts is empty, then try to set the data again
                     if (filteredList.isEmpty()) {
                         myAdapter.setData(oldPosts)
                         filteredList = posts.filter {  post ->
@@ -174,7 +179,7 @@ class HomeActivity : AppCompatActivity() {
                     updateFilter(filteredList as ArrayList<Post>)
                 }
             }
-            else{
+            else{ // If the user did not indicate any fields, search for anything
 
                 if (viewBinding.etSearchInput.text.toString() != "") {
                     myAdapter.setData(oldPosts)
@@ -296,14 +301,14 @@ class HomeActivity : AppCompatActivity() {
         }
 
     }
-
+    /** shows a Toast if input is actually invalid */
     private fun showToast(filteredList : ArrayList<Post>){
         if (filteredList.isEmpty()) {
             Toast.makeText(baseContext, "Invalid. Clear Filter & Text then search",
                 Toast.LENGTH_SHORT).show()
         }
     }
-
+    /** updates the currentlist in myAdapter*/
     private fun updateFilter(filteredList: ArrayList<Post>){
         myAdapter.setData(filteredList)
         showToast(filteredList)

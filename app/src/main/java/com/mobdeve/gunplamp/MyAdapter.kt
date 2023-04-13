@@ -14,33 +14,24 @@ import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
 
 
-//Remove Intent parameter if we don't need to include comments
-
-//class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultLauncher:
-////ActivityResultLauncher<Intent>) : Adapter<MyViewHolder>()
+/**
+ * MyAdapter holds most of the RecyclerView setup logic for Post data
+ */
 class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>, private val userID : String) : Adapter<MyViewHolder>() {
 
     private val db = Firebase.firestore
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-
-//        companion object {
-//            const val USERNAME_KEY: String = "USERNAME_KEY"
-//            const val IMAGE_KEY: String = "IMAGE_KEY"
-//            const val CAPTION_KEY: String = "CAPTION_KEY"
-//            const val POSITION_KEY: String = "POSITION_KEY"
-//        }
 
         val itemViewBinding: ItemLayoutBinding = ItemLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-//
         val myViewHolder = MyViewHolder(itemViewBinding)
 
         return myViewHolder
     }
-
+    /** Binds data and also updates the document containing the likes for an item */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bindData(this.data[position], userID)
 
@@ -61,7 +52,7 @@ class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultL
 
             docRef.update("likes", this.data[position].likes)
         })
-
+        // If a userID matches a post's userID then store its details on an intent
         if(userID == data[position].userID){
             holder.setEditOnClickListener(View.OnClickListener {
                 val intent : Intent = Intent(holder.itemView.context, ViewPostDetails::class.java)
@@ -76,8 +67,7 @@ class MyAdapter(private val data: ArrayList<Post>, private val myActivityResultL
             })
         }
 
-
-
+        // This sets a view for viewing comments for a certain activity
         holder.setViewCommentsOnClickListener(View.OnClickListener {
            val intent : Intent = Intent(holder.itemView.context, ViewCommentsActivity::class.java)
 

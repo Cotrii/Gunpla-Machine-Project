@@ -57,7 +57,7 @@ class CreatePostActivity : AppCompatActivity() {
         viewBinding = ActivityCreatePostBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        // ask permission for reading external storage and camera
+        // Ask permission for reading external storage and camera
         permissionsBuilder(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA).build().send {
             result ->
                 if((result[0].toString().contains("Granted") || result[0].toString().contains("Permanently"))  && ( result[1].toString().contains("Granted") || result[1].toString().contains("Permanently"))){
@@ -70,7 +70,7 @@ class CreatePostActivity : AppCompatActivity() {
                 }
         };
 
-        // get all stores in db and get its store name to initialize the spinner with
+        // Get all stores in db and get its store name to initialize the spinner with
         db.collection("stores").get().addOnSuccessListener { documents ->
             if(documents != null){
                 for (document in documents) {
@@ -93,7 +93,7 @@ class CreatePostActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        //authorize user
+        // Authorize user
         auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
         if(currentUser != null){
@@ -112,7 +112,7 @@ class CreatePostActivity : AppCompatActivity() {
             finish()
         }
 
-        // post to db
+        // Post to db
         viewBinding.btnPost.setOnClickListener {
             if (viewBinding.etCaption.text.isNotEmpty() && tempName.isNotEmpty() && tempCity.isNotEmpty()) {
                 if(viewBinding.spinnerStore.selectedItem.toString().isNotEmpty()){
@@ -137,7 +137,7 @@ class CreatePostActivity : AppCompatActivity() {
         }
     }
 
-    // create post and store in db
+    // CreatePost - create post and store in db
     private fun createPost(storeID: String){
 
         // save image to firebase storage
@@ -165,7 +165,7 @@ class CreatePostActivity : AppCompatActivity() {
         }
     }
 
-    // show store values in spinner
+    // Initialize Spinner - show store values in spinner
     private fun initializeSpinner(){
         val adapter : ArrayAdapter<String> =  ArrayAdapter(this, android.R.layout.simple_spinner_item, storeNames)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -209,7 +209,6 @@ class CreatePostActivity : AppCompatActivity() {
             }
         }
     }
-
 
     @SuppressLint("Range")
     private fun getFileName(context: Context, uri: Uri): String? {

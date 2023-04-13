@@ -13,7 +13,9 @@ import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
 import com.squareup.picasso.Picasso
 import kotlin.reflect.typeOf
-
+/**
+ * MyViewHolder - contains Post data to be binded into the viewholder
+ */
 class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root) {
 
     fun bindData(post: Post, userID: String) {
