@@ -31,7 +31,6 @@
             android:layout_marginTop="3dp"
             android:layout_marginBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cl_searchBar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logo" />
@@ -92,7 +91,6 @@
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageButton"
-            app:layout_constraintStart_toEndOf="@+id/cl_searchBar"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
@@ -180,6 +178,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:backgroundTint="#2E2828"
+            app:backgroundTint="#2E2828"
             android:text="Clear"
             android:textColor="#FFFFFF"
             android:textColorLink="#000000"

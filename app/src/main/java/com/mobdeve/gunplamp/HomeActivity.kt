@@ -2,12 +2,9 @@ package com.mobdeve.gunplamp
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.util.TypedValue
-import android.util.TypedValue.COMPLEX_UNIT_SP
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -36,8 +33,6 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var myAdapter: MyAdapter
-//    private lateinit var username : String  //    private lateinit var firstName : String  //    private lateinit var lastName : String
-//    private var profilePic by Delegates.notNull<Int>()
     private lateinit var user : User
     private lateinit var auth: FirebaseAuth
     private val db = Firebase.firestore
@@ -65,13 +60,13 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    //The viewPostDetailsLauncher is used to
+    //The viewPostDetailsLauncher is used for EditActivity
     private val viewPostDetailsLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
-
     }
 
+    //userProfileLauncher is used for UserProfileAct
     private val userProfileLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result : ActivityResult ->
@@ -85,19 +80,17 @@ class HomeActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
         auth = FirebaseAuth.getInstance()
 
-        //RecyclerView setup; Note how MyAdapter has viewPostResultLauncher
+        //RecyclerView setup; Note how MyAdapter has viewPostDetailsLauncher
         this.recyclerView = viewBinding.myRecyclerView
         this.myAdapter = MyAdapter(posts as ArrayList<Post>, viewPostDetailsLauncher, auth.currentUser!!.uid)
         viewBinding.myRecyclerView.adapter = myAdapter
         viewBinding.myRecyclerView.layoutManager = LinearLayoutManager(this)
 
         //If a user branches off from the filter group, then make radiogroup invisible
-
         viewBinding.myRecyclerView.setOnTouchListener { _, _ ->
             viewBinding.rgFilter.isVisible = false
             false
         }
-
 
         viewBinding.btnFilter.setOnClickListener(View.OnClickListener {
                 viewBinding.rgFilter.isVisible = true
@@ -107,6 +100,7 @@ class HomeActivity : AppCompatActivity() {
             viewBinding.rgFilter.clearCheck()
         })
 
+        //This function does the filter if a user clicks the search/enter function
         fun doFilter() {
             viewBinding.rgFilter.isVisible = false
             val selectedId = viewBinding.rgFilter.checkedRadioButtonId
@@ -154,16 +148,14 @@ class HomeActivity : AppCompatActivity() {
 
         }
 
+        // This command listens whether Search in Keyboard was pressed
         viewBinding.etSearchInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 doFilter()
                 true
             } else {
-                Toast.makeText(
-                    baseContext,
-                    "Invalid",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(baseContext, "Invalid",
+                    Toast.LENGTH_SHORT).show()
                 false
             }
         }
@@ -191,11 +183,7 @@ class HomeActivity : AppCompatActivity() {
             (animator as SimpleItemAnimator).supportsChangeAnimations = false
         }
 
-
-
-
     }
-
 
     // Once the user comes is redirected to the home activity, reload the current data
     override fun onStart() {
@@ -219,6 +207,9 @@ class HomeActivity : AppCompatActivity() {
         this.callPostQuery()
     }
 
+    /**
+     * callPostQuery retrieves all the post data then transfers it to the adapter
+     */
     private fun callPostQuery() {
 
         db.collection("posts").orderBy("datePosted", Query.Direction.DESCENDING).get().addOnSuccessListener { documents ->
@@ -244,11 +235,8 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showToast(filteredList : ArrayList<Post>){
         if (filteredList.isEmpty()) {
-            Toast.makeText(
-                baseContext,
-                "Invalid. Clear filter then search",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(baseContext, "Invalid. Clear filter then search",
+                Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -256,7 +244,5 @@ class HomeActivity : AppCompatActivity() {
         myAdapter.setData(filteredList)
         showToast(filteredList)
     }
-
-
 
 }
