@@ -246,7 +246,7 @@ class HomeActivity : AppCompatActivity() {
         if (filteredList.isEmpty()) {
             Toast.makeText(
                 baseContext,
-                "Clear filter then search",
+                "Invalid. Clear filter then search",
                 Toast.LENGTH_SHORT
             ).show()
         }
