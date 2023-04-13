@@ -137,11 +137,20 @@ class HomeActivity : AppCompatActivity() {
 
                     myAdapter.setData(filteredList)
 
-                } else {
+                } else if (selectedText == "Caption"){
 
                     //Caption
                     val filteredList = posts.filter { post ->
                         post.caption!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
+                    }
+
+                    myAdapter.setData(filteredList)
+
+                } else {
+
+                    //City
+                    val filteredList = posts.filter { post ->
+                        post.store!!.city!!.lowercase().contains(viewBinding.etSearchInput.text.toString().lowercase())
                     }
 
                     myAdapter.setData(filteredList)

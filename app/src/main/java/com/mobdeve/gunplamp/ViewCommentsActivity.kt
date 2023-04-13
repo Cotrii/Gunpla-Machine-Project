@@ -16,6 +16,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ActivityViewCommentsBinding
 import java.lang.Integer.parseInt
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -87,12 +88,12 @@ class ViewCommentsActivity : AppCompatActivity() {
                     "username" to user.username,
                     "content" to viewBinding.etEntry.text.toString(),
                     "postID" to postid,
-                    "datePosted" to datePosted
+                    "commentDate" to datePosted
                 )
 
                 comments.add(data1)
 
-                commentsList.add(Comment(user.username, viewBinding.etEntry.text.toString(), postid))
+                commentsList.add(Comment(user.username, viewBinding.etEntry.text.toString(), postid, datePosted.toString()))
 
                 this.myCommentsAdapter.notifyDataSetChanged()
             }
@@ -106,17 +107,30 @@ class ViewCommentsActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
 
             for (document in result) {
+
+                Log.d("nice", document.toString())
                 var index = 0
 
                 val comment =  Comment(  document.getString("username").toString(),
                     document.getString("content").toString(),
-                    document.getString("postID").toString())
+                    document.getString("postID").toString(),
+                    document.getDate("commentDate").toString())
 
                 commentsList.add(comment)
                 this.myCommentsAdapter.notifyItemInserted(index)
                 index++
+
+
+                //
+                val sortedData = commentsList.sortedByDescending {
+                    it.commentDate
+                }
+
+                myCommentsAdapter.setData(sortedData)
+
             }
         }
+
     }
 
 

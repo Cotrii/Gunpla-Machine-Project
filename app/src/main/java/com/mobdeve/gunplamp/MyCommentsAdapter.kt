@@ -31,4 +31,14 @@ class MyCommentsAdapter(private val data: ArrayList<Comment>) : RecyclerView.Ada
 
     }
 
+    fun setData(newCommentList: List<Comment>) {
+        // Clear the existing data.
+        data.clear()
+        // Add the new data to the list.
+        data.addAll(newCommentList)
+        // Notify the adapter that the data has changed.
+        notifyDataSetChanged()
+    }
+
+
 }
