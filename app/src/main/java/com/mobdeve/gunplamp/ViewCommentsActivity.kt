@@ -78,14 +78,14 @@ class ViewCommentsActivity : AppCompatActivity() {
 
 
         viewBinding.btnSubmitCmmt.setOnClickListener(View.OnClickListener {
-
+            viewBinding.btnSubmitCmmt.isEnabled = false
             if (viewBinding.etEntry.text.toString() != "") {
                 // Add new comment to database
                 val comments = db.collection("comments")
 
                 // Get all data input to a hashmap then add it to the database and recyclerview
                 val data1 = hashMapOf(
-                    "username" to user.username,
+                    "userID" to user.id,
                     "content" to viewBinding.etEntry.text.toString(),
                     "postID" to postid,
                     "commentDate" to datePosted
@@ -97,6 +97,8 @@ class ViewCommentsActivity : AppCompatActivity() {
 
                 this.myCommentsAdapter.notifyDataSetChanged()
             }
+            viewBinding.btnSubmitCmmt.isEnabled = true
+            viewBinding.etEntry.setText("")
         })
 
 
@@ -111,22 +113,31 @@ class ViewCommentsActivity : AppCompatActivity() {
                 Log.d("nice", document.toString())
                 var index = 0
 
-                val comment =  Comment(  document.getString("username").toString(),
-                    document.getString("content").toString(),
-                    document.getString("postID").toString(),
-                    document.getDate("commentDate").toString())
+                db.collection("users").document(document.getString("userID").toString()).get().addOnSuccessListener {user ->
+                    if(user != null) {
+                        val username = user!!.getString("username").toString()
+                        val comment =  Comment(
+                            username,
+                            document.getString("content").toString(),
+                            document.getString("postID").toString(),
+                            document.getDate("commentDate").toString())
+                        commentsList.add(comment)
+                        this.myCommentsAdapter.notifyItemInserted(index)
+                        index++
 
-                commentsList.add(comment)
-                this.myCommentsAdapter.notifyItemInserted(index)
-                index++
 
+                        //
+                        val sortedData = commentsList.sortedByDescending {
+                            it.commentDate
+                        }
 
-                //
-                val sortedData = commentsList.sortedByDescending {
-                    it.commentDate
+                        myCommentsAdapter.setData(sortedData)
+                    }
                 }
 
-                myCommentsAdapter.setData(sortedData)
+
+
+
 
             }
         }
