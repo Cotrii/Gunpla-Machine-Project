@@ -32,33 +32,40 @@ class RegisterActivity : AppCompatActivity() {
 
                 if (viewBinding.editTextPassword.text.toString() == viewBinding.editTextConfirmPassword.text.toString()
                 ) {
+                    db.collection("users").whereEqualTo("username", viewBinding.editTextFullName).get().addOnCompleteListener(this) {result ->
+                        if(result.isSuccessful){
+                            auth.createUserWithEmailAndPassword(viewBinding.editTextEmail.text.trim().toString(), viewBinding.editTextPassword.text.toString())
+                                .addOnCompleteListener(this) { task ->
+                                    if (task.isSuccessful) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        val user = hashMapOf(
+                                            "fullName" to viewBinding.editTextFullName.text.toString(),
+                                            "email" to viewBinding.editTextEmail.text.trim().toString(),
+                                            "username" to  viewBinding.editTextUsername.text.toString(),
+                                            "profilePic" to 1
+                                        )
 
-                    auth.createUserWithEmailAndPassword(viewBinding.editTextEmail.text.trim().toString(), viewBinding.editTextPassword.text.toString())
-                        .addOnCompleteListener(this) { task ->
-                            if (task.isSuccessful) {
-                                // Sign in success, update UI with the signed-in user's information
-                                val user = hashMapOf(
-                                    "fullName" to viewBinding.editTextFullName.text.toString(),
-                                    "email" to viewBinding.editTextEmail.text.trim().toString(),
-                                    "username" to  viewBinding.editTextUsername.text.toString(),
-                                    "profilePic" to 1
-                                )
+                                        db.collection("users").document(auth.currentUser!!.uid).set(user).addOnSuccessListener {
+                                            val returnIntent = Intent()
+                                            intent.putExtra("email", viewBinding.editTextEmail.text.trim().toString())
+                                            intent.putExtra("username", viewBinding.editTextUsername.text.toString())
+                                            setResult(RESULT_OK,intent)
+                                            finish()
+                                        }
 
-                                db.collection("users").document(auth.currentUser!!.uid).set(user).addOnSuccessListener {
-                                    val returnIntent = Intent()
-                                    intent.putExtra("email", viewBinding.editTextEmail.text.trim().toString())
-                                    intent.putExtra("username", viewBinding.editTextUsername.text.toString())
-                                    setResult(RESULT_OK,intent)
-                                    finish()
+                                        Toast.makeText(this, "Registered Successfully!", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Toast.makeText(baseContext, "Authentication failed." + task,
+                                            Toast.LENGTH_SHORT).show()
+                                    }
                                 }
-
-                                Toast.makeText(this, "user is:" + user, Toast.LENGTH_SHORT).show()
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Toast.makeText(baseContext, "Authentication failed." + task,
-                                    Toast.LENGTH_SHORT).show()
-                            }
                         }
+                        else{
+                            Toast.makeText(this, "Username Already Taken", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
                 } else {
                     Toast.makeText(this, "Mismatched Password", Toast.LENGTH_SHORT).show()
                 }
