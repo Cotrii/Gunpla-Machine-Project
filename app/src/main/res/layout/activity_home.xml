@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".HomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -179,11 +180,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#2E2828"
-            app:backgroundTint="#2E2828"
             android:text="Clear"
             android:textColor="#FFFFFF"
             android:textColorLink="#000000"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            app:backgroundTint="#2E2828" />
 
     </RadioGroup>
 

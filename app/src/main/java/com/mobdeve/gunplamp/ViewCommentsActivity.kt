@@ -33,22 +33,10 @@ class ViewCommentsActivity : AppCompatActivity() {
     private var db = Firebase.firestore
     private var commentsList: MutableList<Comment> = ArrayList<Comment>()
     private lateinit var auth: FirebaseAuth
-
     var datePosted : Date = Date()
-
     private lateinit var user : User
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var myCommentsAdapter: MyCommentsAdapter
-
-//    private val addCommentLauncher = registerForActivityResult(
-//        ActivityResultContracts.StartActivityForResult()
-//    ) { result: ActivityResult ->
-//
-//        if (result.resultCode == RESULT_OK) {
-//        }
-//    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,8 +97,6 @@ class ViewCommentsActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
 
             for (document in result) {
-
-                Log.d("nice", document.toString())
                 var index = 0
 
                 db.collection("users").document(document.getString("userID").toString()).get().addOnSuccessListener {user ->
@@ -135,11 +121,6 @@ class ViewCommentsActivity : AppCompatActivity() {
                         myCommentsAdapter.setData(sortedData)
                     }
                 }
-
-
-
-
-
             }
         }
 
