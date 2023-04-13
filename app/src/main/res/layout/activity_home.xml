@@ -147,6 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:text="Store"
+            android:textColor="#000000"
             android:textSize="14sp" />
 
         <RadioButton
@@ -154,6 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:text="User"
+            android:textColor="#000000"
             android:textSize="14sp" />
 
         <RadioButton
@@ -161,6 +163,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:text="Caption"
+            android:textColor="#000000"
             android:textSize="14sp" />
 
         <RadioButton
@@ -168,6 +171,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:text="City"
+            android:textColor="#000000"
             android:textSize="14sp" />
 
         <Button
@@ -176,6 +180,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Clear"
+            android:textColor="#FFFFFF"
+            android:textColorLink="#000000"
             android:textSize="12sp" />
 
     </RadioGroup>
