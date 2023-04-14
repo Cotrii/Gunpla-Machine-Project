@@ -28,6 +28,8 @@ class UserProfileActivity : AppCompatActivity() {
     private lateinit var user : User
     private lateinit var viewBinding: ActivityUserProfileBinding
     private var editPassword : Boolean = false
+    private lateinit var originalFullName : String
+    private lateinit var originalUserName : String
 
     private val homeActivityLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -52,10 +54,13 @@ class UserProfileActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
         auth = FirebaseAuth.getInstance()
 
-        viewBinding.saveButton.visibility = View.INVISIBLE
 
-        val originalFullName = viewBinding.fullName.text.toString()
-        val originalUserName = viewBinding.username.text.toString()
+
+        viewBinding.saveButton.visibility = View.INVISIBLE
+        originalUserName = ""
+        originalFullName = ""
+
+
 
         viewBinding.oldPassword.visibility = View.GONE
         viewBinding.newPassword.visibility = View.GONE
@@ -210,6 +215,8 @@ class UserProfileActivity : AppCompatActivity() {
                     viewBinding.email.setText(user.email)
                     viewBinding.username.setText(user.username)
                     viewBinding.ivProfilePic.setImageResource(getProfilePic(user.profilePic))
+                    originalFullName = viewBinding.fullName.text.toString()
+                    originalUserName = viewBinding.username.text.toString()
                 }
             }
         }
@@ -226,27 +233,28 @@ class UserProfileActivity : AppCompatActivity() {
             else if(viewBinding.fullName.text.length == 0 || viewBinding.username.text.length == 0){
                 Toast.makeText(this, "Invalid Fields", Toast.LENGTH_SHORT).show()
             }
-            else{
+            else if(viewBinding.username.text.toString() != originalUserName){
+
                 db.collection("users").whereEqualTo("username", viewBinding.username.text.toString()).get().addOnSuccessListener {result ->
                     if(result.size() == 0) {
                         // updates values of the user in DB
                         db.collection("users").document(currentUser!!.uid).update("fullName", viewBinding.fullName.text.toString(),
-                            "username", viewBinding.username.text.toString(),"profilePic", user.profilePic).addOnSuccessListener { document ->
+                            "username", viewBinding.username.text.toString(),"profilePic", user.profilePic).addOnSuccessListener { document1 ->
                             // if editPassword is true then...
-                            if(document != null) {
+                            if(document1 != null) {
                                 if (editPassword) {
                                     // get credential and reauthenticate user
                                     val credential = EmailAuthProvider.getCredential(
                                         currentUser?.email ?: "",
                                         viewBinding.oldPassword.text.toString()
                                     )
-                                    currentUser.reauthenticate(credential)?.addOnCompleteListener { task ->
+                                    currentUser.reauthenticate(credential)?.addOnCompleteListener { task1 ->
                                         // update password to the new password
-                                        if (task.isSuccessful) {
+                                        if (task1.isSuccessful) {
                                             currentUser.updatePassword(viewBinding.confirmNewPassword.text.toString())
-                                                ?.addOnCompleteListener { task ->
-                                                    if (task.isSuccessful) {
-                                                        if (document != null) {
+                                                ?.addOnCompleteListener { task2 ->
+                                                    if (task2.isSuccessful) {
+                                                        if (task2 != null) {
                                                             setResult(RESULT_OK, intent)
                                                             finish()
                                                         }
@@ -262,6 +270,10 @@ class UserProfileActivity : AppCompatActivity() {
                                     }
                                 }
                             }
+                            else{
+                                setResult(RESULT_OK, intent)
+                                finish()
+                            }
                         }
                     }
                     else{
@@ -270,8 +282,46 @@ class UserProfileActivity : AppCompatActivity() {
 
                 }
             }
-
-
+            else{
+                // updates values of the user in DB
+                db.collection("users").document(currentUser!!.uid).update("fullName", viewBinding.fullName.text.toString(),
+                    "username", viewBinding.username.text.toString(),"profilePic", user.profilePic).addOnSuccessListener { document1 ->
+                    // if editPassword is true then...
+                    if(document1 != null) {
+                        if (editPassword) {
+                            // get credential and reauthenticate user
+                            val credential = EmailAuthProvider.getCredential(
+                                currentUser?.email ?: "",
+                                viewBinding.oldPassword.text.toString()
+                            )
+                            currentUser.reauthenticate(credential)?.addOnCompleteListener { task1 ->
+                                // update password to the new password
+                                if (task1.isSuccessful) {
+                                    currentUser.updatePassword(viewBinding.confirmNewPassword.text.toString())
+                                        ?.addOnCompleteListener { task2 ->
+                                            if (task2.isSuccessful) {
+                                                if (task2 != null) {
+                                                    setResult(RESULT_OK, intent)
+                                                    finish()
+                                                }
+                                            } else {
+                                                setResult(RESULT_CANCELED, intent)
+                                                finish()
+                                            }
+                                        }
+                                } else {
+                                    setResult(RESULT_CANCELED, intent)
+                                    finish()
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        setResult(RESULT_OK, intent)
+                        finish()
+                    }
+                }
+            }
         }
     }
 
