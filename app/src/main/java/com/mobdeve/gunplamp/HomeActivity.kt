@@ -317,8 +317,8 @@ class HomeActivity : AppCompatActivity() {
     /** shows a Toast if input is actually invalid */
     private fun showToast(filteredList : ArrayList<Post>){
         if (filteredList.isEmpty()) {
-            Toast.makeText(baseContext, "Invalid. Clear Filter & Text then search",
-                Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, "No results. Please clear filter & input",
+                Toast.LENGTH_LONG).show()
         }
     }
     /** updates the currentlist in myAdapter*/
