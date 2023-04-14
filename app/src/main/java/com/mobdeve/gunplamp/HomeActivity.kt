@@ -291,9 +291,22 @@ class HomeActivity : AppCompatActivity() {
                             val store = Store(store.id, store.getString("name"), store.getString("city"))
                             val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
                             posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false, document["likes"] as ArrayList<String>))
-                            oldPosts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false, document["likes"] as ArrayList<String>))
+//                            oldPosts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false, document["likes"] as ArrayList<String>))
                             this.myAdapter.notifyItemInserted(index)
                             index++
+
+
+
+                            if (documents.size() == index) {
+                                val dateFormat= SimpleDateFormat("MMM d, yyyy")
+
+                                val sortedList = posts.sortedByDescending {
+                                    dateFormat.parse(it.datePosted)
+                                }
+
+                                myAdapter.setData(sortedList)
+                                oldPosts = sortedList as MutableList<Post>
+                            }
                         }
                     }
                 }
