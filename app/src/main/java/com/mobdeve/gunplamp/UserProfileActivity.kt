@@ -227,43 +227,45 @@ class UserProfileActivity : AppCompatActivity() {
                 Toast.makeText(this, "Invalid Fields", Toast.LENGTH_SHORT).show()
             }
             else{
-                // updates values of the user in DB
-                db.collection("users").document(currentUser!!.uid).update("fullName", viewBinding.fullName.text.toString(),
-                    "username", viewBinding.username.text.toString(),"profilePic", user.profilePic).addOnSuccessListener { document ->
-                    // if editPassword is true then...
-                    if(document != null) {
-                        if (editPassword) {
-                            // get credential and reauthenticate user
-                            val credential = EmailAuthProvider.getCredential(
-                                currentUser?.email ?: "",
-                                viewBinding.oldPassword.text.toString()
-                            )
-                            currentUser.reauthenticate(credential)?.addOnCompleteListener { task ->
-                                // update password to the new password
-                                if (task.isSuccessful) {
-                                    currentUser.updatePassword(viewBinding.confirmNewPassword.text.toString())
-                                        ?.addOnCompleteListener { task ->
-                                            if (task.isSuccessful) {
-                                                if (document != null) {
-                                                    setResult(RESULT_OK, intent)
-                                                    finish()
+                db.collection("users").whereEqualTo("username", viewBinding.username.text.toString()).get().addOnSuccessListener {result ->
+                    if(result.size() == 0) {
+                        // updates values of the user in DB
+                        db.collection("users").document(currentUser!!.uid).update("fullName", viewBinding.fullName.text.toString(),
+                            "username", viewBinding.username.text.toString(),"profilePic", user.profilePic).addOnSuccessListener { document ->
+                            // if editPassword is true then...
+                            if(document != null) {
+                                if (editPassword) {
+                                    // get credential and reauthenticate user
+                                    val credential = EmailAuthProvider.getCredential(
+                                        currentUser?.email ?: "",
+                                        viewBinding.oldPassword.text.toString()
+                                    )
+                                    currentUser.reauthenticate(credential)?.addOnCompleteListener { task ->
+                                        // update password to the new password
+                                        if (task.isSuccessful) {
+                                            currentUser.updatePassword(viewBinding.confirmNewPassword.text.toString())
+                                                ?.addOnCompleteListener { task ->
+                                                    if (task.isSuccessful) {
+                                                        if (document != null) {
+                                                            setResult(RESULT_OK, intent)
+                                                            finish()
+                                                        }
+                                                    } else {
+                                                        setResult(RESULT_CANCELED, intent)
+                                                        finish()
+                                                    }
                                                 }
-                                            } else {
-                                                setResult(RESULT_CANCELED, intent)
-                                                finish()
-                                            }
+                                        } else {
+                                            setResult(RESULT_CANCELED, intent)
+                                            finish()
                                         }
-                                } else {
-                                    setResult(RESULT_CANCELED, intent)
-                                    finish()
+                                    }
                                 }
                             }
                         }
                     }
-                    // if user wasnt found
                     else{
-                        setResult(RESULT_CANCELED, intent)
-                        finish()
+                        Toast.makeText(this, "Username already exists!", Toast.LENGTH_SHORT).show()
                     }
 
                 }
