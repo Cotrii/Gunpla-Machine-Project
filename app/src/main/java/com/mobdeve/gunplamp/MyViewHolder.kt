@@ -12,6 +12,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
 import kotlin.reflect.typeOf
 /**
  * MyViewHolder - contains Post data to be binded into the viewholder
@@ -47,7 +48,7 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
         this.viewBinding.tvDesc.text = post.caption
         this.viewBinding.tvLikeCounter.text = post.countLikes().toString() + " Likes"
 
-        this.viewBinding.tvDate.text = post.datePosted
+        this.viewBinding.tvDate.text = post.datePosted.substring(0, 12)
     }
     // Listen if a user wants to like a post
     fun setLikeOnClickListener(onClickListener: View.OnClickListener) {

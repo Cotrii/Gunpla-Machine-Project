@@ -289,7 +289,7 @@ class HomeActivity : AppCompatActivity() {
                         db.collection("stores").document(document.getString("storeID").toString()).get().addOnSuccessListener { store ->
                             val poster = User(user.id,user.getString("username").toString(),user.getString("fullName").toString(),user.getString("email").toString(),user.getLong("profilePic")!!.toInt())
                             val store = Store(store.id, store.getString("name"), store.getString("city"))
-                            val datePosted = SimpleDateFormat("MMM d, yyyy").format(document.getDate("datePosted"))
+                            val datePosted = SimpleDateFormat("MMM d, yyyy HH:mm:ss").format(document.getDate("datePosted"))
                             posts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false, document["likes"] as ArrayList<String>))
 //                            oldPosts.add(Post(document.id,poster,document.getString("imagePost"),document.getString("caption"),store,datePosted, false, document["likes"] as ArrayList<String>))
                             this.myAdapter.notifyItemInserted(index)
@@ -298,7 +298,7 @@ class HomeActivity : AppCompatActivity() {
 
 
                             if (documents.size() == index) {
-                                val dateFormat= SimpleDateFormat("MMM d, yyyy")
+                                val dateFormat= SimpleDateFormat("MMM d, yyyy HH:mm:ss")
 
                                 val sortedList = posts.sortedByDescending {
                                     dateFormat.parse(it.datePosted)
