@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:background="#BAB9B9">
+    android:background="#FFFFFF"
+    android:clipChildren="false">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="298dp"
+        android:layout_height="400dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
@@ -31,23 +31,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="430dp"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
         android:gravity="center"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="300dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        android:background="#FFFFFF">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="306dp"
             android:layout_margin="10dp"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_loginHeader"
@@ -88,6 +86,7 @@
                 android:textColor="#000000"
                 android:textColorHint="#528CE7"
                 android:textSize="14sp" />
+
             <Button
                 android:id="@+id/btn_savelogin"
                 android:layout_width="wrap_content"
@@ -131,9 +130,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Sign Up"
                         android:clickable="true"
-                        android:textColor="#528CE7"/>
+                        android:text="Sign Up"
+                        android:textColor="#528CE7" />
                 </LinearLayout>
 
             </LinearLayout>

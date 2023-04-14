@@ -60,8 +60,9 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="95dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="6dp"
         android:layout_marginBottom="200dp"
         android:backgroundTint="#E9494A"
         android:text="Sign In"
