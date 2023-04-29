@@ -1,4 +1,4 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.mobdeve.gunplamp.databinding.ActivityLoginBinding
+import s13.mobdeve.gunplamp.databinding.ActivityLoginBinding
 
 /**
  * LoginActivity contains the logic of login whether if the user exists or not

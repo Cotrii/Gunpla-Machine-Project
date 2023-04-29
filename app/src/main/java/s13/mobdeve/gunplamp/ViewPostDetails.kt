@@ -1,4 +1,4 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 import android.content.Intent
 import android.graphics.Color
@@ -12,9 +12,9 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.mobdeve.gunplamp.databinding.ActivityViewPostDetailsBinding
 import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
+import s13.mobdeve.gunplamp.databinding.ActivityViewPostDetailsBinding
 
 /**
  * In ViewPostDetails Activity, a user is able to view a post, edit or delete the post iself
@@ -45,7 +45,7 @@ class ViewPostDetails : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         // Set Image View (not editable)
-        val imageString = intent.getStringExtra(ViewPostDetails.IMAGE_KEY)
+        val imageString = intent.getStringExtra(IMAGE_KEY)
         if(imageString != null){
             if(imageString.toIntOrNull() != null ){
                 this.viewBinding.ivImage.setImageResource(imageString.toInt())
@@ -59,12 +59,12 @@ class ViewPostDetails : AppCompatActivity() {
             }
         }
 
-        captionStr = intent.getStringExtra(ViewPostDetails.CAPTION_KEY).toString()
-        val position = intent.getIntExtra(ViewPostDetails.POSITION_KEY, 0)
+        captionStr = intent.getStringExtra(CAPTION_KEY).toString()
+        val position = intent.getIntExtra(POSITION_KEY, 0)
 
 
         //Display id of Post
-        val id = intent.getStringExtra(ViewPostDetails.POST_ID_KEY).toString()
+        val id = intent.getStringExtra(POST_ID_KEY).toString()
 
 
         viewBinding.etEditCaption.setText(captionStr)
@@ -106,10 +106,10 @@ class ViewPostDetails : AppCompatActivity() {
 
             val changedIntent : Intent = Intent()
 
-            changedIntent.putExtra(ViewPostDetails.CAPTION_KEY, viewBinding.etEditCaption.text.toString())
-            changedIntent.putExtra(ViewPostDetails.POSITION_KEY, position)
+            changedIntent.putExtra(CAPTION_KEY, viewBinding.etEditCaption.text.toString())
+            changedIntent.putExtra(POSITION_KEY, position)
 
-            changedIntent.putExtra(ViewPostDetails.STATUS_KEY, "Edit")
+            changedIntent.putExtra(STATUS_KEY, "Edit")
 
             setResult(RESULT_OK, changedIntent)
             finish()

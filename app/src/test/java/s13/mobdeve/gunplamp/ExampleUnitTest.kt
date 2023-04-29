@@ -1,4 +1,4 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 import org.junit.Test
 

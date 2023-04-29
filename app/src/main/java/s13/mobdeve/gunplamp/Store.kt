@@ -1,4 +1,4 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 /**
  * A store contains an id, name, and city which are all considered Strings in the database

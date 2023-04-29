@@ -1,4 +1,4 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.mobdeve.gunplamp.databinding.ActivityCreatePostBinding
+import s13.mobdeve.gunplamp.databinding.ActivityCreatePostBinding
 import java.net.URI
 import java.security.AccessController.getContext
 import java.util.*

@@ -1,13 +1,13 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.gunplamp.CommentViewHolder
-import com.mobdeve.gunplamp.databinding.CommentsLayoutBinding
-import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
+import s13.mobdeve.gunplamp.CommentViewHolder
+import s13.mobdeve.gunplamp.databinding.CommentsLayoutBinding
+import s13.mobdeve.gunplamp.databinding.ItemLayoutBinding
 
 /**
  * MyCommentsAdapter holds Comments data of a Post

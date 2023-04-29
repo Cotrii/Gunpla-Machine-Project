@@ -1,4 +1,4 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 /**
  * A User contains an id,username, fullname, email (All Strings) and a profilePic of int which

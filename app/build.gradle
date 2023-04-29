@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.mobdeve.gunplamp'
+    namespace 's13.mobdeve.gunplamp'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.mobdeve.gunplamp"
+        applicationId "s13.mobdeve.gunplamp"
         minSdk 23
         targetSdk 33
         versionCode 1

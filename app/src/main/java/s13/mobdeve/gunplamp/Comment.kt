@@ -1,4 +1,4 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 /**
  * The class "Comment" contains a username, content, postID (all in String format)

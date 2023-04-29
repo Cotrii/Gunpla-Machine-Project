@@ -1,4 +1,4 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -15,7 +15,7 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.mobdeve.gunplamp.databinding.ActivityUserProfileBinding
+import s13.mobdeve.gunplamp.databinding.ActivityUserProfileBinding
 
 /**
  * UserProfileActivity - In this activity a user may view its current profile pic, username
@@ -332,13 +332,13 @@ class UserProfileActivity : AppCompatActivity() {
             return R.drawable.profpic1
         }
         else if(index == 2){
-            return  R.drawable.profpic2
+            return R.drawable.profpic2
         }
         else if(index == 3){
-            return  R.drawable.profpic3
+            return R.drawable.profpic3
         }
         else if(index == 4){
-            return  R.drawable.profpic4
+            return R.drawable.profpic4
         }
         else{
             return R.drawable.profpic1

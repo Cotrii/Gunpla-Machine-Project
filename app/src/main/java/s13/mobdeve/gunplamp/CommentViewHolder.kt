@@ -1,9 +1,9 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 import android.text.TextUtils.substring
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.gunplamp.Comment
-import com.mobdeve.gunplamp.databinding.CommentsLayoutBinding
+import s13.mobdeve.gunplamp.Comment
+import s13.mobdeve.gunplamp.databinding.CommentsLayoutBinding
 
 /**
  * The class "CommentViewHolder" contains a username and comment. This is used to initialize

@@ -1,4 +1,4 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.mobdeve.gunplamp.databinding.ActivityViewCommentsBinding
+import s13.mobdeve.gunplamp.databinding.ActivityViewCommentsBinding
 import java.lang.Integer.parseInt
 import java.text.SimpleDateFormat
 import java.util.*
@@ -63,7 +63,7 @@ class ViewCommentsActivity : AppCompatActivity() {
             }
         }
 
-        val postid = intent.getStringExtra(ViewCommentsActivity.POST_ID_KEY).toString()
+        val postid = intent.getStringExtra(POST_ID_KEY).toString()
 
         // If input is not empty, then add the comment to the list
         viewBinding.btnSubmitCmmt.setOnClickListener(View.OnClickListener {

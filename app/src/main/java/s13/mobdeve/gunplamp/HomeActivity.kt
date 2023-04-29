@@ -1,4 +1,4 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 import android.content.Context
 import android.content.Intent
@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.mobdeve.gunplamp.databinding.ActivityHomeBinding
+import s13.mobdeve.gunplamp.databinding.ActivityHomeBinding
 import java.lang.Integer.parseInt
 import java.text.SimpleDateFormat
 import java.util.*

@@ -1,4 +1,4 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 import android.content.Intent
 import android.provider.ContactsContract
@@ -11,7 +11,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
+import s13.mobdeve.gunplamp.databinding.ItemLayoutBinding
 
 
 /**

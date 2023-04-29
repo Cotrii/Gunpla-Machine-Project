@@ -1,4 +1,4 @@
-package com.mobdeve.gunplamp
+package s13.mobdeve.gunplamp
 
 import android.net.Uri
 import android.opengl.Visibility
@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.mobdeve.gunplamp.databinding.ItemLayoutBinding
 import com.squareup.picasso.Picasso
+import s13.mobdeve.gunplamp.databinding.ItemLayoutBinding
 import java.text.SimpleDateFormat
 import kotlin.reflect.typeOf
 /**
@@ -85,13 +85,13 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
             return R.drawable.profpic1
         }
         else if(index == 2){
-            return  R.drawable.profpic2
+            return R.drawable.profpic2
         }
         else if(index == 3){
-            return  R.drawable.profpic3
+            return R.drawable.profpic3
         }
         else if(index == 4){
-            return  R.drawable.profpic4
+            return R.drawable.profpic4
         }
         else{
             return R.drawable.profpic1
